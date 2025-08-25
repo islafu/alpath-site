@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Alpath® — Ecoturismo Premium</title>
+  <meta name="description" content="Ecoturismo en alta montaña, senderismo y expediciones nacionales e internacionales." />
+  <meta property="og:title" content="Alpath® — Ecoturismo Premium" />
+  <meta property="og:description" content="Vive experiencias transformativas en montaña." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#3a492d" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#f4a71d;--card:#fdf5e6;--muted:#5c4520;--text:#1f1a09;--brand:#3a492d;--accent:#a65a2c;--ring:0 0 0 3px rgba(58,73,45,.35);
+      /* Hero images: puedes cambiarlas por tus archivos reales */
+      --hero:url('assets/landing-hero.jpg');
+      --hero-mobile:url('assets/landing-hero-mobile.jpg');
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;height:100%}
+    body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+    h1,h2,h3,h4,.brand span{font-family:'Fraunces',serif;font-weight:600;letter-spacing:-0.5px}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block;height:auto}
+    .container{max-width:1120px;margin-inline:auto;padding:0 20px}
+    .btn{display:inline-flex;align-items:center;gap:.6rem;background:var(--brand);color:#fff;padding:.85rem 1.1rem;border-radius:14px;font-weight:600;border:1px solid rgba(0,0,0,.08);box-shadow:0 8px 24px rgba(0,0,0,.35);transition:.2s}
+    .btn:hover{transform:translateY(-1px)}
+    .btn-outline{background:transparent;border:1px solid var(--brand);color:var(--brand)}
+    .btn-outline:hover{background:var(--brand);color:#fff}
+    /* En el hero, outline blanco */
+    .hero .btn-outline{background:rgba(255,255,255,0.15);border:1px solid #fff;color:#fff}
+    .hero .btn-outline:hover{background:rgba(255,255,255,0.25)}
+    .badge{display:inline-flex;align-items:center;gap:.45rem;background:rgba(0,0,0,.6);color:#fff;padding:.35rem .6rem;border-radius:999px;font-size:.85rem;border:1px solid rgba(255,255,255,.25)}
+
+    /* Header */
+    header{position:sticky;top:0;z-index:50;transition:background .3s,border .3s}
+    header.scrolled{background:rgba(58,73,45,.97);border-bottom:1px solid rgba(0,0,0,.25)}
+    nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .brand{display:flex;align-items:center;gap:.6rem;font-weight:800;letter-spacing:.2px;color:#fff}
+    .logo{width:42px;height:42px;border-radius:50%;background:url('assets/logo.png') center/cover no-repeat}
+    .nav-links{display:flex;gap:1rem}
+    .nav-links a{opacity:.95;padding:.5rem .75rem;border-radius:10px;color:#fff;position:relative;transition:color .25s ease}
+    .nav-links a::after{content:"";position:absolute;left:.75rem;right:.75rem;bottom:.35rem;height:2px;background:#fff;transform:scaleX(0);transform-origin:left;transition:transform .25s ease}
+    .nav-links a:hover{color:#fff}
+    .nav-links a:hover::after{transform:scaleX(1)}
+
+    /* Hero */
+    .hero{padding:72px 0 48px;position:relative;min-height:70vh;display:flex;align-items:center;justify-content:center;text-align:center}
+    .hero::before{content:'';position:absolute;inset:0;background:var(--hero, url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1600&auto=format&fit=crop')) center/cover no-repeat}
+    .hero::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,.55)}
+    .hero .container{position:relative;z-index:1}
+    .hero h1{font-size:clamp(2.2rem,6vw,3.5rem);color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.6)}
+    .hero p{font-family:'Fraunces',serif;font-size:1.6rem;color:#fff;margin:0 auto 24px;text-shadow:0 2px 8px rgba(0,0,0,.6)}
+    .cta-row{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap;justify-content:center}
+
+    /* Sections */
+    .section{padding:64px 0}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .feature{background:var(--card);border:1px solid rgba(0,0,0,.1);border-radius:18px;padding:18px}
+    .feature h4{margin:10px 0 6px;color:var(--brand)}
+    .feature p{margin:0;color:var(--muted)}
+
+    /* Cards / Stats */
+    .card{background:var(--card);border:1px solid rgba(0,0,0,.1);border-radius:18px;padding:18px}
+
+    /* Forms */
+    form{display:grid;gap:12px}
+    input,textarea{width:100%;background:#fff;border:1px solid rgba(0,0,0,.12);color:#1b1b1b;border-radius:12px;padding:12px 14px;outline:none}
+    input:focus,textarea:focus{box-shadow:var(--ring);border-color:rgba(58,73,45,.55)}
+    textarea{min-height:120px;resize:vertical}
+
+    /* Footer */
+    footer{padding:36px 0;border-top:1px solid rgba(0,0,0,.1);color:var(--muted)}
+
+    /* Mobile hero override */
+    @media (max-width:640px){
+      .hero::before{background:var(--hero-mobile, var(--hero, url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1200&auto=format&fit=crop'))) center/cover no-repeat}
+      .grid-3{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <header id="siteHeader">
+    <div class="container">
+      <nav>
+        <a href="#" class="brand">
+          <span class="logo" aria-hidden="true"></span>
+          <span>Alpath®</span>
+        </a>
+        <div class="nav-links">
+          <a href="#experiencias">Experiencias</a>
+          <a href="#calendario">Calendario</a>
+          <a href="#nosotros">Nosotros</a>
+          <a href="#contacto">Contacto</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <span class="badge kicker">Ecoturismo · Senderismo · Alta montaña</span>
+      <h1>Alpath®</h1>
+      <p>Los mejores días son los que no se quedaron en planes.</p>
+      <div class="cta-row">
+        <a href="#calendario" class="btn">Próximas salidas</a>
+        <a href="https://www.instagram.com/alpathmountainco/" target="_blank" class="btn btn-outline">Instagram</a>
+        <a href="https://wa.me/523343682659?text=Hola%20Alpath%C2%AE%2C%20quiero%20informaci%C3%B3n%20de%20sus%20pr%C3%B3ximas%20salidas" target="_blank" class="btn btn-outline">Reservar por WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Galería -->
+  <section id="galeria" class="section" style="background:var(--card)">
+    <div class="container">
+      <h2 style="margin:0 0 14px;font-size:2rem;color:var(--brand);text-align:center">Momentos Alpath®</h2>
+      <p class="lead" style="text-align:center;margin-bottom:24px;color:var(--muted)">Un vistazo a nuestras experiencias recientes en montaña.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px">
+        <a href="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=1600&auto=format&fit=crop" target="_blank"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=800&auto=format&fit=crop" alt="Trekking" style="width:100%;border-radius:12px;object-fit:cover;transition:.3s;cursor:pointer" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'"/></a>
+        <a href="https://images.unsplash.com/photo-1523419409543-4483f7a3a6f7?q=80&w=1600&auto=format&fit=crop" target="_blank"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1523419409543-4483f7a3a6f7?q=80&w=800&auto=format&fit=crop" alt="Cumbre" style="width:100%;border-radius:12px;object-fit:cover;transition:.3s;cursor:pointer" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'"/></a>
+        <a href="https://images.unsplash.com/photo-1509644851169-2acc08aa25b8?q=80&w=1600&auto=format&fit=crop" target="_blank"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1509644851169-2acc08aa25b8?q=80&w=800&auto=format&fit=crop" alt="Alta montaña" style="width:100%;border-radius:12px;object-fit:cover;transition:.3s;cursor:pointer" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'"/></a>
+        <a href="https://images.unsplash.com/photo-1491553895911-0055eca6402d?q=80&w=1600&auto=format&fit=crop" target="_blank"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?q=80&w=800&auto=format&fit=crop" alt="Bosque" style="width:100%;border-radius:12px;object-fit:cover;transition:.3s;cursor:pointer" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'"/></a>
+        <a href="https://images.unsplash.com/photo-1549887534-1541e9323dde?q=80&w=1600&auto=format&fit=crop" target="_blank"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1549887534-1541e9323dde?q=80&w=800&auto=format&fit=crop" alt="Amanecer" style="width:100%;border-radius:12px;object-fit:cover;transition:.3s;cursor:pointer" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'"/></a>
+        <a href="https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=1600&auto=format&fit=crop" target="_blank"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=800&auto=format&fit=crop" alt="Equipo" style="width:100%;border-radius:12px;object-fit:cover;transition:.3s;cursor:pointer" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'"/></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experiencias -->
+  <section id="experiencias" class="section">
+    <div class="container">
+      <h2 style="margin:0 0 14px;font-size:2rem;color:var(--brand)">Experiencias</h2>
+      <p class="lead" style="color:var(--muted)">Opciones para todos los niveles con la misma filosofía: seguridad, comunidad y crecimiento personal.</p>
+      <div class="grid-3" style="margin-top:18px">
+        <article class="feature">
+          <h4>Senderismo Consciente</h4>
+          <p>Rutas de 6–12 km, enfoque en respiración, técnica y conexión con el entorno.</p>
+        </article>
+        <article class="feature">
+          <h4>Alta Montaña</h4>
+          <p>Ascensos como Nevado de Toluca e Iztaccíhuatl. Ritmo de aclimatación y manejo de frío.</p>
+        </article>
+        <article class="feature">
+          <h4>Expediciones Internacionales</h4>
+          <p>Suiza, Patagonia y más. Itinerarios curados, logística y guía profesional.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Calendario / Próximas salidas -->
+  <section id="calendario" class="section">
+    <div class="container">
+      <h2 style="margin:0 0 14px;font-size:2rem;color:var(--brand)">Próximas salidas</h2>
+      <div class="grid-3" style="margin-top:18px">
+        <article class="feature">
+          <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1520975682031-a6a6944a62c0?q=80&w=1400&auto=format&fit=crop" alt="Nevado de Toluca" style="border-radius:12px;margin-bottom:10px" />
+          <h4>Nevado de Toluca — Amanecer</h4>
+          <p>Intermedio · 4,200 msnm · Cupo limitado</p>
+          <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap">
+            <a class="btn" href="nevado-toluca.html">Ver detalle</a>
+            <a class="btn btn-outline" target="_blank" href="https://wa.me/523343682659?text=Hola%20Alpath%C2%AE%2C%20quiero%20informaci%C3%B3n%20del%20Nevado%20de%20Toluca">Reservar</a>
+          </div>
+        </article>
+        <article class="feature">
+          <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1473172707857-f9e276582ab6?q=80&w=1400&auto=format&fit=crop" alt="Iztaccíhuatl" style="border-radius:12px;margin-bottom:10px" />
+          <h4>Iztaccíhuatl — Aclimatación & Cumbre</h4>
+          <p>Avanzado · Nieve y frío · Equipo básico requerido</p>
+          <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap">
+            <a class="btn btn-outline" target="_blank" href="https://wa.me/523343682659?text=Hola%20Alpath%C2%AE%2C%20quiero%20informaci%C3%B3n%20de%20Iztacc%C3%ADhuatl">Reservar</a>
+          </div>
+        </article>
+        <article class="feature">
+          <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1505764706515-aa95265c5abc?q=80&w=1400&auto=format&fit=crop" alt="Alpes Suizos" style="border-radius:12px;margin-bottom:10px" />
+          <h4>Alpes Suizos — Lagos y Glaciares</h4>
+          <p>8 días · Cupos muy limitados</p>
+          <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap">
+            <a class="btn btn-outline" target="_blank" href="https://wa.me/523343682659?text=Hola%20Alpath%C2%AE%2C%20quiero%20informaci%C3%B3n%20de%20Alpes%20Suizos">Reservar</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Nosotros -->
+  <section id="nosotros" class="section">
+    <div class="container">
+      <h2 style="margin:0 0 14px;font-size:2rem;color:var(--brand)">Nuestra filosofía</h2>
+      <div class="grid-3" style="margin-top:18px">
+        <article class="feature"><h4>Guía & Seguridad</h4><p>Protocolos y ritmo adecuado en todo momento.</p></article>
+        <article class="feature"><h4>Grupos Pequeños</h4><p>Atención cercana para que disfrutes y avances a tu propio paso.</p></article>
+        <article class="feature"><h4>Respeto por la Naturaleza</h4><p>Prácticas de bajo impacto y colaboración con comunidades locales.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contacto -->
+  <section id="contacto" class="section">
+    <div class="container" style="display:grid;grid-template-columns:1.1fr .9fr;gap:22px">
+      <div>
+        <h2 style="margin:0 0 14px;font-size:2rem;color:var(--brand)">Reserva tu lugar</h2>
+        <p class="lead">Escríbenos por WhatsApp o déjanos tus datos y te contactamos.</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin:12px 0 20px">
+          <a class="btn" target="_blank" href="https://wa.me/523343682659?text=Hola%20Alpath%C2%AE%2C%20quiero%20informaci%C3%B3n%20de%20sus%20pr%C3%B3ximas%20salidas">WhatsApp</a>
+          <a class="btn btn-outline" target="_blank" href="https://www.instagram.com/alpathmountainco/">Instagram</a>
+        </div>
+        <form id="contactForm">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <input required name="nombre" placeholder="Tu nombre" />
+            <input required type="email" name="email" placeholder="Email" />
+          </div>
+          <input name="telefono" placeholder="Teléfono (opcional)" />
+          <textarea required name="mensaje" placeholder="¿Qué salida te interesa? ¿Para cuántas personas?"></textarea>
+          <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+            <button class="btn" type="submit">Enviar</button>
+            <span id="formMsg" style="color:var(--muted)"></span>
+          </div>
+        </form>
+      </div>
+      <div class="card">
+        <h3 style="margin-top:0;color:var(--brand)">Preguntas frecuentes</h3>
+        <details open style="margin-bottom:8px"><summary><strong>¿Qué nivel físico necesito?</strong></summary><p style="color:var(--muted)">Tenemos rutas básicas, intermedias y avanzadas. Te ayudamos a elegir según tu experiencia y objetivos.</p></details>
+        <details style="margin-bottom:8px"><summary><strong>¿Qué equipo debo llevar?</strong></summary><p style="color:var(--muted)">Botas, mochila, capa térmica y rompevientos. Para alta montaña te compartimos lista completa.</p></details>
+        <details style="margin-bottom:8px"><summary><strong>Política de reembolso</strong></summary><p style="color:var(--muted)">Reembolsos o cambio de fecha con aviso previo (aplican condiciones según la salida).</p></details>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container" style="display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap">
+      <small>© <span id="year"></span> Alpath®.</small>
+      <small><a href="#">Aviso de privacidad</a> · <a href="#">Términos</a></small>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent=new Date().getFullYear();
+    const header=document.getElementById('siteHeader');
+    window.addEventListener('scroll',()=>{
+      if(window.scrollY>60){header.classList.add('scrolled')}else{header.classList.remove('scrolled')}
+    });
+
+    // Form mock (replace with backend or Formspree)
+    const form = document.getElementById('contactForm');
+    const msg = document.getElementById('formMsg');
+    form.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      msg.textContent = 'Enviando…';
+      await new Promise(res=>setTimeout(res, 800));
+      form.reset();
+      msg.textContent = '¡Gracias! Te contactaremos pronto.';
+    });
+  </script>
+</body>
+</html>
