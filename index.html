@@ -15,9 +15,9 @@
   <style>
     :root{
       --bg:#f4a71d;--card:#fdf5e6;--muted:#5c4520;--text:#1f1a09;--brand:#3a492d;--accent:#a65a2c;--ring:0 0 0 3px rgba(58,73,45,.35);
-      /* Hero images: puedes cambiarlas por tus archivos reales */
-      --hero:url('assets/landing-hero.jpg');
-      --hero-mobile:url('assets/landing-hero-mobile.jpg');
+      /* Hero images (root-relative) */
+      --hero:url('/assets/landing-hero.jpg');
+      --hero-mobile:url('/assets/landing-hero-mobile.jpg');
     }
     *{box-sizing:border-box}
     html,body{margin:0;height:100%}
@@ -40,7 +40,7 @@
     header.scrolled{background:rgba(58,73,45,.97);border-bottom:1px solid rgba(0,0,0,.25)}
     nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
     .brand{display:flex;align-items:center;gap:.6rem;font-weight:800;letter-spacing:.2px;color:#fff}
-    .logo{width:42px;height:42px;border-radius:50%;background:url('assets/logo.png') center/cover no-repeat}
+    .logo{width:42px;height:42px;border-radius:50%;background:url('/assets/logo.png?v=2') center/cover no-repeat}
     .nav-links{display:flex;gap:1rem}
     .nav-links a{opacity:.95;padding:.5rem .75rem;border-radius:10px;color:#fff;position:relative;transition:color .25s ease}
     .nav-links a::after{content:"";position:absolute;left:.75rem;right:.75rem;bottom:.35rem;height:2px;background:#fff;transform:scaleX(0);transform-origin:left;transition:transform .25s ease}
@@ -86,7 +86,7 @@
   <header id="siteHeader">
     <div class="container">
       <nav>
-        <a href="#" class="brand">
+        <a href="/" class="brand">
           <span class="logo" aria-hidden="true"></span>
           <span>Alpath®</span>
         </a>
