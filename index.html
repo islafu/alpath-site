@@ -33,40 +33,66 @@
     .hero .btn-outline:hover{background:rgba(255,255,255,0.25)}
     .badge{display:inline-flex;align-items:center;gap:.45rem;background:rgba(0,0,0,.6);color:#fff;padding:.35rem .6rem;border-radius:999px;font-size:.85rem;border:1px solid rgba(255,255,255,.25)}
 
-    header{position:sticky;top:0;z-index:50;transition:background .3s,border .3s}
+    /* Header */
+    header{position:sticky;top:0;z-index:60;transition:background .3s,border .3s}
     header.scrolled{background:rgba(58,73,45,.97);border-bottom:1px solid rgba(0,0,0,.25)}
-    nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    nav{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
     .brand{display:flex;align-items:center;gap:.6rem;font-weight:800;letter-spacing:.2px;color:#fff}
     .logo{width:42px;height:42px;border-radius:50%;background:url('assets/logo.png?v=3') center/cover no-repeat}
+
+    /* Desktop nav */
     .nav-links{display:flex;gap:1rem}
     .nav-links a{opacity:.95;padding:.5rem .75rem;border-radius:10px;color:#fff;position:relative;transition:color .25s ease}
     .nav-links a::after{content:"";position:absolute;left:.75rem;right:.75rem;bottom:.35rem;height:2px;background:#fff;transform:scaleX(0);transform-origin:left;transition:transform .25s ease}
-    .nav-links a:hover{color:#fff}
     .nav-links a:hover::after{transform:scaleX(1)}
 
+    /* Mobile nav */
+    .menu-toggle{display:none;align-items:center;gap:.4rem;background:transparent;color:#fff;border:1px solid rgba(255,255,255,.35);padding:.45rem .65rem;border-radius:10px}
+    .menu-toggle svg{width:18px;height:18px}
+    @media (max-width:768px){
+      .menu-toggle{display:inline-flex}
+      .nav-links{display:none;position:fixed;left:12px;right:12px;top:60px;flex-direction:column;background:rgba(58,73,45,.98);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:10px;gap:8px;box-shadow:0 12px 24px rgba(0,0,0,.35)}
+      .nav-links.open{display:flex}
+      .nav-links a{padding:.75rem 1rem;background:rgba(255,255,255,.06);border-radius:8px}
+      nav{padding:10px 0}
+    }
+
+    /* Hero */
     .hero{padding:72px 0 48px;position:relative;min-height:70vh;display:flex;align-items:center;justify-content:center;text-align:center}
     .hero::before{content:'';position:absolute;inset:0;background:var(--hero) center/cover no-repeat}
     .hero::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,.55)}
     .hero .container{position:relative;z-index:1}
-    .hero h1{font-size:clamp(2.2rem,6vw,3.5rem);color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.6)}
-    .hero p{font-family:'Fraunces',serif;font-size:1.6rem;color:#fff;margin:0 auto 24px;text-shadow:0 2px 8px rgba(0,0,0,.6)}
+    .hero h1{font-size:clamp(2.1rem,7.5vw,3.5rem);color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.6)}
+    .hero p{font-family:'Fraunces',serif;font-size:clamp(1.1rem,4.5vw,1.6rem);color:#fff;margin:0 auto 24px;text-shadow:0 2px 8px rgba(0,0,0,.6)}
     .cta-row{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap;justify-content:center}
 
+    /* Sections */
     .section{padding:64px 0}
     .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
     .feature{background:var(--card);border:1px solid rgba(0,0,0,.1);border-radius:18px;padding:18px}
     .feature h4{margin:10px 0 6px;color:var(--brand)}
     .feature p{margin:0;color:var(--muted)}
 
+    /* Cards / Stats */
     .card{background:var(--card);border:1px solid rgba(0,0,0,.1);border-radius:18px;padding:18px}
 
+    /* Contact grid (responsive) */
+    .contact-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:22px}
+    @media (max-width:768px){
+      .contact-grid{grid-template-columns:1fr;gap:14px}
+      .contact-grid .btn{width:100%;justify-content:center}
+    }
+
+    /* Forms */
     form{display:grid;gap:12px}
     input,textarea{width:100%;background:#fff;border:1px solid rgba(0,0,0,.12);color:#1b1b1b;border-radius:12px;padding:12px 14px;outline:none}
     input:focus,textarea:focus{box-shadow:var(--ring);border-color:rgba(58,73,45,.55)}
     textarea{min-height:120px;resize:vertical}
 
+    /* Footer */
     footer{padding:36px 0;border-top:1px solid rgba(0,0,0,.1);color:var(--muted)}
 
+    /* Mobile hero override + grids */
     @media (max-width:640px){
       .hero::before{background:var(--hero-mobile) center/cover no-repeat}
       .grid-3{grid-template-columns:1fr}
@@ -81,7 +107,12 @@
           <span class="logo" aria-hidden="true"></span>
           <span>Alpath®</span>
         </a>
-        <div class="nav-links">
+        <button id="menuToggle" class="menu-toggle" aria-label="Abrir menú">
+          <!-- icono -->
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 6h16v2H4zM4 11h16v2H4zM4 16h16v2H4z"/></svg>
+          Menú
+        </button>
+        <div id="navLinks" class="nav-links">
           <a href="#experiencias">Experiencias</a>
           <a href="#calendario">Calendario</a>
           <a href="#nosotros">Nosotros</a>
@@ -91,6 +122,7 @@
     </div>
   </header>
 
+  <!-- Hero -->
   <section class="hero">
     <div class="container">
       <span class="badge kicker">Ecoturismo · Senderismo · Alta montaña</span>
@@ -104,6 +136,7 @@
     </div>
   </section>
 
+  <!-- Galería -->
   <section id="galeria" class="section" style="background:var(--card)">
     <div class="container">
       <h2 style="margin:0 0 14px;font-size:2rem;color:var(--brand);text-align:center">Momentos Alpath®</h2>
@@ -119,6 +152,7 @@
     </div>
   </section>
 
+  <!-- Experiencias -->
   <section id="experiencias" class="section">
     <div class="container">
       <h2 style="margin:0 0 14px;font-size:2rem;color:var(--brand)">Experiencias</h2>
@@ -140,6 +174,7 @@
     </div>
   </section>
 
+  <!-- Calendario / Próximas salidas -->
   <section id="calendario" class="section">
     <div class="container">
       <h2 style="margin:0 0 14px;font-size:2rem;color:var(--brand)">Próximas salidas</h2>
@@ -177,6 +212,7 @@
     </div>
   </section>
 
+  <!-- Nosotros -->
   <section id="nosotros" class="section">
     <div class="container">
       <h2 style="margin:0 0 14px;font-size:2rem;color:var(--brand)">Nuestra filosofía</h2>
@@ -188,8 +224,9 @@
     </div>
   </section>
 
+  <!-- Contacto -->
   <section id="contacto" class="section">
-    <div class="container" style="display:grid;grid-template-columns:1.1fr .9fr;gap:22px">
+    <div class="container contact-grid">
       <div>
         <h2 style="margin:0 0 14px;font-size:2rem;color:var(--brand)">Reserva tu lugar</h2>
         <p class="lead">Escríbenos por WhatsApp o déjanos tus datos y te contactamos.</p>
@@ -227,12 +264,22 @@
   </footer>
 
   <script>
+    // Año
     document.getElementById('year').textContent=new Date().getFullYear();
+
+    // Header scroll bg
     const header=document.getElementById('siteHeader');
     window.addEventListener('scroll',()=>{
       if(window.scrollY>60){header.classList.add('scrolled')}else{header.classList.remove('scrolled')}
     });
 
+    // Mobile menu
+    const toggle=document.getElementById('menuToggle');
+    const links=document.getElementById('navLinks');
+    toggle.addEventListener('click',(e)=>{ e.stopPropagation(); links.classList.toggle('open'); });
+    document.addEventListener('click',(e)=>{ if(!e.target.closest('nav')) links.classList.remove('open'); });
+
+    // Form mock
     const form = document.getElementById('contactForm');
     const msg = document.getElementById('formMsg');
     form.addEventListener('submit', async (e)=>{
