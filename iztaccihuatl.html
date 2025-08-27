@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Alpath® · Iztaccíhuatl — Aclimatación & Cumbre</title>
+  <meta name="description" content="Ascenso al Iztaccíhuatl con Alpath®. Aclimatación progresiva, seguridad y guía profesional." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#f4a71d;--card:#fdf5e6;--muted:#5c4520;--text:#1f1a09;--brand:#3a492d;--accent:#a65a2c;
+      --hero:url('/assets/izta-hero.jpg'); --hero-mobile:url('/assets/izta-hero-mobile.jpg');
+    }
+    *{box-sizing:border-box} html,body{margin:0;height:100%}
+    body{font-family:Inter,system-ui;line-height:1.6;color:var(--text);background:var(--bg)}
+    h1,h2,h3,h4,.brand{font-family:'Fraunces',serif}
+    a{color:inherit;text-decoration:none} img{max-width:100%;display:block;height:auto}
+    .container{max-width:1100px;margin:0 auto;padding:0 20px}
+
+    header{position:sticky;top:0;background:transparent;backdrop-filter:blur(6px);z-index:40;border-bottom:1px solid transparent;transition:background .3s,border .3s}
+    header.scrolled{background:rgba(58,73,45,.97);border-bottom:1px solid rgba(0,0,0,.25)}
+    nav{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
+    .logo{display:flex;align-items:center;gap:.6rem;font-weight:800;color:#fff}
+    .logo img{width:34px;height:34px;border-radius:50%;object-fit:cover}
+    .nav-links{display:flex;gap:1rem}
+    .nav-links a{opacity:.95;padding:.5rem .75rem;border-radius:10px;color:#fff;position:relative;transition:color .25s ease}
+    .nav-links a::after{content:"";position:absolute;left:.75rem;right:.75rem;bottom:.35rem;height:2px;background:#fff;transform:scaleX(0);transform-origin:left;transition:transform .25s ease}
+    .nav-links a:hover::after{transform:scaleX(1)}
+
+    .btn{display:inline-flex;gap:.6rem;align-items:center;background:var(--brand);color:#fff;padding:.85rem 1.1rem;border-radius:14px;font-weight:600;border:1px solid rgba(0,0,0,.08);box-shadow:0 8px 24px rgba(0,0,0,.25);transition:.2s}
+    .btn:hover{transform:translateY(-1px)}
+    .btn-outline{background:transparent;border:1px solid var(--brand);color:var(--brand)}
+    .btn-outline:hover{background:var(--brand);color:#fff}
+    .hero .btn-outline{background:rgba(255,255,255,.15);border:1px solid #fff;color:#fff}
+    .hero .btn-outline:hover{background:rgba(255,255,255,.25)}
+
+    .hero{position:relative;min-height:56vh;display:grid;place-items:center;text-align:center}
+    .hero::before{content:"";position:absolute;inset:0;background:var(--hero) center/cover no-repeat}
+    .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.55),rgba(0,0,0,.35))}
+    .hero .inner{position:relative;z-index:1;color:#fff;padding:28px}
+    .breadcrumbs{display:flex;gap:.35rem;justify-content:center;font-size:.9rem;opacity:.9}
+    .breadcrumbs a{text-decoration:underline}
+    .pill{display:inline-block;background:rgba(255,255,255,.18);padding:.35rem .7rem;border-radius:999px;margin-top:8px}
+
+    .section{padding:46px 0}
+    .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:24px}
+    .card{background:var(--card);border:1px solid rgba(0,0,0,.1);border-radius:16px;padding:18px;box-shadow:0 4px 16px rgba(0,0,0,.06)}
+    .card + .card{margin-top:18px}
+    .muted{color:var(--muted)}
+    details{background:#fff7df;border:1px solid rgba(0,0,0,.08);border-radius:12px;padding:12px;margin:8px 0}
+
+    .thumbs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+    .thumbs img{aspect-ratio:1/1;border-radius:12px;object-fit:cover;transition:.25s}
+    .thumbs img:hover{transform:scale(1.03)}
+
+    footer{padding:32px 0;border-top:1px solid rgba(0,0,0,.1);color:var(--muted)}
+    @media (max-width:640px){ .grid{grid-template-columns:1fr} .card{margin-top:12px} .hero::before{background:var(--hero-mobile) center/cover no-repeat} }
+  </style>
+</head>
+<body>
+  <header id="topbar">
+    <div class="container">
+      <nav>
+        <a href="/index.html" class="logo"><img src="/assets/logo.png?v=3" alt="Alpath®"/><span class="brand">Alpath®</span></a>
+        <div class="nav-links">
+          <a href="/index.html#calendario">Calendario</a>
+          <a href="https://wa.me/523343682659?text=Hola%20Alpath%C2%AE%2C%20me%20interesa%20Iztacc%C3%ADhuatl%20(Aclimataci%C3%B3n%20%26%20Cumbre)" target="_blank">Reservar</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="inner">
+      <div class="breadcrumbs"><a href="/index.html">Inicio</a> / <a href="/index.html#calendario">Experiencias</a> / <span>Iztaccíhuatl — Aclimatación & Cumbre</span></div>
+      <h1 style="margin:8px 0 6px">Iztaccíhuatl — Aclimatación & Cumbre</h1>
+      <div class="pill">Avanzado · 5,200 msnm · 8–12 horas</div>
+      <div style="display:flex;gap:10px;justify-content:center;margin-top:12px;flex-wrap:wrap">
+        <a class="btn" target="_blank" href="https://wa.me/523343682659?text=Hola%20Alpath%C2%AE%2C%20me%20interesa%20Iztacc%C3%ADhuatl%20(Aclimataci%C3%B3n%20%26%20Cumbre)">Apartar lugar</a>
+        <a class="btn btn-outline" href="#faq">Preguntas frecuentes</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container grid">
+      <div>
+        <div class="card">
+          <h2 style="margin-top:0">Descripción</h2>
+          <p class="muted">Aclimatación progresiva y ascenso por ruta clásica del Iztaccíhuatl. Enfoque en seguridad, ritmo, técnica en terreno pedregoso y manejo de frío.</p>
+          <ul class="muted" style="margin-top:8px">
+            <li>Distancia: 12–16 km (según condiciones)</li>
+            <li>Desnivel positivo: 1,100–1,400 m</li>
+            <li>Clima: frío, viento y posible hielo estacional</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3 style="margin-top:0">Itinerario</h3>
+          <details open><summary><strong>Plan general</strong></summary>
+            <ol class="muted">
+              <li>Día 0: Revisión de equipo y recomendaciones</li>
+              <li>Día 1: Aclimatación y aproximación</li>
+              <li>Día 2: Ataque a cumbre y descenso</li>
+            </ol>
+          </details>
+          <details><summary><strong>Qué incluye</strong></summary>
+            <ul class="muted"><li>Guía Alpath® (alta montaña)</li><li>Botiquín y radios</li><li>Seguro de viajero</li></ul>
+          </details>
+          <details><summary><strong>No incluye</strong></summary>
+            <ul class="muted"><li>Alimentos</li><li>Equipo personal técnico</li><li>Accesos/parque</li></ul>
+          </details>
+        </div>
+      </div>
+
+      <aside>
+        <div class="card">
+          <h3 style="margin-top:0">Próximas fechas</h3>
+          <ul class="muted" style="margin-top:6px">
+            <li>06 Oct — Cupo 10</li>
+            <li>20 Oct — Cupo 10</li>
+          </ul>
+          <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap">
+            <a class="btn" target="_blank" href="https://wa.me/523343682659?text=Hola%20Alpath%C2%AE%2C%20me%20interesa%20Iztacc%C3%ADhuatl%20(Aclimataci%C3%B3n%20%26%20Cumbre)">Apartar lugar</a>
+            <a class="btn btn-outline" href="#faq">Preguntas frecuentes</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 style="margin-top:0">Galería</h3>
+          <div class="thumbs">
+            <img loading="lazy" decoding="async" src="/assets/galeria/izta-01.jpg" width="600" height="600" alt="Arista del Iztaccíhuatl">
+            <img loading="lazy" decoding="async" src="/assets/galeria/nevado-02.jpg" width="600" height="600" alt="Zona alta (referencial)">
+            <img loading="lazy" decoding="async" src="/assets/galeria/equipo-01.jpg" width="600" height="600" alt="Equipo Alpath®">
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section id="faq" class="section" style="padding-top:0">
+    <div class="container">
+      <div class="card">
+        <h3 style="margin-top:0">Preguntas frecuentes</h3>
+        <details open><summary><strong>¿Equipo recomendado?</strong></summary>
+          <p class="muted">Botas, casco, bastones, capas térmicas, rompevientos, guantes, frontal y 2–3L de agua. Lista completa al reservar.</p>
+        </details>
+        <details><summary><strong>¿Punto de reunión?</strong></summary>
+          <p class="muted">Se comparte por WhatsApp tras confirmar tu lugar.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container" style="display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap">
+      <small>© <span id="year"></span> Alpath®.</small>
+      <small><a href="#">Aviso de privacidad</a> · <a href="#">Términos</a></small>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent=new Date().getFullYear();
+    const header=document.getElementById('topbar');
+    window.addEventListener('scroll',()=>{ if(window.scrollY>40){header.classList.add('scrolled')} else{header.classList.remove('scrolled')} });
+  </script>
+</body>
+</html>
