@@ -1,0 +1,9 @@
+# Evitar carpetas/instaladores de herramientas
+ImageMagick-Windows-7/
+ImageMagick*/
+*.msi
+*.exe
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
