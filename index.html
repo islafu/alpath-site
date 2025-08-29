@@ -5,22 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Alpath® — Ecoturismo Premium</title>
   <meta name="description" content="Ecoturismo en alta montaña, senderismo y expediciones nacionales e internacionales." />
-  <!-- Open Graph -->
   <meta property="og:title" content="Alpath® — Ecoturismo Premium" />
   <meta property="og:description" content="Vive experiencias transformativas en montaña." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://alpath.netlify.app/" />
-  <meta property="og:image" content="https://alpath.netlify.app/assets/og/og-home.jpg" />
   <meta name="theme-color" content="#3a492d" />
-
-  <!-- Fonts & Icons -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png" />
   <link rel="manifest" href="assets/manifest.webmanifest" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     :root{
@@ -35,20 +31,23 @@
     a{color:inherit;text-decoration:none}
     img{max-width:100%;display:block;height:auto}
     .container{max-width:1120px;margin-inline:auto;padding:0 20px}
+
+    /* Buttons */
     .btn{display:inline-flex;align-items:center;gap:.6rem;background:var(--brand);color:#fff;padding:.85rem 1.1rem;border-radius:14px;font-weight:600;border:1px solid rgba(0,0,0,.08);box-shadow:0 8px 24px rgba(0,0,0,.35);transition:.2s}
     .btn:hover{transform:translateY(-1px)}
     .btn-outline{background:transparent;border:1px solid var(--brand);color:var(--brand)}
     .btn-outline:hover{background:var(--brand);color:#fff}
-    .badge{display:inline-flex;align-items:center;gap:.45rem;background:rgba(0,0,0,.6);color:#fff;padding:.35rem .6rem;border-radius:999px;font-size:.85rem;border:1px solid rgba(255,255,255,.25)}
+    .btn-primary{background:#f4a71d;color:#1f1a09;border:1px solid rgba(0,0,0,.28);box-shadow:0 10px 30px rgba(0,0,0,.45)}
+    .btn-ghost{background:rgba(255,255,255,.20);color:#fff;border:1px solid rgba(255,255,255,.65)}
 
     /* Header */
     header{position:sticky;top:0;z-index:60;transition:background .3s,border .3s}
     header.scrolled{background:rgba(58,73,45,.97);border-bottom:1px solid rgba(0,0,0,.25)}
     nav{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
     .brand{display:flex;align-items:center;gap:.6rem;color:#fff}
-    /* suite → isotipo con fade+scale; tamaños más grandes */
+    /* Logo suite → isotipo (fade/scale) + tamaños mayores */
     .brand-slot{position:relative;display:inline-block;width:180px;height:44px}
-    .brand-img{position:absolute;inset:0;margin:auto;height:44px;width:auto;opacity:1;transform:scale(1);transition:opacity .28s cubic-bezier(.2,.65,.3,1),transform .28s cubic-bezier(.2,.65,.3,1);will-change:opacity,transform}
+    .brand-img{position:absolute;inset:0;margin:auto;height:44px;width:auto;opacity:1;transform:scale(1);transition:opacity .28s cubic-bezier(.2,.65,.3,1),transform .28s cubic-bezier(.2,.65,.3,1)}
     .brand-img-iso{width:44px;height:44px;opacity:0;transform:scale(.85);pointer-events:none}
     header.scrolled .brand-img-full{opacity:0;transform:scale(.92)}
     header.scrolled .brand-img-iso{opacity:1;transform:scale(1)}
@@ -56,8 +55,6 @@
     .nav-links a{opacity:.95;padding:.5rem .75rem;border-radius:10px;color:#fff;position:relative;transition:color .25s ease}
     .nav-links a::after{content:"";position:absolute;left:.75rem;right:.75rem;bottom:.35rem;height:2px;background:#fff;transform:scaleX(0);transform-origin:left;transition:transform .25s ease}
     .nav-links a:hover::after{transform:scaleX(1)}
-
-    /* Mobile nav */
     .menu-toggle{display:none;align-items:center;gap:.4rem;background:transparent;color:#fff;border:1px solid rgba(255,255,255,.35);padding:.45rem .65rem;border-radius:10px}
     .menu-toggle svg{width:18px;height:18px}
     @media (max-width:768px){
@@ -76,13 +73,9 @@
     .hero::before{content:'';position:absolute;inset:0;background:var(--hero) center/cover no-repeat}
     .hero::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom, rgba(0,0,0,.38), rgba(0,0,0,.70))}
     .hero .container{position:relative;z-index:1}
-    .hero h1{font-size:clamp(2.1rem,7.5vw,3.5rem);color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.6)}
-    .hero p{font-family:'Fraunces',serif;font-size:clamp(1.1rem,4.5vw,1.6rem);color:#fff;margin:0 auto 24px;text-shadow:0 2px 8px rgba(0,0,0,.6)}
-    .hero-logo{width:min(60vw,480px);height:auto;filter:drop-shadow(0 6px 18px rgba(0,0,0,.35))}
-    /* Botones del hero con más contraste */
-    .hero .btn-primary{background:#f4a71d;color:#1f1a09;border:1px solid rgba(0,0,0,.28);box-shadow:0 10px 30px rgba(0,0,0,.45)}
-    .hero .btn-primary:hover{transform:translateY(-1px) scale(1.02)}
-    .hero .btn-ghost{background:rgba(255,255,255,.20);color:#fff;border:1px solid rgba(255,255,255,.65)}
+    .hero h1{font-size:clamp(2.2rem,6vw,3.5rem);color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.6)}
+    .hero p{font-family:'Fraunces',serif;font-size:1.6rem;color:#fff;margin:0 auto 24px;text-shadow:0 2px 8px rgba(0,0,0,.6)}
+    .cta-row{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap;justify-content:center}
     .hero .btn-ghost:hover{background:rgba(255,255,255,.28)}
 
     /* Sections */
@@ -91,58 +84,51 @@
     .feature{background:var(--card);border:1px solid rgba(0,0,0,.1);border-radius:18px;padding:18px}
     .feature h4{margin:10px 0 6px;color:var(--brand)}
     .feature p{margin:0;color:var(--muted)}
+
+    /* Cards */
     .card{background:var(--card);border:1px solid rgba(0,0,0,.1);border-radius:18px;padding:18px}
 
-    /* Contacto layout */
-    .contact-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:22px}
-    @media (max-width:768px){
-      .contact-grid{grid-template-columns:1fr;gap:14px}
-      .contact-grid .btn{width:100%;justify-content:center}
-    }
-
+    /* Forms */
     form{display:grid;gap:12px}
     input,textarea{width:100%;background:#fff;border:1px solid rgba(0,0,0,.12);color:#1b1b1b;border-radius:12px;padding:12px 14px;outline:none}
     input:focus,textarea:focus{box-shadow:var(--ring);border-color:rgba(58,73,45,.55)}
     textarea{min-height:120px;resize:vertical}
 
+    /* Footer */
     footer{padding:36px 0;border-top:1px solid rgba(0,0,0,.1);color:var(--muted)}
 
+    /* Mobile hero override */
     @media (max-width:640px){
       .hero::before{background:var(--hero-mobile) center/cover no-repeat}
       .grid-3{grid-template-columns:1fr}
     }
 
-    /* LIGHTBOX */
+    /* LIGHTBOX (galería) */
     .lightbox{position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center}
     .lightbox.open{display:flex}
     .lightbox img{max-width:96vw;max-height:90vh;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.5);touch-action:pinch-zoom}
     .lightbox .close{position:absolute;top:14px;right:14px;background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.35);border-radius:10px;padding:.5rem .7rem}
-
-    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
   </style>
 </head>
 <body>
   <header id="siteHeader">
     <div class="container">
       <nav>
-        <a href="index.html" class="brand" aria-label="Alpath®">
+        <!-- Logo: ahora sí lleva a Home -->
+        <a href="index.html" class="brand" aria-label="Ir a inicio">
           <span class="brand-slot">
-            <img class="brand-img brand-img-full"
-                 src="assets/brand/logo-h-white-480.png"
+            <img class="brand-img brand-img-full" src="assets/brand/logo-h-white-480.png"
                  srcset="assets/brand/logo-h-white-480.png 1x, assets/brand/logo-h-white-960.png 2x"
                  width="140" height="36" alt="Alpath®">
-            <img class="brand-img brand-img-iso"
-                 src="assets/brand/isotipo-greengray-512.png"
+            <img class="brand-img brand-img-iso"  src="assets/brand/isotipo-greengray-512.png"
                  srcset="assets/brand/isotipo-greengray-512.png 1x, assets/brand/isotipo-greengray-512.png 2x"
                  width="44" height="44" alt="" aria-hidden="true">
           </span>
         </a>
 
         <button id="menuToggle" class="menu-toggle" aria-label="Abrir menú">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 6h16v2H4zM4 11h16v2H4zM4 16h16v2H4z"/></svg>
-          Menú
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 6h16v2H4zM4 11h16v2H4zM4 16h16v2H4z"/></svg> Menú
         </button>
-
         <div id="navLinks" class="nav-links">
           <a href="#experiencias">Experiencias</a>
           <a href="#calendario">Calendario</a>
@@ -156,17 +142,13 @@
   <!-- Hero -->
   <section class="hero">
     <div class="container">
-      <span class="badge kicker">Ecoturismo · Senderismo · Alta montaña</span>
-      <h1 class="sr-only">Alpath®</h1>
-      <img class="hero-logo"
-           src="assets/brand/hero-logo-greengray-960.png"
-           srcset="assets/brand/hero-logo-greengray-960.png 1x, assets/brand/hero-logo-greengray-960.png 2x"
-           alt="Alpath®" style="margin:12px auto 8px;display:block">
+      <span class="badge kicker" style="display:inline-flex;align-items:center;gap:.45rem;background:rgba(0,0,0,.6);color:#fff;padding:.35rem .6rem;border-radius:999px;font-size:.85rem;border:1px solid rgba(255,255,255,.25)">Ecoturismo · Senderismo · Alta montaña</span>
+      <h1>Alpath®</h1>
       <p>El viaje a tu mejor versión.</p>
-      <div class="cta-row" style="display:flex;gap:12px;margin-top:22px;flex-wrap:wrap;justify-content:center">
-        <a href="https://wa.me/523343682659?text=Hola%20Alpath%C2%AE%2C%20quiero%20informaci%C3%B3n%20de%20sus%20pr%C3%B3ximas%20salidas" target="_blank" class="btn btn-primary">Reservar por WhatsApp</a>
-        <a href="#calendario" class="btn btn-ghost">Próximas salidas</a>
+      <div class="cta-row">
+        <a href="#calendario" class="btn">Próximas salidas</a>
         <a href="https://www.instagram.com/alpathmountainco/" target="_blank" class="btn btn-ghost">Instagram</a>
+        <a href="https://wa.me/523343682659?text=Hola%20Alpath%C2%AE%2C%20quiero%20informaci%C3%B3n%20de%20sus%20pr%C3%B3ximas%20salidas" target="_blank" class="btn btn-primary">Reservar por WhatsApp</a>
       </div>
     </div>
   </section>
@@ -177,12 +159,12 @@
       <h2 style="margin:0 0 14px;font-size:2rem;color:var(--brand);text-align:center">Momentos Alpath®</h2>
       <p class="lead" style="text-align:center;margin-bottom:24px;color:var(--muted)">Un vistazo a nuestras experiencias recientes en montaña.</p>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px">
-        <a href="assets/galeria/nevado-01.jpg"><img loading="lazy" decoding="async" src="assets/galeria/nevado-01.jpg" width="800" height="800" alt="Galería Nevado 01" style="width:100%;border-radius:12px;object-fit:cover;transition:.3s;cursor:pointer" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'"/></a>
-        <a href="assets/galeria/nevado-02.jpg"><img loading="lazy" decoding="async" src="assets/galeria/nevado-02.jpg" width="800" height="800" alt="Galería Nevado 02" style="width:100%;border-radius:12px;object-fit:cover;transition:.3s;cursor:pointer" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'"/></a>
-        <a href="assets/galeria/nevado-03.jpg"><img loading="lazy" decoding="async" src="assets/galeria/nevado-03.jpg" width="800" height="800" alt="Galería Nevado 03" style="width:100%;border-radius:12px;object-fit:cover;transition:.3s;cursor:pointer" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'"/></a>
-        <a href="assets/galeria/izta-01.jpg"><img loading="lazy" decoding="async" src="assets/galeria/izta-01.jpg" width="800" height="800" alt="Galería Izta 01" style="width:100%;border-radius:12px;object-fit:cover;transition:.3s;cursor:pointer" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'"/></a>
-        <a href="assets/galeria/alpes-01.jpg"><img loading="lazy" decoding="async" src="assets/galeria/alpes-01.jpg" width="800" height="800" alt="Galería Alpes 01" style="width:100%;border-radius:12px;object-fit:cover;transition:.3s;cursor:pointer" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'"/></a>
-        <a href="assets/galeria/equipo-01.jpg"><img loading="lazy" decoding="async" src="assets/galeria/equipo-01.jpg" width="800" height="800" alt="Equipo Alpath®" style="width:100%;border-radius:12px;object-fit:cover;transition:.3s;cursor:pointer" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'"/></a>
+        <img loading="lazy" decoding="async" src="assets/galeria/nevado-01.jpg" alt="Trekking" style="width:100%;border-radius:12px;object-fit:cover;cursor:zoom-in"/>
+        <img loading="lazy" decoding="async" src="assets/galeria/izta-01.jpg" alt="Cumbre" style="width:100%;border-radius:12px;object-fit:cover;cursor:zoom-in"/>
+        <img loading="lazy" decoding="async" src="assets/galeria/izta-02.jpg" alt="Alta montaña" style="width:100%;border-radius:12px;object-fit:cover;cursor:zoom-in"/>
+        <img loading="lazy" decoding="async" src="assets/galeria/nevado-02.jpg" alt="Bosque" style="width:100%;border-radius:12px;object-fit:cover;cursor:zoom-in"/>
+        <img loading="lazy" decoding="async" src="assets/galeria/alpes-01.jpg" alt="Amanecer" style="width:100%;border-radius:12px;object-fit:cover;cursor:zoom-in"/>
+        <img loading="lazy" decoding="async" src="assets/galeria/equipo-01.jpg" alt="Equipo" style="width:100%;border-radius:12px;object-fit:cover;cursor:zoom-in"/>
       </div>
     </div>
   </section>
@@ -193,20 +175,8 @@
       <h2 style="margin:0 0 14px;font-size:2rem;color:var(--brand)">Experiencias</h2>
       <p class="lead" style="color:var(--muted)">Opciones para todos los niveles con la misma filosofía: seguridad, comunidad y crecimiento personal.</p>
       <div class="grid-3" style="margin-top:18px">
-        <article class="feature"><h4>Senderismo Consciente</h4><p>Rutas de 6–12 km, enfoque en respiración, técnica y conexión con el entorno.</p></article>
-        <article class="feature"><h4>Alta Montaña</h4><p>Ascensos como Nevado de Toluca e Iztaccíhuatl. Ritmo de aclimatación y manejo de frío.</p></article>
-        <article class="feature"><h4>Expediciones Internacionales</h4><p>Suiza, Patagonia y más. Itinerarios curados, logística y guía profesional.</p></article>
-      </div>
-    </div>
-  </section>
-
-  <!-- Calendario -->
-  <section id="calendario" class="section">
-    <div class="container">
-      <h2 style="margin:0 0 14px;font-size:2rem;color:var(--brand)">Próximas salidas</h2>
-      <div class="grid-3" style="margin-top:18px">
         <article class="feature">
-          <img loading="lazy" decoding="async" src="assets/calendario/nevado-card.jpg" width="1400" height="900" alt="Nevado de Toluca — Amanecer" style="border-radius:12px;margin-bottom:10px" />
+          <img loading="lazy" decoding="async" src="assets/calendario/nevado-card.jpg" alt="Nevado de Toluca" style="border-radius:12px;margin-bottom:10px" />
           <h4>Nevado de Toluca — Amanecer</h4>
           <p>Intermedio · 4,200 msnm · Cupo limitado</p>
           <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap">
@@ -215,30 +185,42 @@
           </div>
         </article>
         <article class="feature">
-          <img loading="lazy" decoding="async" src="assets/calendario/izta-card.jpg" width="1400" height="900" alt="Iztaccíhuatl" style="border-radius:12px;margin-bottom:10px" />
+          <img loading="lazy" decoding="async" src="assets/calendario/izta-card.jpg" alt="Iztaccíhuatl" style="border-radius:12px;margin-bottom:10px" />
           <h4>Iztaccíhuatl — Aclimatación & Cumbre</h4>
           <p>Avanzado · Nieve y frío · Equipo básico requerido</p>
           <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap">
             <a class="btn" href="iztaccihuatl.html">Ver detalle</a>
-            <a class="btn btn-outline" target="_blank" href="https://wa.me/523343682659?text=Hola%20Alpath%C2%AE%2C%20me%20interesa%20Iztacc%C3%ADhuatl%20(Aclimataci%C3%B3n%20%26%20Cumbre)">Reservar</a>
+            <a class="btn btn-outline" target="_blank" href="https://wa.me/523343682659?text=Hola%20Alpath%C2%AE%2C%20quiero%20informaci%C3%B3n%20de%20Iztacc%C3%ADhuatl">Reservar</a>
           </div>
         </article>
         <article class="feature">
-          <img loading="lazy" decoding="async" src="assets/calendario/alpes-card.jpg" width="1400" height="900" alt="Alpes Suizos" style="border-radius:12px;margin-bottom:10px" />
+          <img loading="lazy" decoding="async" src="assets/calendario/alpes-card.jpg" alt="Alpes Suizos" style="border-radius:12px;margin-bottom:10px" />
           <h4>Alpes Suizos — Lagos y Glaciares</h4>
           <p>8 días · Cupos muy limitados</p>
           <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap">
             <a class="btn" href="alpes-suizos.html">Ver detalle</a>
-            <a class="btn btn-outline" target="_blank" href="https://wa.me/523343682659?text=Hola%20Alpath%C2%AE%2C%20me%20interesan%20Alpes%20Suizos%20(Lagos%20y%20Glaciares)">Reservar</a>
+            <a class="btn btn-outline" target="_blank" href="https://wa.me/523343682659?text=Hola%20Alpath%C2%AE%2C%20quiero%20informaci%C3%B3n%20de%20Alpes%20Suizos">Reservar</a>
           </div>
         </article>
       </div>
     </div>
   </section>
 
+  <!-- Nosotros -->
+  <section id="nosotros" class="section">
+    <div class="container">
+      <h2 style="margin:0 0 14px;font-size:2rem;color:var(--brand)">Nuestra filosofía</h2>
+      <div class="grid-3" style="margin-top:18px">
+        <article class="feature"><h4>Guía & Seguridad</h4><p>Protocolos y ritmo adecuado en todo momento.</p></article>
+        <article class="feature"><h4>Grupos Pequeños</h4><p>Atención cercana para que disfrutes y avances a tu propio paso.</p></article>
+        <article class="feature"><h4>Respeto por la Naturaleza</h4><p>Prácticas de bajo impacto y colaboración con comunidades locales.</p></article>
+      </div>
+    </div>
+  </section>
+
   <!-- Contacto -->
   <section id="contacto" class="section">
-    <div class="container contact-grid">
+    <div class="container" style="display:grid;grid-template-columns:1.1fr .9fr;gap:22px">
       <div>
         <h2 style="margin:0 0 14px;font-size:2rem;color:var(--brand)">Reserva tu lugar</h2>
         <p class="lead">Escríbenos por WhatsApp o déjanos tus datos y te contactamos.</p>
@@ -246,23 +228,17 @@
           <a class="btn" target="_blank" href="https://wa.me/523343682659?text=Hola%20Alpath%C2%AE%2C%20quiero%20informaci%C3%B3n%20de%20sus%20pr%C3%B3ximas%20salidas">WhatsApp</a>
           <a class="btn btn-outline" target="_blank" href="https://www.instagram.com/alpathmountainco/">Instagram</a>
         </div>
-
-        <!-- Netlify Forms -->
-        <form name="contacto" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/gracias.html">
-          <input type="hidden" name="form-name" value="contacto" />
-          <p style="display:none"><label>No llenar: <input name="bot-field" /></label></p>
-
+        <!-- Mock simple; si usas Netlify Forms cambia al formato con data-netlify -->
+        <form id="contactForm">
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
             <input required name="nombre" placeholder="Tu nombre" />
             <input required type="email" name="email" placeholder="Email" />
           </div>
           <input name="telefono" placeholder="Teléfono (opcional)" />
           <textarea required name="mensaje" placeholder="¿Qué salida te interesa? ¿Para cuántas personas?"></textarea>
-
-          <div data-netlify-recaptcha="true" style="margin:8px 0"></div>
-
           <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
             <button class="btn" type="submit">Enviar</button>
+            <span id="formMsg" style="color:var(--muted)"></span>
           </div>
         </form>
       </div>
@@ -290,10 +266,10 @@
   </div>
 
   <script>
-    // Año en footer
+    // Año footer
     document.getElementById('year').textContent=new Date().getFullYear();
 
-    // Header scroll (activa el cambio de logo)
+    // Header scrolled
     const header=document.getElementById('siteHeader');
     window.addEventListener('scroll',()=>{ if(window.scrollY>60){header.classList.add('scrolled')}else{header.classList.remove('scrolled')} });
 
@@ -303,7 +279,20 @@
     if(toggle){ toggle.addEventListener('click',(e)=>{ e.stopPropagation(); links.classList.toggle('open'); }); }
     document.addEventListener('click',(e)=>{ if(!e.target.closest('nav')) links.classList.remove('open'); });
 
-    // Lightbox
+    // Form mock (replace con backend o Netlify Forms)
+    const form = document.getElementById('contactForm');
+    const msg = document.getElementById('formMsg');
+    if(form){
+      form.addEventListener('submit', async (e)=>{
+        e.preventDefault();
+        msg.textContent = 'Enviando…';
+        await new Promise(res=>setTimeout(res, 800));
+        form.reset();
+        msg.textContent = '¡Gracias! Te contactaremos pronto.';
+      });
+    }
+
+    // Lightbox (galería)
     (function(){
       const lb=document.getElementById('lightbox');
       const imgEl=lb.querySelector('img');
@@ -312,16 +301,8 @@
       function closeLb(){ lb.classList.remove('open'); lb.setAttribute('aria-hidden','true'); imgEl.src=''; }
       document.addEventListener('click',(e)=>{
         const link = e.target.closest('a');
-        if(link && link.querySelector('img')){
-          e.preventDefault();
-          const img = link.querySelector('img');
-          openLb(link.getAttribute('href') || img.src, img.alt);
-          return;
-        }
-        if(e.target.tagName==='IMG' && e.target.closest('.section') && !e.target.closest('#lightbox')){
-          openLb(e.target.src, e.target.alt);
-          return;
-        }
+        if(link && link.querySelector('img')){ e.preventDefault(); const img = link.querySelector('img'); openLb(link.getAttribute('href') || img.src, img.alt); return; }
+        if(e.target.tagName==='IMG' && e.target.closest('#galeria') && !e.target.closest('#lightbox')){ openLb(e.target.src, e.target.alt); return; }
         if(e.target===lb){ closeLb(); }
       });
       closeBtn.addEventListener('click', closeLb);
