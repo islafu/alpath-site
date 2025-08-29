@@ -12,14 +12,15 @@
   <meta property="og:image" content="https://alpath.netlify.app/assets/og/og-izta.jpg" />
   <meta name="theme-color" content="#3a492d" />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png" />
   <link rel="manifest" href="assets/manifest.webmanifest" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     :root{
@@ -34,16 +35,23 @@
     a{color:inherit;text-decoration:none}
     img{max-width:100%;display:block;height:auto}
     .container{max-width:1120px;margin-inline:auto;padding:0 20px}
+
+    /* Buttons */
     .btn{display:inline-flex;align-items:center;gap:.6rem;background:var(--brand);color:#fff;padding:.85rem 1.1rem;border-radius:14px;font-weight:600;border:1px solid rgba(0,0,0,.08);box-shadow:0 8px 24px rgba(0,0,0,.35);transition:.2s}
     .btn:hover{transform:translateY(-1px)}
     .btn-outline{background:transparent;border:1px solid var(--brand);color:var(--brand)}
     .btn-outline:hover{background:var(--brand);color:#fff}
+    .btn-primary{background:#f4a71d;color:#1f1a09;border:1px solid rgba(0,0,0,.28);box-shadow:0 10px 30px rgba(0,0,0,.45)}
+    .btn-ghost{background:rgba(255,255,255,.20);color:#fff;border:1px solid rgba(255,255,255,.65)}
+    .btn-ghost:hover{background:rgba(255,255,255,.28)}
+
+    /* Header */
     header{position:sticky;top:0;z-index:60;transition:background .3s,border .3s}
     header.scrolled{background:rgba(58,73,45,.97);border-bottom:1px solid rgba(0,0,0,.25)}
     nav{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
-    .brand{display:flex;align-items:center;gap:.6rem;color:#fff}
+    .brand{display:flex;align-items:center;gap:.6rem;color:#fff;position:relative;z-index:2}
     .brand-slot{position:relative;display:inline-block;width:180px;height:44px}
-    .brand-img{position:absolute;inset:0;margin:auto;height:44px;width:auto;opacity:1;transform:scale(1);transition:opacity .28s cubic-bezier(.2,.65,.3,1),transform .28s cubic-bezier(.2,.65,.3,1)}
+    .brand-img{position:absolute;inset:0;margin:auto;height:44px;width:auto;opacity:1;transform:scale(1);transition:opacity .28s cubic-bezier(.2,.65,.3,1),transform .28s cubic-bezier(.2,.65,.3,1);pointer-events:none}
     .brand-img-iso{width:44px;height:44px;opacity:0;transform:scale(.85);pointer-events:none}
     header.scrolled .brand-img-full{opacity:0;transform:scale(.92)}
     header.scrolled .brand-img-iso{opacity:1;transform:scale(1)}
@@ -64,6 +72,7 @@
       .brand-img-iso{width:40px;height:40px}
     }
 
+    /* Hero */
     .hero{padding:72px 0 48px;position:relative;min-height:70vh;display:flex;align-items:center;justify-content:center;text-align:center}
     .hero::before{content:'';position:absolute;inset:0;background:var(--hero) center/cover no-repeat}
     .hero::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom, rgba(0,0,0,.38), rgba(0,0,0,.70))}
@@ -71,10 +80,6 @@
     .hero h1{font-size:clamp(2.1rem,7.5vw,3.5rem);color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.6)}
     .hero p{font-family:'Fraunces',serif;font-size:clamp(1.1rem,4.5vw,1.6rem);color:#fff;margin:0 auto 24px;text-shadow:0 2px 8px rgba(0,0,0,.6)}
     .hero-logo{width:min(60vw,480px);height:auto;filter:drop-shadow(0 6px 18px rgba(0,0,0,.35))}
-    .hero .btn-primary{background:#f4a71d;color:#1f1a09;border:1px solid rgba(0,0,0,.28);box-shadow:0 10px 30px rgba(0,0,0,.45)}
-    .hero .btn-primary:hover{transform:translateY(-1px) scale(1.02)}
-    .hero .btn-ghost{background:rgba(255,255,255,.20);color:#fff;border:1px solid rgba(255,255,255,.65)}
-    .hero .btn-ghost:hover{background:rgba(255,255,255,.28)}
 
     .section{padding:64px 0}
     .card{background:var(--card);border:1px solid rgba(0,0,0,.1);border-radius:18px;padding:18px}
@@ -86,6 +91,20 @@
     .lightbox.open{display:flex}
     .lightbox img{max-width:96vw;max-height:90vh;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.5);touch-action:pinch-zoom}
     .lightbox .close{position:absolute;top:14px;right:14px;background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.35);border-radius:10px;padding:.5rem .7rem}
+
+    /* ===== Reserva tu lugar (layout aireado) ===== */
+    .reserve-grid{
+      display:grid;
+      grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);
+      gap:28px;
+      align-items:start;
+    }
+    .reserve-grid .card{ padding:24px; }
+    .reserve-grid .lead{ margin-bottom:10px; }
+    #reserva .cta-wrap{ display:flex; gap:12px; flex-wrap:wrap; margin:12px 0 20px; }
+    #reserva form .row{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    @media (max-width:980px){ .reserve-grid{ grid-template-columns:1fr; gap:20px; } }
+    @media (max-width:640px){ #reserva form .row{ grid-template-columns:1fr; } }
   </style>
 </head>
 <body>
@@ -94,8 +113,8 @@
       <nav>
         <a href="index.html" class="brand" aria-label="Ir a inicio">
           <span class="brand-slot">
-            <img class="brand-img brand-img-full" src="assets/brand/logo-h-white-480.png" srcset="assets/brand/logo-h-white-480.png 1x, assets/brand/logo-h-white-960.png 2x" width="140" height="36" alt="Alpath®">
-            <img class="brand-img brand-img-iso"  src="assets/brand/isotipo-greengray-512.png" srcset="assets/brand/isotipo-greengray-512.png 1x, assets/brand/isotipo-greengray-512.png 2x" width="44" height="44" alt="" aria-hidden="true">
+            <img class="brand-img brand-img-full" src="assets/brand/logo-h-white-480.png" width="140" height="36" alt="Alpath®">
+            <img class="brand-img brand-img-iso"  src="assets/brand/isotipo-greengray-512.png" width="44" height="44" alt="" aria-hidden="true">
           </span>
         </a>
 
@@ -114,7 +133,7 @@
 
   <section class="hero">
     <div class="container">
-      <img class="hero-logo" src="assets/brand/hero-logo-greengray-960.png" srcset="assets/brand/hero-logo-greengray-960.png 1x, assets/brand/hero-logo-greengray-960.png 2x" alt="Alpath®" style="margin:0 auto 10px;display:block">
+      <img class="hero-logo" src="assets/brand/hero-logo-greengray-960.png" alt="Alpath®" style="margin:0 auto 10px;display:block">
       <h1>Iztaccíhuatl — Aclimatación & Cumbre</h1>
       <p class="lead">Avanzado · nieve y frío · equipo básico requerido</p>
       <div class="cta-row" style="display:flex;gap:12px;margin-top:10px;flex-wrap:wrap;justify-content:center">
@@ -132,9 +151,9 @@
       </div>
       <h3 style="margin:22px 0 10px;color:var(--brand)">Galería</h3>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px">
-        <img src="assets/galeria/izta-01.jpg" alt="Galería 1" style="border-radius:12px">
-        <img src="assets/galeria/izta-02.jpg" alt="Galería 2" style="border-radius:12px">
-        <img src="assets/galeria/izta-03.jpg" alt="Galería 3" style="border-radius:12px">
+        <img src="assets/galeria/izta-01.jpg" alt="Galería 1" style="border-radius:12px;cursor:zoom-in">
+        <img src="assets/galeria/izta-02.jpg" alt="Galería 2" style="border-radius:12px;cursor:zoom-in">
+        <img src="assets/galeria/izta-03.jpg" alt="Galería 3" style="border-radius:12px;cursor:zoom-in">
       </div>
     </div>
   </section>
@@ -177,11 +196,12 @@
 
   <!-- Reserva tu lugar -->
   <section id="reserva" class="section" style="background:var(--card)">
-    <div class="container" style="display:grid;grid-template-columns:1.1fr .9fr;gap:22px">
+    <div class="container reserve-grid">
       <div>
         <h2 style="margin:0 0 14px;font-size:2rem;color:var(--brand)">Reserva tu lugar</h2>
         <p class="lead">Escríbenos por WhatsApp o déjanos tus datos y te contactamos.</p>
-        <div style="display:flex;gap:10px;flex-wrap:wrap;margin:12px 0 20px">
+
+        <div class="cta-wrap">
           <a class="btn" target="_blank" href="https://wa.me/523343682659?text=Hola%20Alpath%C2%AE%2C%20quiero%20reservar%20Iztacc%C3%ADhuatl">WhatsApp</a>
           <a class="btn btn-outline" target="_blank" href="https://www.instagram.com/alpathmountainco/">Instagram</a>
         </div>
@@ -190,7 +210,7 @@
           <input type="hidden" name="form-name" value="contacto-izta" />
           <p style="display:none"><label>No llenar: <input name="bot-field" /></label></p>
 
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div class="row">
             <input required name="nombre" placeholder="Tu nombre" />
             <input required type="email" name="email" placeholder="Email" />
           </div>
@@ -207,8 +227,8 @@
 
       <div class="card">
         <h3 style="margin-top:0;color:var(--brand)">Preguntas frecuentes</h3>
-        <details open style="margin-bottom:8px"><summary><strong>¿Qué nivel físico necesito?</strong></summary><p style="color:var(--muted)">Básico, intermedio o avanzado según la salida.</p></details>
-        <details style="margin-bottom:8px"><summary><strong>¿Qué equipo debo llevar?</strong></summary><p style="color:var(--muted)">Lista completa según temporada y ruta.</p></details>
+        <details open style="margin-bottom:8px"><summary><strong>¿Qué nivel físico necesito?</strong></summary><p style="color:var(--muted)">Tenemos rutas para distintos niveles.</p></details>
+        <details style="margin-bottom:8px"><summary><strong>¿Qué equipo debo llevar?</strong></summary><p style="color:var(--muted)">Lista de equipo sugerida antes del viaje.</p></details>
         <details style="margin-bottom:8px"><summary><strong>Política de reembolso</strong></summary><p style="color:var(--muted)">Reembolsos/cambios con aviso previo (condiciones aplican).</p></details>
       </div>
     </div>

@@ -9,11 +9,14 @@
   <meta property="og:description" content="Vive experiencias transformativas en montaña." />
   <meta property="og:type" content="website" />
   <meta name="theme-color" content="#3a492d" />
+
+  <!-- Favicons / PWA -->
   <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png" />
   <link rel="manifest" href="assets/manifest.webmanifest" />
 
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -39,15 +42,16 @@
     .btn-outline:hover{background:var(--brand);color:#fff}
     .btn-primary{background:#f4a71d;color:#1f1a09;border:1px solid rgba(0,0,0,.28);box-shadow:0 10px 30px rgba(0,0,0,.45)}
     .btn-ghost{background:rgba(255,255,255,.20);color:#fff;border:1px solid rgba(255,255,255,.65)}
+    .btn-ghost:hover{background:rgba(255,255,255,.28)}
 
     /* Header */
     header{position:sticky;top:0;z-index:60;transition:background .3s,border .3s}
     header.scrolled{background:rgba(58,73,45,.97);border-bottom:1px solid rgba(0,0,0,.25)}
     nav{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
-    .brand{display:flex;align-items:center;gap:.6rem;color:#fff}
-    /* Logo suite → isotipo (fade/scale) + tamaños mayores */
+    .brand{display:flex;align-items:center;gap:.6rem;color:#fff;position:relative;z-index:2}
+    /* Logo suite → isotipo (fade/scale) */
     .brand-slot{position:relative;display:inline-block;width:180px;height:44px}
-    .brand-img{position:absolute;inset:0;margin:auto;height:44px;width:auto;opacity:1;transform:scale(1);transition:opacity .28s cubic-bezier(.2,.65,.3,1),transform .28s cubic-bezier(.2,.65,.3,1)}
+    .brand-img{position:absolute;inset:0;margin:auto;height:44px;width:auto;opacity:1;transform:scale(1);transition:opacity .28s cubic-bezier(.2,.65,.3,1),transform .28s cubic-bezier(.2,.65,.3,1);pointer-events:none}
     .brand-img-iso{width:44px;height:44px;opacity:0;transform:scale(.85);pointer-events:none}
     header.scrolled .brand-img-full{opacity:0;transform:scale(.92)}
     header.scrolled .brand-img-iso{opacity:1;transform:scale(1)}
@@ -75,8 +79,8 @@
     .hero .container{position:relative;z-index:1}
     .hero h1{font-size:clamp(2.2rem,6vw,3.5rem);color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.6)}
     .hero p{font-family:'Fraunces',serif;font-size:1.6rem;color:#fff;margin:0 auto 24px;text-shadow:0 2px 8px rgba(0,0,0,.6)}
+    .hero-logo{width:min(60vw,520px);height:auto;filter:drop-shadow(0 6px 18px rgba(0,0,0,.35));margin:0 auto 8px;display:block}
     .cta-row{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap;justify-content:center}
-    .hero .btn-ghost:hover{background:rgba(255,255,255,.28)}
 
     /* Sections */
     .section{padding:64px 0}
@@ -97,24 +101,38 @@
     /* Footer */
     footer{padding:36px 0;border-top:1px solid rgba(0,0,0,.1);color:var(--muted)}
 
-    /* Mobile hero override */
-    @media (max-width:640px){
-      .hero::before{background:var(--hero-mobile) center/cover no-repeat}
-      .grid-3{grid-template-columns:1fr}
+    /* Reserva tu lugar (layout aireado como páginas internas) */
+    .reserve-grid{
+      display:grid;
+      grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);
+      gap:28px;
+      align-items:start;
     }
+    .reserve-grid .card{ padding:24px; }
+    .reserve-grid .lead{ margin-bottom:10px; }
+    #contacto .cta-wrap{ display:flex; gap:12px; flex-wrap:wrap; margin:12px 0 20px; }
+    #contacto form .row{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    @media (max-width:980px){ .reserve-grid{ grid-template-columns:1fr; gap:20px; } }
+    @media (max-width:640px){ #contacto form .row{ grid-template-columns:1fr; } }
 
     /* LIGHTBOX (galería) */
     .lightbox{position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center}
     .lightbox.open{display:flex}
     .lightbox img{max-width:96vw;max-height:90vh;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.5);touch-action:pinch-zoom}
     .lightbox .close{position:absolute;top:14px;right:14px;background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.35);border-radius:10px;padding:.5rem .7rem}
+
+    /* Mobile hero image */
+    @media (max-width:640px){
+      .hero::before{background:var(--hero-mobile) center/cover no-repeat}
+      .grid-3{grid-template-columns:1fr}
+    }
   </style>
 </head>
 <body>
   <header id="siteHeader">
     <div class="container">
       <nav>
-        <!-- Logo: ahora sí lleva a Home -->
+        <!-- Logo → Home (click seguro) -->
         <a href="index.html" class="brand" aria-label="Ir a inicio">
           <span class="brand-slot">
             <img class="brand-img brand-img-full" src="assets/brand/logo-h-white-480.png"
@@ -142,8 +160,9 @@
   <!-- Hero -->
   <section class="hero">
     <div class="container">
-      <span class="badge kicker" style="display:inline-flex;align-items:center;gap:.45rem;background:rgba(0,0,0,.6);color:#fff;padding:.35rem .6rem;border-radius:999px;font-size:.85rem;border:1px solid rgba(255,255,255,.25)">Ecoturismo · Senderismo · Alta montaña</span>
-      <h1>Alpath®</h1>
+      <!-- Logo completo en hero (opcional, decorativo) -->
+      <img class="hero-logo" src="assets/brand/hero-logo-greengray-960.png" alt="Alpath®">
+      <h1 style="margin-top:6px">Alpath®</h1>
       <p>El viaje a tu mejor versión.</p>
       <div class="cta-row">
         <a href="#calendario" class="btn">Próximas salidas</a>
@@ -218,19 +237,21 @@
     </div>
   </section>
 
-  <!-- Contacto -->
+  <!-- Contacto / Reserva tu lugar (layout aireado) -->
   <section id="contacto" class="section">
-    <div class="container" style="display:grid;grid-template-columns:1.1fr .9fr;gap:22px">
+    <div class="container reserve-grid">
       <div>
         <h2 style="margin:0 0 14px;font-size:2rem;color:var(--brand)">Reserva tu lugar</h2>
         <p class="lead">Escríbenos por WhatsApp o déjanos tus datos y te contactamos.</p>
-        <div style="display:flex;gap:10px;flex-wrap:wrap;margin:12px 0 20px">
+
+        <div class="cta-wrap">
           <a class="btn" target="_blank" href="https://wa.me/523343682659?text=Hola%20Alpath%C2%AE%2C%20quiero%20informaci%C3%B3n%20de%20sus%20pr%C3%B3ximas%20salidas">WhatsApp</a>
           <a class="btn btn-outline" target="_blank" href="https://www.instagram.com/alpathmountainco/">Instagram</a>
         </div>
-        <!-- Mock simple; si usas Netlify Forms cambia al formato con data-netlify -->
+
+        <!-- Mock: si usas Netlify Forms cámbialo por el formato data-netlify -->
         <form id="contactForm">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div class="row">
             <input required name="nombre" placeholder="Tu nombre" />
             <input required type="email" name="email" placeholder="Email" />
           </div>
@@ -266,7 +287,7 @@
   </div>
 
   <script>
-    // Año footer
+    // Año
     document.getElementById('year').textContent=new Date().getFullYear();
 
     // Header scrolled
@@ -279,7 +300,7 @@
     if(toggle){ toggle.addEventListener('click',(e)=>{ e.stopPropagation(); links.classList.toggle('open'); }); }
     document.addEventListener('click',(e)=>{ if(!e.target.closest('nav')) links.classList.remove('open'); });
 
-    // Form mock (replace con backend o Netlify Forms)
+    // Form mock (reemplaza por Netlify Forms si quieres envío real)
     const form = document.getElementById('contactForm');
     const msg = document.getElementById('formMsg');
     if(form){
@@ -292,7 +313,7 @@
       });
     }
 
-    // Lightbox (galería)
+    // Lightbox galería
     (function(){
       const lb=document.getElementById('lightbox');
       const imgEl=lb.querySelector('img');
