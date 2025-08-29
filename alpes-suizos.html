@@ -1,158 +1,120 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Alpath® · Alpes Suizos — Lagos y Glaciares</title>
-  <meta name="description" content="Expedición de 8 días por Alpes Suizos con Alpath®. Lagos, glaciares y rutas panorámicas." />
+  <title>Alpath® — Alpes Suizos — Lagos y Glaciares</title>
+  <meta name="description" content="8 días · Cupos muy limitados · Lagos turquesa y glaciares con logística Alpath®." />
+  <meta property="og:title" content="Alpath® — Alpes Suizos — Lagos y Glaciares" />
+  <meta property="og:description" content="8 días · Cupos muy limitados · Lagos turquesa y glaciares con logística Alpath®." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://alpath.netlify.app/alpes-suizos.html" />
+  <meta property="og:image" content="https://alpath.netlify.app/assets/og/og-alpes.jpg" />
+  <meta name="theme-color" content="#3a492d" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png" />
+  <link rel="manifest" href="assets/manifest.webmanifest" />
+
   <style>
     :root{
-      --bg:#f4a71d;--card:#fdf5e6;--muted:#5c4520;--text:#1f1a09;--brand:#3a492d;--accent:#a65a2c;
-      --hero:url('assets/alpes-hero.jpg?v=2');
-      --hero-mobile:url('assets/alpes-hero-mobile.jpg?v=2');
+      --bg:#f4a71d;--card:#fdf5e6;--muted:#5c4520;--text:#1f1a09;--brand:#3a492d;--accent:#a65a2c;--ring:0 0 0 3px rgba(58,73,45,.35);
+      --hero:url('assets/alpes-hero.jpg');
+      --hero-mobile:url('assets/alpes-hero-mobile.jpg');
     }
-    *{box-sizing:border-box} html,body{margin:0;height:100%}
-    body{font-family:Inter,system-ui;line-height:1.6;color:var(--text);background:var(--bg)}
-    h1,h2,h3,h4,.brand{font-family:'Fraunces',serif}
-    a{color:inherit;text-decoration:none} img{max-width:100%;display:block;height:auto}
-    .container{max-width:1100px;margin:0 auto;padding:0 20px}
-
-    header{position:sticky;top:0;background:transparent;backdrop-filter:blur(6px);z-index:40;border-bottom:1px solid transparent;transition:background .3s,border .3s}
-    header.scrolled{background:rgba(58,73,45,.97);border-bottom:1px solid rgba(0,0,0,.25)}
-    nav{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
-    .logo{display:flex;align-items:center;gap:.6rem;font-weight:800;color:#fff}
-    .logo img{width:34px;height:34px;border-radius:50%;object-fit:cover}
-    .nav-links{display:flex;gap:1rem}
-    .nav-links a{opacity:.95;padding:.5rem .75rem;border-radius:10px;color:#fff;position:relative;transition:color .25s ease}
-    .nav-links a::after{content:"";position:absolute;left:.75rem;right:.75rem;bottom:.35rem;height:2px;background:#fff;transform:scaleX(0);transform-origin:left;transition:transform .25s ease}
-    .nav-links a:hover::after{transform:scaleX(1)}
-
-    .btn{display:inline-flex;gap:.6rem;align-items:center;background:var(--brand);color:#fff;padding:.85rem 1.1rem;border-radius:14px;font-weight:600;border:1px solid rgba(0,0,0,.08);box-shadow:0 8px 24px rgba(0,0,0,.25);transition:.2s}
+    /* reutiliza estilos base como en nevado */
+    *{box-sizing:border-box}
+    html,body{margin:0;height:100%}
+    body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+    h1,h2,h3,h4{font-family:'Fraunces',serif;font-weight:600;letter-spacing:-0.5px}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block;height:auto}
+    .container{max-width:1120px;margin-inline:auto;padding:0 20px}
+    .btn{display:inline-flex;align-items:center;gap:.6rem;background:var(--brand);color:#fff;padding:.85rem 1.1rem;border-radius:14px;font-weight:600;border:1px solid rgba(0,0,0,.08);box-shadow:0 8px 24px rgba(0,0,0,.35);transition:.2s}
     .btn:hover{transform:translateY(-1px)}
     .btn-outline{background:transparent;border:1px solid var(--brand);color:var(--brand)}
     .btn-outline:hover{background:var(--brand);color:#fff}
-    .hero .btn-outline{background:rgba(255,255,255,.15);border:1px solid #fff;color:#fff}
-    .hero .btn-outline:hover{background:rgba(255,255,255,.25)}
-
-    .hero{position:relative;min-height:56vh;display:grid;place-items:center;text-align:center}
-    .hero::before{content:"";position:absolute;inset:0;background:var(--hero) center/cover no-repeat}
-    .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.55),rgba(0,0,0,.35))}
-    .hero .inner{position:relative;z-index:1;color:#fff;padding:28px}
-    .breadcrumbs{display:flex;gap:.35rem;justify-content:center;font-size:.9rem;opacity:.9}
-    .breadcrumbs a{text-decoration:underline}
-    .pill{display:inline-block;background:rgba(255,255,255,.18);padding:.35rem .7rem;border-radius:999px;margin-top:8px}
-
-    .section{padding:46px 0}
-    .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:24px}
-    .card{background:var(--card);border:1px solid rgba(0,0,0,.1);border-radius:16px;padding:18px;box-shadow:0 4px 16px rgba(0,0,0,.06)}
-    .card + .card{margin-top:18px}
-    .muted{color:var(--muted)}
-    details{background:#fff7df;border:1px solid rgba(0,0,0,.08);border-radius:12px;padding:12px;margin:8px 0}
-
-    .thumbs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-    .thumbs img{aspect-ratio:1/1;border-radius:12px;object-fit:cover;transition:.25s}
-    .thumbs img:hover{transform:scale(1.03)}
-
-    footer{padding:32px 0;border-top:1px solid rgba(0,0,0,.1);color:var(--muted)}
-    @media (max-width:640px){ .grid{grid-template-columns:1fr} .card{margin-top:12px} .hero::before{background:var(--hero-mobile) center/cover no-repeat} }
+    header{position:sticky;top:0;z-index:60;transition:background .3s,border .3s}
+    header.scrolled{background:rgba(58,73,45,.97);border-bottom:1px solid rgba(0,0,0,.25)}
+    nav{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
+    .brand{display:flex;align-items:center;gap:.6rem;color:#fff}
+    .brand-slot{position:relative;display:inline-block;width:148px;height:36px}
+    .brand-img{position:absolute;inset:0;margin:auto;height:36px;width:auto;opacity:1;transform:scale(1);transition:opacity .28s cubic-bezier(.2,.65,.3,1),transform .28s cubic-bezier(.2,.65,.3,1);will-change:opacity,transform}
+    .brand-img-iso{width:36px;height:36px;opacity:0;transform:scale(.85);pointer-events:none}
+    header.scrolled .brand-img-full{opacity:0;transform:scale(.92)}
+    header.scrolled .brand-img-iso{opacity:1;transform:scale(1)}
+    .nav-links{display:flex;gap:1rem}
+    .menu-toggle{display:none;align-items:center;gap:.4rem;background:transparent;color:#fff;border:1px solid rgba(255,255,255,.35);padding:.45rem .65rem;border-radius:10px}
+    .menu-toggle svg{width:18px;height:18px}
+    @media (max-width:768px){
+      .menu-toggle{display:inline-flex}
+      .nav-links{display:none;position:fixed;left:12px;right:12px;top:60px;flex-direction:column;background:rgba(58,73,45,.98);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:10px;gap:8px;box-shadow:0 12px 24px rgba(0,0,0,.35)}
+      .nav-links.open{display:flex}
+      nav{padding:10px 0}
+    }
+    .hero{padding:72px 0 48px;position:relative;min-height:70vh;display:flex;align-items:center;justify-content:center;text-align:center}
+    .hero::before{content:'';position:absolute;inset:0;background:var(--hero) center/cover no-repeat}
+    .hero::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,.55)}
+    .hero .container{position:relative;z-index:1}
+    .hero h1{font-size:clamp(2.1rem,7.5vw,3.5rem);color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.6)}
+    .hero p{font-family:'Fraunces',serif;font-size:clamp(1.1rem,4.5vw,1.6rem);color:#fff;margin:0 auto 24px;text-shadow:0 2px 8px rgba(0,0,0,.6)}
+    .hero-logo{width:min(60vw,480px);height:auto;filter:drop-shadow(0 6px 18px rgba(0,0,0,.35))}
+    .section{padding:64px 0}
+    .card{background:var(--card);border:1px solid rgba(0,0,0,.1);border-radius:18px;padding:18px}
+    footer{padding:36px 0;border-top:1px solid rgba(0,0,0,.1);color:var(--muted)}
+    @media (max-width:640px){ .hero::before{background:var(--hero-mobile) center/cover no-repeat} }
   </style>
 </head>
 <body>
-  <header id="topbar">
+  <header id="siteHeader">
     <div class="container">
       <nav>
-        <a href="index.html" class="logo"><img src="assets/logo.png?v=3" alt="Alpath®"/><span class="brand">Alpath®</span></a>
-        <div class="nav-links">
+        <a href="index.html" class="brand" aria-label="Alpath®">
+          <span class="brand-slot">
+            <img class="brand-img brand-img-full" src="assets/brand/logo-h-white-480.png" srcset="assets/brand/logo-h-white-480.png 1x, assets/brand/logo-h-white-960.png 2x" width="140" height="36" alt="Alpath®">
+            <img class="brand-img brand-img-iso"  src="assets/brand/isotipo-greengray-512.png" srcset="assets/brand/isotipo-greengray-512.png 1x, assets/brand/isotipo-greengray-512.png 2x" width="36" height="36" alt="" aria-hidden="true">
+          </span>
+        </a>
+        <button id="menuToggle" class="menu-toggle" aria-label="Abrir menú">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 6h16v2H4zM4 11h16v2H4zM4 16h16v2H4z"/></svg> Menú
+        </button>
+        <div id="navLinks" class="nav-links">
+          <a href="index.html#experiencias">Experiencias</a>
           <a href="index.html#calendario">Calendario</a>
-          <a href="https://wa.me/523343682659?text=Hola%20Alpath%C2%AE%2C%20me%20interesan%20Alpes%20Suizos%20(Lagos%20y%20Glaciares)" target="_blank">Reservar</a>
+          <a href="index.html#nosotros">Nosotros</a>
+          <a href="index.html#contacto">Contacto</a>
         </div>
       </nav>
     </div>
   </header>
 
   <section class="hero">
-    <div class="inner">
-      <div class="breadcrumbs"><a href="index.html">Inicio</a> / <a href="index.html#calendario">Experiencias</a> / <span>Alpes Suizos — Lagos y Glaciares</span></div>
-      <h1 style="margin:8px 0 6px">Alpes Suizos — Lagos y Glaciares</h1>
-      <div class="pill">8 días · Intermedio · Cupo muy limitado</div>
-      <div style="display:flex;gap:10px;justify-content:center;margin-top:12px;flex-wrap:wrap">
-        <a class="btn" target="_blank" href="https://wa.me/523343682659?text=Hola%20Alpath%C2%AE%2C%20me%20interesan%20Alpes%20Suizos%20(Lagos%20y%20Glaciares)">Apartar lugar</a>
-        <a class="btn btn-outline" href="#faq">Preguntas frecuentes</a>
+    <div class="container">
+      <img class="hero-logo" src="assets/brand/hero-logo-greengray-960.png" srcset="assets/brand/hero-logo-greengray-960.png 1x, assets/brand/hero-logo-greengray-960.png 2x" alt="Alpath®" style="margin:0 auto 10px;display:block">
+      <h1>Alpes Suizos — Lagos y Glaciares</h1>
+      <p class="lead">8 días · Cupos muy limitados</p>
+      <div class="cta-row" style="display:flex;gap:12px;margin-top:10px;flex-wrap:wrap;justify-content:center">
+        <a class="btn btn-outline" target="_blank" href="https://wa.me/523343682659?text=Hola%20Alpath%C2%AE%2C%20me%20interesan%20Alpes%20Suizos%20(Lagos%20y%20Glaciares)">Reservar por WhatsApp</a>
+        <a class="btn" href="index.html#calendario">Ver calendario</a>
       </div>
     </div>
   </section>
 
   <section class="section">
-    <div class="container grid">
-      <div>
-        <div class="card">
-          <h2 style="margin-top:0">Descripción</h2>
-          <p class="muted">Ruta curada por valles alpinos, lagos turquesa y glaciares accesibles. Ritmo cómodo, enfoque en seguridad y disfrute del paisaje.</p>
-          <ul class="muted" style="margin-top:8px">
-            <li>Desniveles moderados (300–900 m diarios)</li>
-            <li>Traslados en tren/teleférico según itinerario</li>
-            <li>Alojamiento en pueblos alpinos pintorescos</li>
-          </ul>
-        </div>
-
-        <div class="card">
-          <h3 style="margin-top:0">Itinerario (resumen)</h3>
-          <details open><summary><strong>Días 1–2</strong></summary>
-            <ul class="muted"><li>Llegada y traslado a punto base</li><li>Ruta corta de aclimatación</li></ul>
-          </details>
-          <details><summary><strong>Días 3–6</strong></summary>
-            <ul class="muted"><li>Rutas panorámicas de 10–16 km</li><li>Visita a glaciares accesibles</li></ul>
-          </details>
-          <details><summary><strong>Días 7–8</strong></summary>
-            <ul class="muted"><li>Lago + miradores</li><li>Día libre y regreso</li></ul>
-          </details>
-          <details><summary><strong>Incluye</strong></summary>
-            <ul class="muted"><li>Guía Alpath®</li><li>Logística y reservas</li><li>Briefing previo y recomendaciones de equipo</li></ul>
-          </details>
-          <details><summary><strong>No incluye</strong></summary>
-            <ul class="muted"><li>Vuelos</li><li>Alimentos</li><li>Seguros/entradas no especificados</li></ul>
-          </details>
-        </div>
-      </div>
-
-      <aside>
-        <div class="card">
-          <h3 style="margin-top:0">Próximas salidas</h3>
-          <ul class="muted" style="margin-top:6px">
-            <li>Noviembre — Cupo 8</li>
-            <li>Enero — Cupo 8</li>
-          </ul>
-          <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap">
-            <a class="btn" target="_blank" href="https://wa.me/523343682659?text=Hola%20Alpath%C2%AE%2C%20me%20interesan%20Alpes%20Suizos%20(Lagos%20y%20Glaciares)">Apartar lugar</a>
-            <a class="btn btn-outline" href="#faq">Preguntas frecuentes</a>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3 style="margin-top:0">Galería</h3>
-          <div class="thumbs">
-            <img loading="lazy" decoding="async" src="assets/galeria/alpes-01.jpg" width="600" height="600" alt="Glaciar accesible en los Alpes">
-            <img loading="lazy" decoding="async" src="assets/galeria/alpes-02.jpg" width="600" height="600" alt="Ruta panorámica en Alpes">
-            <img loading="lazy" decoding="async" src="assets/galeria/alpes-03.jpg" width="600" height="600" alt="Grupo en lago alpino">
-          </div>
-        </div>
-      </aside>
-    </div>
-  </section>
-
-  <section id="faq" class="section" style="padding-top:0">
     <div class="container">
-      <div class="card">
-        <h3 style="margin-top:0">Preguntas frecuentes</h3>
-        <details open><summary><strong>¿Nivel físico?</strong></summary>
-          <p class="muted">Intermedio. Rutas de día con desniveles moderados. Se recomienda entrenamiento previo.</p>
-        </details>
-        <details><summary><strong>¿Qué equipo llevo?</strong></summary>
-          <p class="muted">Botas, impermeable, capas térmicas, mochila 20–30L. Lista detallada al reservar.</p>
-        </details>
+      <h2 style="margin:0 0 14px;font-size:2rem;color:var(--brand)">Descripción</h2>
+      <div class="card" style="margin-top:10px">
+        <p style="margin:0;color:var(--muted)">Itinerario curado con logística y guía profesional. Ritmo adecuado y paisajes espectaculares.</p>
+      </div>
+      <h3 style="margin:22px 0 10px;color:var(--brand)">Galería</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px">
+        <img src="assets/galeria/alpes-01.jpg" alt="Galería 1" style="border-radius:12px">
+        <img src="assets/galeria/alpes-02.jpg" alt="Galería 2" style="border-radius:12px">
+        <img src="assets/galeria/alpes-03.jpg" alt="Galería 3" style="border-radius:12px">
       </div>
     </div>
   </section>
@@ -166,8 +128,12 @@
 
   <script>
     document.getElementById('year').textContent=new Date().getFullYear();
-    const header=document.getElementById('topbar');
-    window.addEventListener('scroll',()=>{ if(window.scrollY>40){header.classList.add('scrolled')} else{header.classList.remove('scrolled')} });
+    const header=document.getElementById('siteHeader');
+    window.addEventListener('scroll',()=>{ if(window.scrollY>60){header.classList.add('scrolled')}else{header.classList.remove('scrolled')} });
+    const toggle=document.getElementById('menuToggle');
+    const links=document.getElementById('navLinks');
+    if(toggle){ toggle.addEventListener('click',(e)=>{ e.stopPropagation(); links.classList.toggle('open'); }); }
+    document.addEventListener('click',(e)=>{ if(!e.target.closest('nav')) links.classList.remove('open'); });
   </script>
 </body>
 </html>
