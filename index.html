@@ -27,12 +27,6 @@
       --bg:#f4a71d;--card:#fdf5e6;--muted:#5c4520;--text:#1f1a09;--brand:#3a492d;--accent:#a65a2c;--ring:0 0 0 3px rgba(58,73,45,.35);
       --hero:url('assets/landing-hero.jpg');
       --hero-mobile:url('assets/landing-hero-mobile.jpg');
-
-      /* header: suite (inicio) → isotipo (scroll) */
-      --brand-full-1x:url('assets/brand/logo-h-white-480.png');
-      --brand-full-2x:url('assets/brand/logo-h-white-960.png');
-      --brand-iso-1x:url('assets/brand/isotipo-greengray-512.png');
-      --brand-iso-2x:url('assets/brand/isotipo-greengray-512.png');
     }
     *{box-sizing:border-box}
     html,body{margin:0;height:100%}
@@ -52,9 +46,10 @@
     header.scrolled{background:rgba(58,73,45,.97);border-bottom:1px solid rgba(0,0,0,.25)}
     nav{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
     .brand{display:flex;align-items:center;gap:.6rem;color:#fff}
-    .brand-slot{position:relative;display:inline-block;width:148px;height:36px}
-    .brand-img{position:absolute;inset:0;margin:auto;height:36px;width:auto;opacity:1;transform:scale(1);transition:opacity .28s cubic-bezier(.2,.65,.3,1),transform .28s cubic-bezier(.2,.65,.3,1);will-change:opacity,transform}
-    .brand-img-iso{width:36px;height:36px;opacity:0;transform:scale(.85);pointer-events:none}
+    /* suite → isotipo con fade+scale; tamaños más grandes */
+    .brand-slot{position:relative;display:inline-block;width:180px;height:44px}
+    .brand-img{position:absolute;inset:0;margin:auto;height:44px;width:auto;opacity:1;transform:scale(1);transition:opacity .28s cubic-bezier(.2,.65,.3,1),transform .28s cubic-bezier(.2,.65,.3,1);will-change:opacity,transform}
+    .brand-img-iso{width:44px;height:44px;opacity:0;transform:scale(.85);pointer-events:none}
     header.scrolled .brand-img-full{opacity:0;transform:scale(.92)}
     header.scrolled .brand-img-iso{opacity:1;transform:scale(1)}
     .nav-links{display:flex;gap:1rem}
@@ -71,16 +66,24 @@
       .nav-links.open{display:flex}
       .nav-links a{padding:.75rem 1rem;background:rgba(255,255,255,.06);border-radius:8px}
       nav{padding:10px 0}
+      .brand-slot{width:164px;height:40px}
+      .brand-img{height:40px}
+      .brand-img-iso{width:40px;height:40px}
     }
 
     /* Hero */
     .hero{padding:72px 0 48px;position:relative;min-height:70vh;display:flex;align-items:center;justify-content:center;text-align:center}
     .hero::before{content:'';position:absolute;inset:0;background:var(--hero) center/cover no-repeat}
-    .hero::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,.55)}
+    .hero::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom, rgba(0,0,0,.38), rgba(0,0,0,.70))}
     .hero .container{position:relative;z-index:1}
     .hero h1{font-size:clamp(2.1rem,7.5vw,3.5rem);color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.6)}
     .hero p{font-family:'Fraunces',serif;font-size:clamp(1.1rem,4.5vw,1.6rem);color:#fff;margin:0 auto 24px;text-shadow:0 2px 8px rgba(0,0,0,.6)}
     .hero-logo{width:min(60vw,480px);height:auto;filter:drop-shadow(0 6px 18px rgba(0,0,0,.35))}
+    /* Botones del hero con más contraste */
+    .hero .btn-primary{background:#f4a71d;color:#1f1a09;border:1px solid rgba(0,0,0,.28);box-shadow:0 10px 30px rgba(0,0,0,.45)}
+    .hero .btn-primary:hover{transform:translateY(-1px) scale(1.02)}
+    .hero .btn-ghost{background:rgba(255,255,255,.20);color:#fff;border:1px solid rgba(255,255,255,.65)}
+    .hero .btn-ghost:hover{background:rgba(255,255,255,.28)}
 
     /* Sections */
     .section{padding:64px 0}
@@ -109,6 +112,12 @@
       .grid-3{grid-template-columns:1fr}
     }
 
+    /* LIGHTBOX */
+    .lightbox{position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center}
+    .lightbox.open{display:flex}
+    .lightbox img{max-width:96vw;max-height:90vh;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.5);touch-action:pinch-zoom}
+    .lightbox .close{position:absolute;top:14px;right:14px;background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.35);border-radius:10px;padding:.5rem .7rem}
+
     .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
   </style>
 </head>
@@ -125,7 +134,7 @@
             <img class="brand-img brand-img-iso"
                  src="assets/brand/isotipo-greengray-512.png"
                  srcset="assets/brand/isotipo-greengray-512.png 1x, assets/brand/isotipo-greengray-512.png 2x"
-                 width="36" height="36" alt="" aria-hidden="true">
+                 width="44" height="44" alt="" aria-hidden="true">
           </span>
         </a>
 
@@ -155,9 +164,9 @@
            alt="Alpath®" style="margin:12px auto 8px;display:block">
       <p>Your Own Summit</p>
       <div class="cta-row" style="display:flex;gap:12px;margin-top:22px;flex-wrap:wrap;justify-content:center">
-        <a href="#calendario" class="btn">Próximas salidas</a>
-        <a href="https://www.instagram.com/alpathmountainco/" target="_blank" class="btn btn-outline">Instagram</a>
-        <a href="https://wa.me/523343682659?text=Hola%20Alpath%C2%AE%2C%20quiero%20informaci%C3%B3n%20de%20sus%20pr%C3%B3ximas%20salidas" target="_blank" class="btn btn-outline">Reservar por WhatsApp</a>
+        <a href="https://wa.me/523343682659?text=Hola%20Alpath%C2%AE%2C%20quiero%20informaci%C3%B3n%20de%20sus%20pr%C3%B3ximas%20salidas" target="_blank" class="btn btn-primary">Reservar por WhatsApp</a>
+        <a href="#calendario" class="btn btn-ghost">Próximas salidas</a>
+        <a href="https://www.instagram.com/alpathmountainco/" target="_blank" class="btn btn-ghost">Instagram</a>
       </div>
     </div>
   </section>
@@ -191,7 +200,7 @@
     </div>
   </section>
 
-  <!-- Calendario / Próximas salidas -->
+  <!-- Calendario -->
   <section id="calendario" class="section">
     <div class="container">
       <h2 style="margin:0 0 14px;font-size:2rem;color:var(--brand)">Próximas salidas</h2>
@@ -274,21 +283,50 @@
     </div>
   </footer>
 
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox" aria-hidden="true">
+    <button class="close" aria-label="Cerrar">Cerrar ✕</button>
+    <img alt="">
+  </div>
+
   <script>
     // Año en footer
     document.getElementById('year').textContent=new Date().getFullYear();
 
     // Header scroll (activa el cambio de logo)
     const header=document.getElementById('siteHeader');
-    window.addEventListener('scroll',()=>{
-      if(window.scrollY>60){header.classList.add('scrolled')}else{header.classList.remove('scrolled')}
-    });
+    window.addEventListener('scroll',()=>{ if(window.scrollY>60){header.classList.add('scrolled')}else{header.classList.remove('scrolled')} });
 
     // Menú móvil
     const toggle=document.getElementById('menuToggle');
     const links=document.getElementById('navLinks');
     if(toggle){ toggle.addEventListener('click',(e)=>{ e.stopPropagation(); links.classList.toggle('open'); }); }
     document.addEventListener('click',(e)=>{ if(!e.target.closest('nav')) links.classList.remove('open'); });
+
+    // Lightbox
+    (function(){
+      const lb=document.getElementById('lightbox');
+      const imgEl=lb.querySelector('img');
+      const closeBtn=lb.querySelector('.close');
+      function openLb(src,alt){ imgEl.src=src; imgEl.alt=alt||''; lb.classList.add('open'); lb.setAttribute('aria-hidden','false'); }
+      function closeLb(){ lb.classList.remove('open'); lb.setAttribute('aria-hidden','true'); imgEl.src=''; }
+      document.addEventListener('click',(e)=>{
+        const link = e.target.closest('a');
+        if(link && link.querySelector('img')){
+          e.preventDefault();
+          const img = link.querySelector('img');
+          openLb(link.getAttribute('href') || img.src, img.alt);
+          return;
+        }
+        if(e.target.tagName==='IMG' && e.target.closest('.section') && !e.target.closest('#lightbox')){
+          openLb(e.target.src, e.target.alt);
+          return;
+        }
+        if(e.target===lb){ closeLb(); }
+      });
+      closeBtn.addEventListener('click', closeLb);
+      document.addEventListener('keydown',(e)=>{ if(e.key==='Escape') closeLb(); });
+    })();
   </script>
 </body>
 </html>

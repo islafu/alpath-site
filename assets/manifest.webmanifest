@@ -1,0 +1,16 @@
+{
+  "name": "Alpath® — Ecoturismo Premium",
+  "short_name": "Alpath®",
+  "lang": "es",
+  "description": "Ecoturismo en alta montaña, senderismo y expediciones nacionales e internacionales.",
+  "start_url": "/index.html",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f4a71d",
+  "theme_color": "#3a492d",
+  "icons": [
+    { "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "assets/icons/apple-touch-icon.png", "sizes": "180x180", "type": "image/png", "purpose": "any" }
+  ]
+}
