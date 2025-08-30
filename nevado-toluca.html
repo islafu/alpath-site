@@ -53,6 +53,8 @@
     .brand-slot{position:relative;display:inline-block;width:180px;height:44px}
     .brand-img{position:absolute;inset:0;margin:auto;height:44px;width:auto;opacity:1;transform:scale(1);transition:opacity .28s cubic-bezier(.2,.65,.3,1),transform .28s cubic-bezier(.2,.65,.3,1);pointer-events:none}
     .brand-img-iso{width:44px;height:44px;opacity:0;transform:scale(.85);pointer-events:none}
+    /* El click es del <a>, no de las imágenes del logo */
+    .brand-img, .brand-img-iso { pointer-events: none; }
     header.scrolled .brand-img-full{opacity:0;transform:scale(.92)}
     header.scrolled .brand-img-iso{opacity:1;transform:scale(1)}
     .nav-links{display:flex;gap:1rem}
@@ -112,7 +114,7 @@
     <div class="container">
       <nav>
         <!-- Logo → Home -->
-        <a href="index.html" class="brand" aria-label="Ir a inicio">
+        <a href="/" class="brand" aria-label="Ir a inicio">
           <span class="brand-slot">
             <img class="brand-img brand-img-full" src="assets/brand/logo-h-white-480.png?v=20250829-175015" width="140" height="36" alt="Alpath®">
             <img class="brand-img brand-img-iso"  src="assets/brand/isotipo-greengray-512.png?v=20250829-175015" width="44" height="44" alt="" aria-hidden="true">
@@ -219,7 +221,8 @@
             <input required type="email" name="email" placeholder="Email" />
           </div>
           <input name="telefono" placeholder="Teléfono (opcional)" />
-          <textarea required name="mensaje" placeholder="¿Qué fecha te interesa? ¿Para cuántas personas?"></textarea>
+          <textarea required name="mensaje" rows="6" placeholder="¿Qué fecha te interesa? ¿Para cuántas personas?"></textarea>
+
 
           <div data-netlify-recaptcha="true" style="margin:8px 0"></div>
 
