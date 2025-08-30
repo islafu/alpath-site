@@ -107,19 +107,41 @@
     #reserva form .row{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
     @media (max-width:980px){ .reserve-grid{ grid-template-columns:1fr; gap:20px; } }
     @media (max-width:640px){ #reserva form .row{ grid-template-columns:1fr; } }
+
+        /* Tamaño cómodo y consistente del textarea (como en index) */
+    #reserva textarea,
+    #contacto textarea,
+    .reserve-grid textarea,
+    form textarea,
+    textarea{
+      min-height: 220px;
+      resize: vertical;
+      width: 100%;
+      box-sizing: border-box;
+      font: inherit;
+      line-height: 1.5;
+    }
+    @media (max-width:640px){
+      #reserva textarea,
+      #contacto textarea,
+      .reserve-grid textarea,
+      form textarea,
+      textarea{ min-height: 180px; }
+    }
   </style>
 </head>
 <body>
   <header id="siteHeader">
     <div class="container">
       <nav>
-        <!-- Logo → Home -->
-        <a href="/" class="brand" aria-label="Ir a inicio">
+        <!-- HEADER (reemplaza tu bloque del logo por este) -->
+        <a id="brandHomeLink" href="/" class="brand" aria-label="Ir a inicio">
           <span class="brand-slot">
-            <img class="brand-img brand-img-full" src="assets/brand/logo-h-white-480.png?v=20250829-175015" width="140" height="36" alt="Alpath®">
-            <img class="brand-img brand-img-iso"  src="assets/brand/isotipo-greengray-512.png?v=20250829-175015" width="44" height="44" alt="" aria-hidden="true">
+            <img class="brand-img brand-img-full" src="assets/brand/logo-h-white-480.png" width="140" height="36" alt="Alpath®">
+            <img class="brand-img brand-img-iso"  src="assets/brand/isotipo-greengray-512.png" width="44" height="44" alt="" aria-hidden="true">
           </span>
         </a>
+
 
         <button id="menuToggle" class="menu-toggle" aria-label="Abrir menú">
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 6h16v2H4zM4 11h16v2H4zM4 16h16v2H4z"/></svg> Menú
@@ -255,6 +277,13 @@
   </div>
 
   <script>
+    document.addEventListener('DOMContentLoaded', () => {
+    const a = document.getElementById('brandHomeLink');
+    if (!a) return;
+    const href = a.getAttribute('href') || '';
+    const ok = href === '/' || /index\.html(\?|$)/.test(href);
+    if (!ok) a.setAttribute('href', '/'); // usa 'index.html' si trabajas local sin servidor
+    });
     document.getElementById('year').textContent=new Date().getFullYear();
     const header=document.getElementById('siteHeader');
     window.addEventListener('scroll',()=>{ if(window.scrollY>60){header.classList.add('scrolled')}else{header.classList.remove('scrolled')} });

@@ -128,23 +128,41 @@
       .hero::before{background:var(--hero-mobile) center/cover no-repeat}
       .grid-3{grid-template-columns:1fr}
     }
+
+    /* Tamaño cómodo y consistente del textarea (como en index) */
+    #reserva textarea,
+    #contacto textarea,
+    .reserve-grid textarea,
+    form textarea,
+    textarea{
+      min-height: 220px;
+      resize: vertical;
+      width: 100%;
+      box-sizing: border-box;
+      font: inherit;
+      line-height: 1.5;
+    }
+    @media (max-width:640px){
+      #reserva textarea,
+      #contacto textarea,
+      .reserve-grid textarea,
+      form textarea,
+      textarea{ min-height: 180px; }
+    }
   </style>
 </head>
 <body>
   <header id="siteHeader">
     <div class="container">
       <nav>
-        <!-- Logo → Home (click seguro) -->
-        <a href="/" class="brand" aria-label="Ir a inicio">
-          <span class="brand-slot">
-            <img class="brand-img brand-img-full" src="assets/brand/logo-h-white-480.png?v=20250829-175015"
-                 srcset="assets/brand/logo-h-white-480.png 1x, assets/brand/logo-h-white-960.png 2x"
-                 width="140" height="36" alt="Alpath®">
-            <img class="brand-img brand-img-iso"  src="assets/brand/isotipo-greengray-512.png?v=20250829-175015"
-                 srcset="assets/brand/isotipo-greengray-512.png 1x, assets/brand/isotipo-greengray-512.png 2x"
-                 width="44" height="44" alt="" aria-hidden="true">
-          </span>
-        </a>
+          <!-- HEADER (reemplaza tu bloque del logo por este) -->
+          <a id="brandHomeLink" href="/" class="brand" aria-label="Ir a inicio">
+            <span class="brand-slot">
+              <img class="brand-img brand-img-full" src="assets/brand/logo-h-white-480.png" width="140" height="36" alt="Alpath®">
+              <img class="brand-img brand-img-iso"  src="assets/brand/isotipo-greengray-512.png" width="44" height="44" alt="" aria-hidden="true">
+            </span>
+          </a>
+
 
         <button id="menuToggle" class="menu-toggle" aria-label="Abrir menú">
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 6h16v2H4zM4 11h16v2H4zM4 16h16v2H4z"/></svg> Menú
@@ -289,6 +307,15 @@
   </div>
 
   <script>
+
+    document.addEventListener('DOMContentLoaded', () => {
+    const a = document.getElementById('brandHomeLink');
+    if (!a) return;
+    const href = a.getAttribute('href') || '';
+    const ok = href === '/' || /index\.html(\?|$)/.test(href);
+    if (!ok) a.setAttribute('href', '/'); // usa 'index.html' si trabajas local sin servidor
+    });
+
     // Año
     document.getElementById('year').textContent=new Date().getFullYear();
 
