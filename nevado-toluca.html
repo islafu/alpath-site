@@ -8,14 +8,12 @@
   <meta property="og:title" content="Alpath® — Nevado de Toluca — Amanecer" />
   <meta property="og:description" content="Intermedio · 4,200 msnm · 7–9 horas. Amanecer en el Xinantécatl con guía Alpath®." />
   <meta property="og:type" content="article" />
-  <meta property="og:url" content="https://alpath.netlify.app/nevado-toluca.html" />
-  <meta property="og:image" content="https://alpath.netlify.app/assets/og/og-nevado.jpg" />
   <meta name="theme-color" content="#3a492d" />
 
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png?v=20250829-175015" />
-  <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16.png?v=20250829-175015" />
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png?v=20250829-175015" />
-  <link rel="manifest" href="assets/manifest.webmanifest?v=20250829-175015" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png" />
+  <link rel="manifest" href="assets/manifest.webmanifest" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,8 +22,8 @@
   <style>
     :root{
       --bg:#f4a71d;--card:#fdf5e6;--muted:#5c4520;--text:#1f1a09;--brand:#3a492d;--accent:#a65a2c;--ring:0 0 0 3px rgba(58,73,45,.35);
-      --hero:url('assets/nevado-toluca-hero.jpg?v=20250829-175015');
-      --hero-mobile:url('assets/nevado-toluca-hero-mobile.jpg?v=20250829-175015');
+      --hero:url('assets/nevado-toluca-hero.jpg');
+      --hero-mobile:url('assets/nevado-toluca-hero-mobile.jpg');
     }
     *{box-sizing:border-box}
     html,body{margin:0;height:100%}
@@ -49,14 +47,14 @@
     header.scrolled{background:rgba(58,73,45,.97);border-bottom:1px solid rgba(0,0,0,.25)}
     nav{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
     .brand{display:flex;align-items:center;gap:.6rem;color:#fff;position:relative;z-index:2}
-    /* Logo suite → isotipo (fade/scale) */
     .brand-slot{position:relative;display:inline-block;width:180px;height:44px}
-    .brand-img{position:absolute;inset:0;margin:auto;height:44px;width:auto;opacity:1;transform:scale(1);transition:opacity .28s cubic-bezier(.2,.65,.3,1),transform .28s cubic-bezier(.2,.65,.3,1);pointer-events:none}
-    .brand-img-iso{width:44px;height:44px;opacity:0;transform:scale(.85);pointer-events:none}
-    /* El click es del <a>, no de las imágenes del logo */
-    .brand-img, .brand-img-iso { pointer-events: none; }
+    .brand-img{position:absolute;inset:0;margin:auto;height:44px;width:auto;opacity:1;transform:scale(1);transition:opacity .28s cubic-bezier(.2,.65,.3,1),transform .28s cubic-bezier(.2,.65,.3,1)}
+    .brand-img-iso{width:44px;height:44px;opacity:0;transform:scale(.85)}
     header.scrolled .brand-img-full{opacity:0;transform:scale(.92)}
     header.scrolled .brand-img-iso{opacity:1;transform:scale(1)}
+    /* Evitar que el logo intercepte el click */
+    .brand-img, .brand-img-iso { pointer-events: none; }
+
     .nav-links{display:flex;gap:1rem}
     .nav-links a{opacity:.95;padding:.5rem .75rem;border-radius:10px;color:#fff;position:relative;transition:color .25s ease}
     .nav-links a::after{content:"";position:absolute;left:.75rem;right:.75rem;bottom:.35rem;height:2px;background:#fff;transform:scaleX(0);transform-origin:left;transition:transform .25s ease}
@@ -108,40 +106,21 @@
     @media (max-width:980px){ .reserve-grid{ grid-template-columns:1fr; gap:20px; } }
     @media (max-width:640px){ #reserva form .row{ grid-template-columns:1fr; } }
 
-        /* Tamaño cómodo y consistente del textarea (como en index) */
-    #reserva textarea,
-    #contacto textarea,
-    .reserve-grid textarea,
-    form textarea,
-    textarea{
-      min-height: 220px;
-      resize: vertical;
-      width: 100%;
-      box-sizing: border-box;
-      font: inherit;
-      line-height: 1.5;
-    }
-    @media (max-width:640px){
-      #reserva textarea,
-      #contacto textarea,
-      .reserve-grid textarea,
-      form textarea,
-      textarea{ min-height: 180px; }
-    }
+    /* Textarea consistente */
+    textarea{min-height:220px;resize:vertical;line-height:1.5}
+    @media (max-width:640px){ textarea{min-height:180px} }
   </style>
 </head>
 <body>
   <header id="siteHeader">
     <div class="container">
       <nav>
-        <!-- HEADER (reemplaza tu bloque del logo por este) -->
-        <a id="brandHomeLink" href="/" class="brand" aria-label="Ir a inicio">
+        <a href="/" class="brand" aria-label="Ir a inicio">
           <span class="brand-slot">
             <img class="brand-img brand-img-full" src="assets/brand/logo-h-white-480.png" width="140" height="36" alt="Alpath®">
             <img class="brand-img brand-img-iso"  src="assets/brand/isotipo-greengray-512.png" width="44" height="44" alt="" aria-hidden="true">
           </span>
         </a>
-
 
         <button id="menuToggle" class="menu-toggle" aria-label="Abrir menú">
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 6h16v2H4zM4 11h16v2H4zM4 16h16v2H4z"/></svg> Menú
@@ -158,7 +137,7 @@
 
   <section class="hero">
     <div class="container">
-      <img class="hero-logo" src="assets/brand/hero-logo-greengray-960.png?v=20250829-175015" alt="Alpath®" style="margin:0 auto 10px;display:block">
+      <img class="hero-logo" src="assets/brand/hero-logo-greengray-960.png" alt="Alpath®" style="margin:0 auto 10px;display:block">
       <h1>Nevado de Toluca — Amanecer</h1>
       <p class="lead">Intermedio · 4,200 msnm · 7–9 horas</p>
       <div class="cta-row" style="display:flex;gap:12px;margin-top:10px;flex-wrap:wrap;justify-content:center">
@@ -176,9 +155,9 @@
       </div>
       <h3 style="margin:22px 0 10px;color:var(--brand)">Galería</h3>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px">
-        <img src="assets/galeria/nevado-01.jpg?v=20250829-175015" alt="Galería 1" style="border-radius:12px;cursor:zoom-in">
-        <img src="assets/galeria/nevado-02.jpg?v=20250829-175015" alt="Galería 2" style="border-radius:12px;cursor:zoom-in">
-        <img src="assets/galeria/nevado-03.jpg?v=20250829-175015" alt="Galería 3" style="border-radius:12px;cursor:zoom-in">
+        <img src="assets/galeria/nevado-01.jpg" alt="Galería 1" data-lightbox style="border-radius:12px;cursor:zoom-in">
+        <img src="assets/galeria/nevado-02.jpg" alt="Galería 2" data-lightbox style="border-radius:12px;cursor:zoom-in">
+        <img src="assets/galeria/nevado-03.jpg" alt="Galería 3" data-lightbox style="border-radius:12px;cursor:zoom-in">
       </div>
     </div>
   </section>
@@ -209,10 +188,6 @@
         <details style="margin-bottom:8px">
           <summary><strong>Equipo indispensable</strong></summary>
           <p style="color:var(--muted)">Botas, capa térmica, rompevientos, guantes, gorro, frontal, 2L agua, snacks.</p>
-        </details>
-        <details style="margin-bottom:8px">
-          <summary><strong>Incluye / No incluye</strong></summary>
-          <p style="color:var(--muted)">Incluye guía, logística y apoyo en ruta. No incluye alimentos, renta de equipo ni gastos personales.</p>
         </details>
         <details style="margin-bottom:0">
           <summary><strong>Política de cambios y reembolsos</strong></summary>
@@ -245,7 +220,6 @@
           <input name="telefono" placeholder="Teléfono (opcional)" />
           <textarea required name="mensaje" rows="6" placeholder="¿Qué fecha te interesa? ¿Para cuántas personas?"></textarea>
 
-
           <div data-netlify-recaptcha="true" style="margin:8px 0"></div>
 
           <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
@@ -277,13 +251,6 @@
   </div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-    const a = document.getElementById('brandHomeLink');
-    if (!a) return;
-    const href = a.getAttribute('href') || '';
-    const ok = href === '/' || /index\.html(\?|$)/.test(href);
-    if (!ok) a.setAttribute('href', '/'); // usa 'index.html' si trabajas local sin servidor
-    });
     document.getElementById('year').textContent=new Date().getFullYear();
     const header=document.getElementById('siteHeader');
     window.addEventListener('scroll',()=>{ if(window.scrollY>60){header.classList.add('scrolled')}else{header.classList.remove('scrolled')} });
@@ -292,20 +259,47 @@
     if(toggle){ toggle.addEventListener('click',(e)=>{ e.stopPropagation(); links.classList.toggle('open'); }); }
     document.addEventListener('click',(e)=>{ if(!e.target.closest('nav')) links.classList.remove('open'); });
 
-    // Lightbox
+    // --- LIGHTBOX seguro (solo en imágenes con [data-lightbox]) ---
     (function(){
-      const lb=document.getElementById('lightbox');
-      const imgEl=lb.querySelector('img');
-      const closeBtn=lb.querySelector('.close');
-      function openLb(src,alt){ imgEl.src=src; imgEl.alt=alt||''; lb.classList.add('open'); lb.setAttribute('aria-hidden','false'); }
-      function closeLb(){ lb.classList.remove('open'); lb.setAttribute('aria-hidden','true'); imgEl.src=''; }
-      document.addEventListener('click',(e)=>{
+      const lb = document.getElementById('lightbox');
+      if(!lb) return;
+      const imgEl = lb.querySelector('img');
+      const closeBtn = lb.querySelector('.close');
+
+      function openLb(src, alt){
+        imgEl.src = src;
+        imgEl.alt = alt || '';
+        lb.classList.add('open');
+        lb.setAttribute('aria-hidden','false');
+      }
+      function closeLb(){
+        lb.classList.remove('open');
+        lb.setAttribute('aria-hidden','true');
+        imgEl.src = '';
+      }
+
+      document.addEventListener('click', (e)=>{
+        const targetImg = e.target.closest('img[data-lightbox]');
+        if (targetImg) {
+          e.preventDefault();
+          const full = targetImg.getAttribute('data-full') || targetImg.currentSrc || targetImg.src;
+          openLb(full, targetImg.alt);
+          return;
+        }
         const link = e.target.closest('a');
-        if(link && link.querySelector('img')){ e.preventDefault(); const img = link.querySelector('img'); openLb(link.getAttribute('href') || img.src, img.alt); return; }
-        if(e.target.tagName==='IMG' && e.target.closest('.section') && !e.target.closest('#lightbox')){ openLb(e.target.src, e.target.alt); return; }
-        if(e.target===lb){ closeLb(); }
+        if (link) {
+          const lbImg = link.querySelector('img[data-lightbox]');
+          if (lbImg) {
+            e.preventDefault();
+            const href = link.getAttribute('href');
+            openLb(href || lbImg.currentSrc || lbImg.src, lbImg.alt);
+            return;
+          }
+        }
+        if (e.target === lb) closeLb();
       });
-      closeBtn.addEventListener('click', closeLb);
+
+      closeBtn && closeBtn.addEventListener('click', closeLb);
       document.addEventListener('keydown',(e)=>{ if(e.key==='Escape') closeLb(); });
     })();
   </script>
