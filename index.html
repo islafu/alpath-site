@@ -130,6 +130,22 @@
       .hero::before{background:var(--hero-mobile) center/cover no-repeat}
       .grid-3{grid-template-columns:1fr}
     }
+
+    /* Botón Instagram (gradiente y alto contraste) */
+      .btn-instagram{
+        background: linear-gradient(135deg,
+          #405DE6 0%,
+          #5851DB 20%,
+          #833AB4 40%,
+          #C13584 60%,
+          #E1306C 80%,
+          #FCAF45 100%);
+        color:#fff;
+        border:0;
+        box-shadow:0 10px 30px rgba(193,53,132,.40); /* magenta */
+      }
+      .btn-instagram:hover{ filter:brightness(1.06); transform:translateY(-1px); }
+      .btn-instagram:focus{ box-shadow:var(--ring), 0 10px 30px rgba(193,53,132,.55); }
   </style>
 </head>
 <body>
@@ -167,7 +183,7 @@
       <p>Your Own Summit</p>
       <div class="cta-row">
         <a href="#experiencias" class="btn">Próximas salidas</a>
-        <a href="https://www.instagram.com/alpathmountainco/" target="_blank" class="btn btn-ghost">Instagram</a>
+        <a href="https://www.instagram.com/alpathmountainco/" target="_blank" class="btn btn-instagram">Instagram</a>
         <a href="https://wa.me/523343682659?text=Hola%20Alpath%C2%AE%2C%20quiero%20informaci%C3%B3n%20de%20sus%20pr%C3%B3ximas%20salidas" target="_blank" class="btn btn-primary">Reservar por WhatsApp</a>
       </div>
     </div>
