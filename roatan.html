@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Alpath® — Roatán — Aventura & Mar</title>
+<meta name="description" content="Snorkel · Kayak · Senderismo costero. Aventura en Roatán con logística Alpath®." />
+<meta property="og:title" content="Alpath® — Roatán — Aventura & Mar" />
+<meta property="og:description" content="Snorkel · Kayak · Senderismo costero. Aventura en Roatán con logística Alpath®." />
+<meta property="og:type" content="article" />
+<meta name="theme-color" content="#3a492d" />
+<link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png" />
+<link rel="manifest" href="assets/manifest.webmanifest" />
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4a71d;--card:#fdf5e6;--muted:#5c4520;--text:#1f1a09;--brand:#3a492d;--ring:0 0 0 3px rgba(58,73,45,.35);--hero:url('assets/roatan-hero.jpg');--hero-mobile:url('assets/roatan-hero-mobile.jpg');}
+*{box-sizing:border-box}html,body{margin:0;height:100%}
+body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+h1,h2,h3,h4{font-family:'Fraunces',serif;font-weight:600;letter-spacing:-0.5px}
+a{text-decoration:none;color:inherit}img{max-width:100%;display:block;height:auto}
+.container{max-width:1120px;margin-inline:auto;padding:0 20px}
+.btn{display:inline-flex;align-items:center;gap:.6rem;background:var(--brand);color:#fff;padding:.85rem 1.1rem;border-radius:14px;font-weight:600;border:1px solid rgba(0,0,0,.08);box-shadow:0 8px 24px rgba(0,0,0,.35);transition:.2s}
+.btn:hover{transform:translateY(-1px)}.btn-outline{background:transparent;border:1px solid var(--brand);color:var(--brand)}.btn-outline:hover{background:var(--brand);color:#fff}
+.btn-primary{background:#f4a71d;color:#1f1a09;border:1px solid rgba(0,0,0,.28);box-shadow:0 10px 30px rgba(0,0,0,.45)}
+.btn-ghost{background:rgba(255,255,255,.20);color:#fff;border:1px solid rgba(255,255,255,.65)}.btn-ghost:hover{background:rgba(255,255,255,.28)}
+header{position:sticky;top:0;z-index:60;transition:background .3s,border .3s}
+header.scrolled{background:rgba(58,73,45,.97);border-bottom:1px solid rgba(0,0,0,.25)}
+nav{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
+.brand{display:flex;align-items:center;gap:.6rem;color:#fff;position:relative;z-index:2}
+.brand-slot{position:relative;display:inline-block;width:180px;height:44px}
+.brand-img{position:absolute;inset:0;margin:auto;height:44px;width:auto;opacity:1;transform:scale(1);transition:opacity .28s,transform .28s}
+.brand-img-iso{width:44px;height:44px;opacity:0;transform:scale(.85)}
+header.scrolled .brand-img-full{opacity:0;transform:scale(.92)}header.scrolled .brand-img-iso{opacity:1;transform:scale(1)}
+.brand-img,.brand-img-iso{pointer-events:none}
+.nav-links{display:flex;gap:1rem}.nav-links a{opacity:.95;padding:.5rem .75rem;border-radius:10px;color:#fff;position:relative}
+.menu-toggle{display:none;align-items:center;gap:.4rem;background:transparent;color:#fff;border:1px solid rgba(255,255,255,.35);padding:.45rem .65rem;border-radius:10px}
+@media (max-width:768px){.menu-toggle{display:inline-flex}.nav-links{display:none;position:fixed;left:12px;right:12px;top:60px;flex-direction:column;background:rgba(58,73,45,.98);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:10px;gap:8px;box-shadow:0 12px 24px rgba(0,0,0,.35)}.nav-links.open{display:flex}
+.brand-slot{width:164px;height:40px}.brand-img{height:40px}.brand-img-iso{width:40px;height:40px}}
+.hero{padding:72px 0 48px;position:relative;min-height:70vh;display:flex;align-items:center;justify-content:center;text-align:center}
+.hero::before{content:'';position:absolute;inset:0;background:var(--hero) center/cover no-repeat}
+.hero::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom, rgba(0,0,0,.30), rgba(0,0,0,.65))}
+.hero .container{position:relative;z-index:1}
+.hero h1{font-size:clamp(2.1rem,7.5vw,3.4rem);color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.6)}
+.hero p{font-family:'Fraunces',serif;font-size:clamp(1.1rem,4.5vw,1.6rem);color:#fff;margin:0 auto 18px;text-shadow:0 2px 8px rgba(0,0,0,.6)}
+.hero-logo{width:min(60vw,480px);height:auto;filter:drop-shadow(0 6px 18px rgba(0,0,0,.35));margin:0 auto 10px;display:block}
+.section{padding:64px 0}.card{background:var(--card);border:1px solid rgba(0,0,0,.1);border-radius:18px;padding:18px}
+footer{padding:36px 0;border-top:1px solid rgba(0,0,0,.1);color:var(--muted)}
+@media (max-width:640px){.hero::before{background:var(--hero-mobile) center/cover no-repeat}}
+.reserve-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:28px;align-items:start}
+.reserve-grid .card{padding:24px}.reserve-grid .lead{margin-bottom:10px}
+#reserva .cta-wrap{display:flex;gap:12px;flex-wrap:wrap;margin:12px 0 20px}
+#reserva form .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:980px){.reserve-grid{grid-template-columns:1fr;gap:20px}}
+@media (max-width:640px){#reserva form .row{grid-template-columns:1fr}}
+input,textarea{width:100%;background:#fff;border:1px solid rgba(0,0,0,.12);color:#1b1b1b;border-radius:12px;padding:12px 14px;outline:none}
+input:focus,textarea:focus{box-shadow:var(--ring);border-color:rgba(58,73,45,.55)}
+textarea{min-height:220px;resize:vertical;line-height:1.5}
+@media (max-width:640px){textarea{min-height:180px}}
+.lightbox{position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center}
+.lightbox.open{display:flex}.lightbox img{max-width:96vw;max-height:90vh;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.5);touch-action:pinch-zoom}
+.lightbox .close{position:absolute;top:14px;right:14px;background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.35);border-radius:10px;padding:.5rem .7rem}
+</style>
+</head>
+<body>
+<header id="siteHeader"><div class="container"><nav>
+  <a href="/" class="brand" aria-label="Ir a inicio">
+    <span class="brand-slot">
+      <img class="brand-img brand-img-full" src="assets/brand/logo-h-white-480.png" width="140" height="36" alt="Alpath®">
+      <img class="brand-img brand-img-iso"  src="assets/brand/isotipo-greengray-512.png" width="44" height="44" alt="" aria-hidden="true">
+    </span>
+  </a>
+  <button id="menuToggle" class="menu-toggle" aria-label="Abrir menú">Menú</button>
+  <div id="navLinks" class="nav-links">
+    <a href="index.html#experiencias">Experiencias</a>
+    <a href="index.html#nosotros">Nosotros</a>
+    <a href="index.html#contacto">Contacto</a>
+  </div>
+</nav></div></header>
+
+<section class="hero">
+  <div class="container">
+    <img class="hero-logo" src="assets/brand/hero-logo-greengray-960.png" alt="Alpath®">
+    <h1>Roatán — Aventura & Mar</h1>
+    <p>Snorkel · Kayak · Senderismo costero</p>
+    <div class="cta-row" style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <a class="btn btn-primary" target="_blank" href="https://wa.me/523343682659?text=Hola%20Alpath%C2%AE%2C%20quiero%20reservar%20esta%20experiencia%20(Roat%C3%A1n)">Reservar por WhatsApp</a>
+      <a class="btn btn-ghost" href="#reserva">Más opciones</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2 style="margin:0 0 14px;font-size:2rem;color:var(--brand)">Descripción</h2>
+    <div class="card" style="margin-top:10px">
+      <p style="margin:0;color:var(--muted)">Isla caribeña con arrecifes espectaculares. Combinamos actividades acuáticas con senderos costeros y tiempo libre en playa.</p>
+    </div>
+    <h3 style="margin:22px 0 10px;color:var(--brand)">Galería</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px">
+      <img src="assets/galeria/roatan-01.jpg" alt="Galería 1" data-lightbox style="border-radius:12px;cursor:zoom-in">
+      <img src="assets/galeria/roatan-02.jpg" alt="Galería 2" data-lightbox style="border-radius:12px;cursor:zoom-in">
+      <img src="assets/galeria/roatan-03.jpg" alt="Galería 3" data-lightbox style="border-radius:12px;cursor:zoom-in">
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2 style="margin:0 0 14px;font-size:2rem;color:var(--brand)">Itinerario</h2>
+    <div class="card" style="margin-top:10px">
+      <ul style="margin:0;padding-left:18px;color:var(--muted);line-height:1.8">
+        <li><strong>Día 1</strong> Llegada y check-in</li>
+        <li><strong>Días 2–4</strong> Snorkel, kayak y senderismo</li>
+        <li><strong>Día 5</strong> Tiempo libre / opcionales</li>
+        <li><strong>Día 6</strong> Cierre y retorno</li>
+      </ul>
+      <p style="margin:10px 0 0;color:var(--muted);font-size:.95rem">*Itinerario tentativo. Sujeto a clima y mareas.</p>
+    </div>
+
+    <h3 style="margin:22px 0 10px;color:var(--brand)">Preguntas frecuentes</h3>
+    <div class="card">
+      <details open style="margin-bottom:8px"><summary><strong>Nivel físico recomendado</strong></summary><p style="color:var(--muted)">Básico a intermedio. Actividades acuáticas de baja a moderada intensidad.</p></details>
+      <details style="margin-bottom:8px"><summary><strong>Equipo indispensable</strong></summary><p style="color:var(--muted)">Ropa ligera UV, traje de baño, sandalias de río, repelente, bloqueador marino.</p></details>
+      <details style="margin-bottom:0"><summary><strong>Política de cambios y reembolsos</strong></summary><p style="color:var(--muted)">Cambios con aviso previo. Reembolsos sujetos a condiciones.</p></details>
+    </div>
+  </div>
+</section>
+
+<section id="reserva" class="section" style="background:var(--card)">
+  <div class="container reserve-grid">
+    <div>
+      <h2 style="margin:0 0 14px;font-size:2rem;color:var(--brand)">Reserva tu lugar</h2>
+      <p class="lead">Escríbenos por WhatsApp o déjanos tus datos y te contactamos.</p>
+      <div class="cta-wrap">
+        <a class="btn" target="_blank" href="https://wa.me/523343682659?text=Hola%20Alpath%C2%AE%2C%20quiero%20reservar%20Roat%C3%A1n">WhatsApp</a>
+        <a class="btn btn-outline" target="_blank" href="https://www.instagram.com/alpathmountainco/">Instagram</a>
+      </div>
+
+      <form name="contacto-roatan" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/gracias.html">
+        <input type="hidden" name="form-name" value="contacto-roatan" />
+        <p style="display:none"><label>No llenar: <input name="bot-field" /></label></p>
+        <div class="row">
+          <input required name="nombre" placeholder="Tu nombre" />
+          <input required type="email" name="email" placeholder="Email" />
+        </div>
+        <input name="telefono" placeholder="Teléfono (opcional)" />
+        <textarea required name="mensaje" rows="6" placeholder="¿Qué fecha te interesa? ¿Para cuántas personas?"></textarea>
+        <div data-netlify-recaptcha="true" style="margin:8px 0"></div>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><button class="btn" type="submit">Enviar</button></div>
+      </form>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-top:0;color:var(--brand)">Tips rápidos</h3>
+      <ul style="margin:0;padding-left:18px;color:var(--muted);line-height:1.8">
+        <li>Respeta áreas de arrecife (no tocar/caminar)</li>
+        <li>Usa bloqueador biodegradable</li>
+        <li>Hidrátate constantemente</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer><div class="container" style="display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap">
+  <small>© <span id="year"></span> Alpath®.</small>
+  <small><a href="#">Aviso de privacidad</a> · <a href="#">Términos</a></small>
+</div></footer>
+
+<div id="lightbox" class="lightbox" aria-hidden="true"><button class="close" aria-label="Cerrar">Cerrar ✕</button><img alt=""></div>
+
+<script>
+document.getElementById('year').textContent=new Date().getFullYear();
+const header=document.getElementById('siteHeader');window.addEventListener('scroll',()=>{header.classList.toggle('scrolled',window.scrollY>60)});
+const toggle=document.getElementById('menuToggle');const links=document.getElementById('navLinks');if(toggle){toggle.addEventListener('click',(e)=>{e.stopPropagation();links.classList.toggle('open')});}document.addEventListener('click',(e)=>{if(!e.target.closest('nav')) links.classList.remove('open')});
+(function(){const lb=document.getElementById('lightbox');if(!lb)return;const imgEl=lb.querySelector('img');const closeBtn=lb.querySelector('.close');function openLb(src,alt){imgEl.src=src;imgEl.alt=alt||'';lb.classList.add('open');lb.setAttribute('aria-hidden','false')}function closeLb(){lb.classList.remove('open');lb.setAttribute('aria-hidden','true');imgEl.src=''}document.addEventListener('click',(e)=>{const targetImg=e.target.closest('img[data-lightbox]');if(targetImg){e.preventDefault();const full=targetImg.getAttribute('data-full')||targetImg.currentSrc||targetImg.src;openLb(full,targetImg.alt);return}const link=e.target.closest('a');if(link){const lbImg=link.querySelector('img[data-lightbox]');if(lbImg){e.preventDefault();const href=link.getAttribute('href');openLb(href||lbImg.currentSrc||lbImg.src,lbImg.alt);return}}if(e.target===lb)closeLb()});closeBtn&&closeBtn.addEventListener('click',closeLb);document.addEventListener('keydown',(e)=>{if(e.key==='Escape')closeLb()})})();
+</script>
+</body>
+</html>
