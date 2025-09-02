@@ -240,7 +240,31 @@
       .xp-geo{display:flex;align-items:center;gap:8px;margin:10px 0 6px;color:var(--muted);font-size:.95rem}
       .xp-geo .flag{font-size:1.1rem;line-height:1}
 
-
+      /* ====== NOSOTROS (cards estilo mock) ====== */
+      .about-grid{
+        display:grid; gap:18px;
+        grid-template-columns:repeat(3,1fr);
+      }
+      .about-card{
+        position:relative; background:var(--brand); color:#fff;
+        border-radius:22px; padding:18px 18px 16px;
+        border:1px solid rgba(0,0,0,.12);
+        box-shadow:0 10px 24px rgba(0,0,0,.25);
+      }
+      .about-badge{
+        display:inline-block; background:var(--bg); color:#1b1b1b;
+        font-weight:800; border-radius:12px; padding:.35rem .65rem;
+        box-shadow:0 4px 12px rgba(0,0,0,.18);
+      }
+      .about-card p{margin:.85rem 0 0; color:#f5f5f5}
+      .about-quote::after{
+        content:"”"; position:absolute; top:-8px; right:12px;
+        font-family: "Fraunces", serif; font-weight:800; font-size:46px; line-height:1; color:#fff; opacity:.9;
+      }
+      .about-list{margin:.85rem 0 0; padding-left:1.1rem}
+      .about-list li{margin:.25rem 0}
+      @media (max-width:900px){ .about-grid{grid-template-columns:1fr 1fr} }
+      @media (max-width:640px){ .about-grid{grid-template-columns:1fr} }
 
   </style>
 </head>
@@ -632,14 +656,37 @@
   <!-- Nosotros -->
   <section id="nosotros" class="section">
     <div class="container">
-      <h2 style="margin:0 0 14px;font-size:2rem;color:var(--brand)">Nuestra filosofía</h2>
-      <div class="grid-3" style="margin-top:18px">
-        <article class="feature"><h4>Guía & Seguridad</h4><p>Protocolos y ritmo adecuado en todo momento.</p></article>
-        <article class="feature"><h4>Grupos Pequeños</h4><p>Atención cercana para que disfrutes y avances a tu propio paso.</p></article>
-        <article class="feature"><h4>Respeto por la Naturaleza</h4><p>Prácticas de bajo impacto y colaboración con comunidades locales.</p></article>
+      <h2 style="margin:0 0 14px;font-size:2rem;color:var(--brand)">Nosotros</h2>
+      <div class="about-grid">
+
+        <!-- Your own summit -->
+        <article class="about-card about-quote">
+          <span class="about-badge">Your own summit</span>
+          <p>Buscamos inspirar y facilitar el acceso a experiencias de ecoturismo de manera segura y exclusiva. Nos esforzamos por eliminar las limitaciones y brindar a todas las personas, sin importar su nivel de experiencia, la oportunidad de conectarse con la belleza de la naturaleza y vivir momentos inolvidables y transformadores, tanto a nivel físico como emocional y mental.</p>
+        </article>
+
+        <!-- Misión -->
+        <article class="about-card about-quote">
+          <span class="about-badge">Misión</span>
+          <p>Nuestra misión es ayudar a las personas a alcanzar su propia cumbre. Buscamos ser el guía que los acompañe en su transformación personal, donde se encuentren a sí mismos, crezcan y se conecten con su entorno. Nuestro objetivo es brindarles una aventura alpina con un impacto positivo tanto en sus vidas como en el medio ambiente.</p>
+        </article>
+
+        <!-- Valores -->
+        <article class="about-card about-quote">
+          <span class="about-badge">Valores</span>
+          <ul class="about-list">
+            <li>Honestidad</li>
+            <li>Comunidad</li>
+            <li>Conciencia Social</li>
+            <li>Confianza</li>
+            <li>Gratitud</li>
+          </ul>
+        </article>
+
       </div>
     </div>
   </section>
+
 
   <!-- Contacto / Reserva tu lugar -->
   <section id="contacto" class="section">
