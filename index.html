@@ -236,14 +236,10 @@
         .xp-card, .xp-media img{transition:none !important}
       }
 
-      /* Ubicación en tarjetas */
-        .xp-geo{
-          display:flex; justify-content:space-between; align-items:center;
-          gap:12px; margin:10px 0 6px
-        }
-        .xp-geo .place{display:inline-flex; align-items:center; gap:8px; color:var(--muted); font-size:.95rem}
-        .xp-geo .pin{font-size:1.05rem; line-height:1}
-        .btn-sm{padding:.5rem .7rem; border-radius:10px; font-size:.9rem}
+      /* Ubicación compacta */
+      .xp-geo{display:flex;align-items:center;gap:8px;margin:10px 0 6px;color:var(--muted);font-size:.95rem}
+      .xp-geo .flag{font-size:1.1rem;line-height:1}
+
 
 
   </style>
@@ -461,8 +457,7 @@
               <p class="xp-sub">Itinerario curado · Guía profesional</p>
               <div class="xp-meta"><span>🛫 ZRH</span><span>⛺ Trek multi-día</span><span>❄️ Glaciares</span></div>
               <div class="xp-geo">
-                <span class="place"><span class="pin">📍</span>Alpes Berneses / Valais</span>
-                <a class="btn btn-outline btn-sm" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Swiss+Alps">Cómo llegar</a>
+                <span>Bern/Valais, CH</span><span class="flag" aria-hidden="true">🇨🇭</span>
               </div>
               <div class="xp-actions">
                 <a class="btn btn-outline" target="_blank" href="https://wa.me/523343682659?text=Hola%20Alpath%C2%AE%2C%20quiero%20informaci%C3%B3n%20de%20Alpes%20Suizos">Reservar</a>
@@ -481,8 +476,7 @@
               <p class="xp-sub">Arrecifes · Snorkel y Certificación de Buceo</p>
               <div class="xp-meta"><span>🏝 Caribe</span><span>⏱ 5 días</span><span>🐠 Snorkel</span></div>
               <div class="xp-geo">
-                <span class="place"><span class="pin">📍</span>Islas de la Bahía, HN</span>
-                <a class="btn btn-outline btn-sm" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Roat%C3%A1n">Cómo llegar</a>
+                <span>Islas de la Bahía, HN</span><span class="flag" aria-hidden="true">🇭🇳</span>
               </div>
               <div class="xp-actions">
                 <a class="btn btn-outline" target="_blank" href="https://wa.me/523343682659?text=Hola%20Alpath%C2%AE%2C%20quiero%20informaci%C3%B3n%20de%20Roat%C3%A1n">Reservar</a>
@@ -501,8 +495,7 @@
               <p class="xp-sub">Campamento con vistas al Fuego</p>
               <div class="xp-meta"><span>⛰ 3,976 msnm</span><span>⏱ 4 días</span><span>🔥 Volcán activo cercano</span></div>
               <div class="xp-geo">
-                <span class="place"><span class="pin">📍</span>Volcán Acatenango, GT</span>
-                <a class="btn btn-outline btn-sm" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Volc%C3%A1n+Acatenango">Cómo llegar</a>
+                <span>Sacatepéquez, GT</span><span class="flag" aria-hidden="true">🇬🇹</span>
               </div>
               <div class="xp-actions">
                 <a class="btn" href="acatenango.html">Ver detalle</a>
@@ -522,8 +515,7 @@
               <p class="xp-sub">Itinerario 7–9 días · Climas variables</p>
               <div class="xp-meta"><span>⛺ Multi-día</span><span>🧊 Glaciares</span><span>🌄 Miradores</span></div>
               <div class="xp-geo">
-                <span class="place"><span class="pin">📍</span>Torres del Paine / El Chaltén</span>
-                <a class="btn btn-outline btn-sm" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Patagonia+Torres+del+Paine+El+Chalt%C3%A9n">Cómo llegar</a>
+                <span>Patagonia, CL/AR</span><span class="flag" aria-hidden="true">🇨🇱🇦🇷</span>
               </div>
               <div class="xp-actions">
                 <a class="btn" href="patagonia.html">Ver detalle</a>
@@ -543,8 +535,7 @@
               <p class="xp-sub">4,680 msnm · Camping</p>
               <div class="xp-meta"><span>⛰ 4,680 msnm</span><span>⏱ 6 h</span><span>🚶‍♂️ 6 km</span></div>
               <div class="xp-geo">
-                <span class="place"><span class="pin">📍</span>Parque Nac. Nevado de Toluca, Méx.</span>
-                <a class="btn btn-outline btn-sm" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Parque+Nacional+Nevado+de+Toluca">Cómo llegar</a>
+                <span>Estado de México, MX</span><span class="flag" aria-hidden="true">🇲🇽</span>
               </div>
               <div class="xp-actions">
                 <a class="btn" href="nevado-toluca.html">Ver detalle</a>
@@ -564,8 +555,7 @@
               <p class="xp-sub">Trekking a la mujer dormida.</p>
               <div class="xp-meta"><span>⛰ 5,200 msnm</span><span>⏱ 16 h</span><span>🥾 Semi-técnico</span></div>
               <div class="xp-geo">
-                <span class="place"><span class="pin">📍</span>Parque Izta-Popo, Méx./Pue.</span>
-                <a class="btn btn-outline btn-sm" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Iztacc%C3%ADhuatl">Cómo llegar</a>
+                <span>Méx./Pue., MX</span><span class="flag" aria-hidden="true">🇲🇽</span>
               </div>
               <div class="xp-actions">
                 <a class="btn btn-outline" target="_blank" href="https://wa.me/523343682659?text=Hola%20Alpath%C2%AE%2C%20quiero%20informaci%C3%B3n%20de%20Iztacc%C3%ADhuatl">Reservar</a>
@@ -584,8 +574,7 @@
               <p class="xp-sub">Bosque alto · Vistas espectaculares</p>
               <div class="xp-meta"><span>⛰ 4,260 msnm</span><span>⏱ 6 h</span><span>🚶‍♀️ 6 km</span></div>
               <div class="xp-geo">
-                <span class="place"><span class="pin">📍</span>PN Nevado de Colima, Jal./Col.</span>
-                <a class="btn btn-outline btn-sm" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Parque+Nacional+Nevado+de+Colima">Cómo llegar</a>
+                <span>Jalisco, MX</span><span class="flag" aria-hidden="true">🇲🇽</span>
               </div>
               <div class="xp-actions">
                 <a class="btn" href="nevado-de-colima.html">Ver detalle</a>
@@ -605,8 +594,7 @@
               <p class="xp-sub">Aclimatación · Bosque y cumbre</p>
               <div class="xp-meta"><span>⛰ 4,461 msnm</span><span>⏱ 8 h</span><span>🚶 11 km</span></div>
               <div class="xp-geo">
-                <span class="place"><span class="pin">📍</span>Parque Nac. La Malinche, Tlax.</span>
-                <a class="btn btn-outline btn-sm" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Parque+Nacional+La+Malinche">Cómo llegar</a>
+                <span>Tlax./Pue., MX</span><span class="flag" aria-hidden="true">🇲🇽</span>
               </div>
               <div class="xp-actions">
                 <a class="btn" href="malinche.html">Ver detalle</a>
@@ -626,8 +614,7 @@
               <p class="xp-sub">Glaciar · Máxima altura de MX</p>
               <div class="xp-meta"><span>⛰ 5,636 msnm</span><span>⏱ 12 h</span><span>🧊 Equipo técnico</span></div>
               <div class="xp-geo">
-                <span class="place"><span class="pin">📍</span>Pico de Orizaba, Ver./Pue.</span>
-                <a class="btn btn-outline btn-sm" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Pico+de+Orizaba">Cómo llegar</a>
+                <span>Ver./Pue., MX</span><span class="flag" aria-hidden="true">🇲🇽</span>
               </div>
               <div class="xp-actions">
                 <a class="btn" href="pico-de-orizaba.html">Ver detalle</a>
