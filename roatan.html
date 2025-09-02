@@ -63,33 +63,32 @@ textarea{min-height:220px;resize:vertical;line-height:1.5}
 .lightbox.open{display:flex}.lightbox img{max-width:96vw;max-height:90vh;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.5);touch-action:pinch-zoom}
 .lightbox .close{position:absolute;top:14px;right:14px;background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.35);border-radius:10px;padding:.5rem .7rem}
 
-/* ===== GALERÍA DINÁMICA ===== */
-.gallery-masonry{column-gap:12px}
-.gallery-masonry .gitem{break-inside:avoid;display:block;margin:0 0 12px;border-radius:12px;overflow:hidden;position:relative}
-.gallery-masonry img{width:100%;height:auto;display:block;transition:transform .3s ease,filter .3s ease}
-.gallery-masonry .gitem:hover img{transform:scale(1.03)}
-@media(min-width:460px){.gallery-masonry{column-count:2}}
-@media(min-width:720px){.gallery-masonry{column-count:3}}
-@media(min-width:1024px){.gallery-masonry{column-count:4}}
+/* ===== CAROUSEL / SLIDER ===== */
+.carousel{position:relative;width:100%;overflow:hidden;background:#000}
+.carousel-frame{width:100%;height:clamp(280px,62vh,760px)}
+.carousel-track{display:flex;height:100%;transition:transform .6s ease;will-change:transform}
+.carousel-slide{min-width:100%;height:100%;position:relative}
+.carousel-slide img{width:100%;height:100%;object-fit:cover;display:block}
 
-/* Lightbox */
-.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.9);display:none;align-items:center;justify-content:center;z-index:1200}
-.lightbox.open{display:flex}
-.lightbox img{max-width:min(92vw,1400px);max-height:90vh;border-radius:12px}
-.lightbox .lb-ui{position:absolute;inset:0;pointer-events:none}
-.lightbox .btn{
-  pointer-events:auto;position:absolute;top:50%;transform:translateY(-50%);
-  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.4);color:#fff;
-  padding:.6rem .8rem;border-radius:12px
+/* Caption opcional */
+.carousel-caption{
+  position:absolute;left:0;right:0;bottom:0;padding:14px 16px;color:#fff;
+  background:linear-gradient(to top,rgba(0,0,0,.45),rgba(0,0,0,0));font-weight:600
 }
-.lightbox .btn:hover{background:rgba(255,255,255,.2)}
-.lightbox .prev{left:18px}
-.lightbox .next{right:18px}
-.lightbox .close{top:16px;right:16px;transform:none}
-.lightbox .caption{
-  position:absolute;left:0;right:0;bottom:14px;text-align:center;color:#fff;opacity:.9;
-  font-size:.95rem;padding:0 16px
-}
+
+/* Controles */
+.c-btn{position:absolute;top:50%;transform:translateY(-50%);z-index:5;
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.5);
+  color:#fff;padding:.6rem .8rem;border-radius:12px;cursor:pointer}
+.c-btn:hover{background:rgba(255,255,255,.22)}
+.c-prev{left:12px}
+.c-next{right:12px}
+
+/* Dots */
+.c-dots{position:absolute;left:0;right:0;bottom:10px;display:flex;gap:8px;justify-content:center;z-index:5}
+.c-dot{width:9px;height:9px;border-radius:999px;border:1px solid rgba(255,255,255,.8);background:transparent}
+.c-dot.is-active{background:#fff}
+
 
 </style>
 </head>
@@ -211,77 +210,74 @@ const toggle=document.getElementById('menuToggle');const links=document.getEleme
 </script>
 
 <script>
-/* ===== Lightbox + swipe (sin dependencias) ===== */
+/* ===== Slider genérico (autoplay, flechas, dots, swipe, pausa al hover) ===== */
 (function(){
-  const $ = (s,ctx=document)=>ctx.querySelector(s);
-  const $$ = (s,ctx=document)=>Array.from(ctx.querySelectorAll(s));
-  const root = document; // limitar a esta página
+  const carousels = document.querySelectorAll('.carousel');
+  carousels.forEach(initCarousel);
 
-  const items = $$('#galeria .gallery-masonry .gitem', root);
-  if(!items.length) return;
+  function initCarousel(root){
+    const frame = root.querySelector('.carousel-frame');
+    const track = root.querySelector('.carousel-track');
+    const slides = Array.from(root.querySelectorAll('.carousel-slide'));
+    const btnPrev = root.querySelector('.c-prev');
+    const btnNext = root.querySelector('.c-next');
+    const dotsWrap = root.querySelector('.c-dots');
+    const interval = parseInt(root.dataset.interval || '5000', 10);
+    const autoplay = root.dataset.autoplay !== 'false';
 
-  const lb = document.createElement('div');
-  lb.className = 'lightbox';
-  lb.id = 'lightbox';
-  lb.innerHTML = `
-    <img id="lbImg" alt="">
-    <div class="lb-ui">
-      <button class="btn prev" type="button" aria-label="Anterior">‹</button>
-      <button class="btn next" type="button" aria-label="Siguiente">›</button>
-      <button class="btn close" type="button" aria-label="Cerrar">✕</button>
-      <div class="caption" id="lbCap"></div>
-    </div>`;
-  document.body.appendChild(lb);
+    let i = 0, timer = null, hovering = false, touching = false;
+    // Dots
+    const dots = slides.map((_,idx)=>{
+      const b = document.createElement('button');
+      b.className = 'c-dot' + (idx===0 ? ' is-active' : '');
+      b.type = 'button';
+      b.setAttribute('aria-label', `Ir al slide ${idx+1}`);
+      b.addEventListener('click', ()=>go(idx,true));
+      dotsWrap.appendChild(b);
+      return b;
+    });
 
-  const lbImg = $('#lbImg', lb);
-  const lbCap = $('#lbCap', lb);
-  const btnPrev = $('.prev', lb);
-  const btnNext = $('.next', lb);
-  const btnClose= $('.close', lb);
+    function setTransform(){
+      track.style.transform = `translateX(${-i*100}%)`;
+      dots.forEach((d,idx)=>d.classList.toggle('is-active', idx===i));
+    }
+    function prev(manual=false){ i=(i-1+slides.length)%slides.length; setTransform(); restart(manual); }
+    function next(manual=false){ i=(i+1)%slides.length; setTransform(); restart(manual); }
+    function go(idx,manual=false){ i=idx%slides.length; setTransform(); restart(manual); }
 
-  let idx = 0;
+    function start(){
+      if(!autoplay) return;
+      stop();
+      timer = setInterval(()=>{ if(!hovering && !touching && document.visibilityState==='visible'){ next(); } }, interval);
+    }
+    function stop(){ if(timer){ clearInterval(timer); timer=null; } }
+    function restart(manual){ if(manual) { stop(); start(); } }
 
-  function openAt(i){
-    idx = i;
-    const el = items[idx];
-    lbImg.src = el.getAttribute('href');
-    lbCap.textContent = el.dataset.caption || el.querySelector('img')?.alt || '';
-    lb.classList.add('open');
-    lb.setAttribute('aria-hidden', 'false');
+    // Eventos
+    btnPrev.addEventListener('click', ()=>prev(true));
+    btnNext.addEventListener('click', ()=>next(true));
+
+    root.addEventListener('mouseenter', ()=>{ hovering=true; });
+    root.addEventListener('mouseleave', ()=>{ hovering=false; });
+    document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState!=='visible') stop(); else start(); });
+
+    // Swipe
+    let sx=0, sy=0;
+    frame.addEventListener('touchstart', (e)=>{ touching=true; const t=e.changedTouches[0]; sx=t.clientX; sy=t.clientY; }, {passive:true});
+    frame.addEventListener('touchend', (e)=>{
+      const t=e.changedTouches[0]; const dx=t.clientX-sx, dy=t.clientY-sy;
+      touching=false;
+      if(Math.abs(dx)>40 && Math.abs(dx)>Math.abs(dy)){ dx<0 ? next(true) : prev(true); }
+    }, {passive:true});
+
+    // Inicial
+    setTransform(); start();
+    // Resize: asegura altura
+    addEventListener('resize', ()=>setTransform());
   }
-  function closeLB(){
-    lb.classList.remove('open');
-    lb.setAttribute('aria-hidden', 'true');
-    lbImg.src = '';
-  }
-  function next(){ idx = (idx+1) % items.length; openAt(idx); }
-  function prev(){ idx = (idx-1+items.length) % items.length; openAt(idx); }
-
-  items.forEach((a,i)=>{
-    a.addEventListener('click', (e)=>{ e.preventDefault(); openAt(i); });
-  });
-  btnClose.addEventListener('click', closeLB);
-  btnNext.addEventListener('click', (e)=>{ e.stopPropagation(); next(); });
-  btnPrev.addEventListener('click', (e)=>{ e.stopPropagation(); prev(); });
-  lb.addEventListener('click', (e)=>{ if(e.target === lb) closeLB(); });
-  document.addEventListener('keydown', (e)=>{
-    if(!lb.classList.contains('open')) return;
-    if(e.key === 'Escape') closeLB();
-    if(e.key === 'ArrowRight') next();
-    if(e.key === 'ArrowLeft')  prev();
-  });
-  // Swipe
-  let sx=0, sy=0;
-  lb.addEventListener('touchstart', (e)=>{
-    const t = e.changedTouches[0]; sx=t.clientX; sy=t.clientY;
-  }, {passive:true});
-  lb.addEventListener('touchend', (e)=>{
-    const t = e.changedTouches[0], dx=t.clientX-sx, dy=t.clientY-sy;
-    if(Math.abs(dx)>40 && Math.abs(dx)>Math.abs(dy)){ (dx<0?next:prev)(); }
-    else if(Math.abs(dy)>70 && Math.abs(dy)>Math.abs(dx)){ closeLB(); }
-  }, {passive:true});
 })();
 </script>
+
 
 </body>
 </html>
