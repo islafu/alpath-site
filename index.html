@@ -174,6 +174,68 @@
       .c-dot{width:9px;height:9px;border-radius:999px;border:1px solid rgba(255,255,255,.8);background:transparent}
       .c-dot.is-active{background:#fff}
 
+            /* ===== EXPERIENCIAS DINÁMICAS ===== */
+      .xp-wrap{margin-top:18px}
+      .xp-track{
+        display:flex; gap:14px; overflow-x:auto; padding-bottom:6px;
+        scroll-snap-type:x mandatory
+      }
+      .xp-card{
+        scroll-snap-align:start;
+        min-width:85%; max-width:420px;
+        background:var(--card); border:1px solid rgba(0,0,0,.1); border-radius:18px;
+        box-shadow:0 6px 20px rgba(0,0,0,.10); transition:transform .35s ease, box-shadow .35s ease, border-color .3s;
+        position:relative; isolation:isolate;
+        transform:translateY(8px); opacity:0; /* se anima con IO */
+      }
+      .xp-media{position:relative; border-radius:14px; overflow:hidden; aspect-ratio:4/3; background:#111}
+      .xp-media img{width:100%; height:100%; object-fit:cover; transition:transform .6s ease}
+      .xp-card:hover .xp-media img{transform:scale(1.05)}
+      .xp-body{padding:14px 14px 12px}
+      .xp-title{margin:8px 0 4px; font-size:1.05rem; color:var(--brand)}
+      .xp-sub{margin:0; color:var(--muted); font-size:.95rem}
+
+      /* Chips/badges */
+      .chips{position:absolute; left:10px; top:10px; display:flex; gap:6px; z-index:1}
+      .chip{
+        display:inline-flex; align-items:center; gap:.4rem;
+        background:rgba(0,0,0,.55); color:#fff; border:1px solid rgba(255,255,255,.25);
+        padding:.28rem .55rem; border-radius:999px; font-size:.78rem; backdrop-filter: blur(4px);
+      }
+
+      /* Meta bar */
+      .xp-meta{display:flex; gap:10px; flex-wrap:wrap; margin:8px 0 10px; color:var(--muted); font-size:.9rem}
+      .xp-meta span{display:inline-flex; align-items:center; gap:.35rem}
+
+      /* Cupos */
+      .xp-cupos{background:rgba(0,0,0,.06); border:1px solid rgba(0,0,0,.08); border-radius:12px; height:10px; position:relative; overflow:hidden}
+      .xp-cupos .bar{--p:0%; width:var(--p); height:100%; background:linear-gradient(90deg, var(--brand), var(--accent)); transition:width 1s ease}
+      .xp-cupos .label{position:absolute; inset:auto 8px 12px auto; transform:translateY(-155%); font-size:.8rem; color:var(--muted)}
+
+      /* Botones */
+      .xp-actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+
+      /* Hover 3D suave en desktop */
+      @media (hover:hover) and (pointer:fine){
+        .xp-card{transform-style:preserve-3d; will-change:transform}
+        .xp-card:hover{transform:translateY(-4px) rotateX(.5deg) rotateY(.5deg); box-shadow:0 12px 28px rgba(0,0,0,.18)}
+      }
+
+      /* Grid en desktop (3 por fila) y sin scroll */
+      @media (min-width:760px){
+        .xp-track{display:grid; grid-template-columns:repeat(3, 1fr); gap:18px; overflow:visible}
+        .xp-card{min-width:initial}
+      }
+
+      /* Stagger reveal */
+      .xp-card.reveal{opacity:1; transform:translateY(0)}
+      .xp-card{transition-delay:var(--d,0ms)}
+
+      /* Accesibilidad: reducir movimiento */
+      @media (prefers-reduced-motion: reduce){
+        .xp-card, .xp-media img{transition:none !important}
+      }
+
 
   </style>
 </head>
@@ -370,109 +432,240 @@
   </section>
 
 
-  <!-- Experiencias -->
+    <!-- EXPERIENCIAS -->
   <section id="experiencias" class="section">
     <div class="container">
       <h2 style="margin:0 0 14px;font-size:2rem;color:var(--brand)">Experiencias</h2>
       <p class="lead" style="color:var(--muted)">Opciones para todos los niveles con la misma filosofía: seguridad, comunidad y crecimiento personal.</p>
-      <div class="grid-3" style="margin-top:18px">
-        <article class="feature">
-          <img loading="lazy" decoding="async" src="assets/calendario/nevado-card.jpg" alt="Nevado de Toluca" style="border-radius:12px;margin-bottom:10px" />
-          <h4>Nevado de Toluca — Amanecer</h4>
-          <p>Intermedio · 4,200 msnm · Cupo limitado</p>
-          <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap">
-            <a class="btn" href="nevado-toluca.html">Ver detalle</a>
-            <a class="btn btn-outline" target="_blank" href="https://wa.me/523343682659?text=Hola%20Alpath%C2%AE%2C%20quiero%20informaci%C3%B3n%20del%20Nevado%20de%20Toluca">Reservar</a>
-          </div>
-        </article>
-        <article class="feature">
-          <img loading="lazy" decoding="async" src="assets/calendario/izta-card.jpg" alt="Iztaccíhuatl" style="border-radius:12px;margin-bottom:10px" />
-          <h4>Iztaccíhuatl — Aclimatación & Cumbre</h4>
-          <p>Avanzado · Nieve y frío · Equipo básico requerido</p>
-          <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap">
-            <a class="btn" href="iztaccihuatl.html">Ver detalle</a>
-            <a class="btn btn-outline" target="_blank" href="https://wa.me/523343682659?text=Hola%20Alpath%C2%AE%2C%20quiero%20informaci%C3%B3n%20de%20Iztacc%C3%ADhuatl">Reservar</a>
-          </div>
-        </article>
-        <article class="feature">
-          <img loading="lazy" decoding="async" src="assets/calendario/alpes-card.jpg" alt="Alpes Suizos" style="border-radius:12px;margin-bottom:10px" />
-          <h4>Alpes Suizos — Lagos y Glaciares</h4>
-          <p>8 días · Cupos muy limitados</p>
-          <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap">
-            <a class="btn" href="alpes-suizos.html">Ver detalle</a>
-            <a class="btn btn-outline" target="_blank" href="https://wa.me/523343682659?text=Hola%20Alpath%C2%AE%2C%20quiero%20informaci%C3%B3n%20de%20Alpes%20Suizos">Reservar</a>
-          </div>
-        </article>
-        
-                <!-- Nevado de Colima -->
-        <article class="feature">
-          <img loading="lazy" decoding="async" src="assets/calendario/colima-card.jpg" alt="Nevado de Colima" style="border-radius:12px;margin-bottom:10px" />
-          <h4>Nevado de Colima — Amanecer</h4>
-          <p>Intermedio · 4,200 msnm · Cupo limitado</p>
-          <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap">
-            <a class="btn" href="nevado-de-colima.html">Ver detalle</a>
-            <a class="btn btn-outline" target="_blank" href="https://wa.me/523343682659?text=Hola%20Alpath%C2%AE%2C%20quiero%20informaci%C3%B3n%20del%20Nevado%20de%20Colima">Reservar</a>
-          </div>
-        </article>
 
-        <!-- La Malinche -->
-        <article class="feature">
-          <img loading="lazy" decoding="async" src="assets/calendario/malinche-card.jpg" alt="La Malinche" style="border-radius:12px;margin-bottom:10px" />
-          <h4>La Malinche — Cumbre</h4>
-          <p>Intermedio · 4,461 msnm · Técnica básica</p>
-          <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap">
-            <a class="btn" href="malinche.html">Ver detalle</a>
-            <a class="btn btn-outline" target="_blank" href="https://wa.me/523343682659?text=Hola%20Alpath%C2%AE%2C%20quiero%20informaci%C3%B3n%20de%20La%20Malinche">Reservar</a>
-          </div>
-        </article>
+      <div class="xp-wrap">
+        <div class="xp-track" id="xpTrack">
+          <!-- Nevado de Toluca -->
+          <article class="xp-card" style="--d:40ms" data-cupos="8" data-max="12">
+            <div class="xp-media">
+              <div class="chips">
+                <span class="chip">Intermedio</span>
+                <span class="chip">Amanecer</span>
+              </div>
+              <img src="assets/calendario/nevado-card.jpg" alt="Nevado de Toluca — Amanecer">
+            </div>
+            <div class="xp-body">
+              <h4 class="xp-title">Nevado de Toluca — Amanecer</h4>
+              <p class="xp-sub">4,200 msnm · Cupo limitado</p>
+              <div class="xp-meta">
+                <span>⛰ 4,200 msnm</span>
+                <span>⏱ 10 h</span>
+                <span>🚶‍♂️ 12 km</span>
+              </div>
+              <div class="xp-cupos">
+                <div class="bar"></div>
+                <div class="label"></div>
+              </div>
+              <div class="xp-actions">
+                <a class="btn" href="nevado-toluca.html">Ver detalle</a>
+                <a class="btn btn-outline" target="_blank" href="https://wa.me/523343682659?text=Hola%20Alpath%C2%AE%2C%20quiero%20informaci%C3%B3n%20del%20Nevado%20de%20Toluca">Reservar</a>
+              </div>
+            </div>
+          </article>
 
-        <!-- Pico de Orizaba -->
-        <article class="feature">
-          <img loading="lazy" decoding="async" src="assets/calendario/orizaba-card.jpg" alt="Pico de Orizaba" style="border-radius:12px;margin-bottom:10px" />
-          <h4>Pico de Orizaba — Itzáctepetl</h4>
-          <p>Avanzado · 5,636 msnm · Alta montaña</p>
-          <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap">
-            <a class="btn" href="pico-de-orizaba.html">Ver detalle</a>
-            <a class="btn btn-outline" target="_blank" href="https://wa.me/523343682659?text=Hola%20Alpath%C2%AE%2C%20quiero%20informaci%C3%B3n%20del%20Pico%20de%20Orizaba">Reservar</a>
-          </div>
-        </article>
+          <!-- Iztaccíhuatl -->
+          <article class="xp-card" style="--d:100ms" data-cupos="5" data-max="10">
+            <div class="xp-media">
+              <div class="chips">
+                <span class="chip">Avanzado</span>
+                <span class="chip">Alta montaña</span>
+              </div>
+              <img src="assets/calendario/izta-card.jpg" alt="Iztaccíhuatl — Aclimatación & Cumbre">
+            </div>
+            <div class="xp-body">
+              <h4 class="xp-title">Iztaccíhuatl — Aclimatación & Cumbre</h4>
+              <p class="xp-sub">Nieve y frío · Equipo básico requerido</p>
+              <div class="xp-meta">
+                <span>⛰ 5,200 msnm</span>
+                <span>⏱ 18 h</span>
+                <span>🥾 Crampones</span>
+              </div>
+              <div class="xp-cupos">
+                <div class="bar"></div>
+                <div class="label"></div>
+              </div>
+              <div class="xp-actions">
+                <a class="btn btn-outline" target="_blank" href="https://wa.me/523343682659?text=Hola%20Alpath%C2%AE%2C%20quiero%20informaci%C3%B3n%20de%20Iztacc%C3%ADhuatl">Reservar</a>
+              </div>
+            </div>
+          </article>
 
-        <!-- Patagonia -->
-        <article class="feature">
-          <img loading="lazy" decoding="async" src="assets/calendario/patagonia-card.jpg" alt="Patagonia" style="border-radius:12px;margin-bottom:10px" />
-          <h4>Patagonia — Trek de lagos</h4>
-          <p>8–10 días · Cupos limitados</p>
-          <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap">
-            <a class="btn" href="patagonia.html">Ver detalle</a>
-            <a class="btn btn-outline" target="_blank" href="https://wa.me/523343682659?text=Hola%20Alpath%C2%AE%2C%20quiero%20informaci%C3%B3n%20de%20Patagonia">Reservar</a>
-          </div>
-        </article>
+          <!-- Nevado de Colima -->
+          <article class="xp-card" style="--d:160ms" data-cupos="9" data-max="14">
+            <div class="xp-media">
+              <div class="chips">
+                <span class="chip">Intermedio</span>
+                <span class="chip">Bosque</span>
+              </div>
+              <img src="assets/calendario/colima-card.jpg" alt="Nevado de Colima — Senderos de pino">
+            </div>
+            <div class="xp-body">
+              <h4 class="xp-title">Nevado de Colima</h4>
+              <p class="xp-sub">Bosque alto · Vistas espectaculares</p>
+              <div class="xp-meta">
+                <span>⛰ 3,820 msnm</span>
+                <span>⏱ 8 h</span>
+                <span>🚶‍♀️ 10 km</span>
+              </div>
+              <div class="xp-cupos">
+                <div class="bar"></div>
+                <div class="label"></div>
+              </div>
+              <div class="xp-actions">
+                <a class="btn" href="nevado-de-colima.html">Ver detalle</a>
+                <a class="btn btn-outline" target="_blank" href="https://wa.me/523343682659?text=Hola%20Alpath%C2%AE%2C%20quiero%20informaci%C3%B3n%20del%20Nevado%20de%20Colima">Reservar</a>
+              </div>
+            </div>
+          </article>
 
-        <!-- Roatán -->
-        <article class="feature">
-          <img loading="lazy" decoding="async" src="assets/calendario/roatan-card.jpg" alt="Roatán" style="border-radius:12px;margin-bottom:10px" />
-          <h4>Roatán — Aventura & Mar</h4>
-          <p>Snorkel · Kayak · Senderismo costero</p>
-          <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap">
-            <a class="btn" href="roatan.html">Ver detalle</a>
-            <a class="btn btn-outline" target="_blank" href="https://wa.me/523343682659?text=Hola%20Alpath%C2%AE%2C%20quiero%20informaci%C3%B3n%20de%20Roat%C3%A1n">Reservar</a>
-          </div>
-        </article>
+          <!-- La Malinche -->
+          <article class="xp-card" style="--d:220ms" data-cupos="7" data-max="12">
+            <div class="xp-media">
+              <div class="chips">
+                <span class="chip">Básico</span>
+                <span class="chip">Aclimatación</span>
+              </div>
+              <img src="assets/calendario/malinche-card.jpg" alt="La Malinche — Cresta y pinos">
+            </div>
+            <div class="xp-body">
+              <h4 class="xp-title">La Malinche</h4>
+              <p class="xp-sub">Aclimatación ideal · Bosque y cumbre</p>
+              <div class="xp-meta">
+                <span>⛰ 4,461 msnm</span>
+                <span>⏱ 8 h</span>
+                <span>🚶 11 km</span>
+              </div>
+              <div class="xp-cupos">
+                <div class="bar"></div>
+                <div class="label"></div>
+              </div>
+              <div class="xp-actions">
+                <a class="btn" href="malinche.html">Ver detalle</a>
+                <a class="btn btn-outline" target="_blank" href="https://wa.me/523343682659?text=Hola%20Alpath%C2%AE%2C%20quiero%20informaci%C3%B3n%20de%20La%20Malinche">Reservar</a>
+              </div>
+            </div>
+          </article>
 
-        <!-- Acatenango -->
-        <article class="feature">
-          <img loading="lazy" decoding="async" src="assets/calendario/acatenango-card.jpg" alt="Acatenango" style="border-radius:12px;margin-bottom:10px" />
-          <h4>Acatenango — Noche de volcán</h4>
-          <p>2 días · Campamento · Vista al Fuego</p>
-          <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap">
-            <a class="btn" href="acatenango.html">Ver detalle</a>
-            <a class="btn btn-outline" target="_blank" href="https://wa.me/523343682659?text=Hola%20Alpath%C2%AE%2C%20quiero%20informaci%C3%B3n%20de%20Acatenango">Reservar</a>
-          </div>
-        </article>
+          <!-- Pico de Orizaba -->
+          <article class="xp-card" style="--d:280ms" data-cupos="4" data-max="8">
+            <div class="xp-media">
+              <div class="chips">
+                <span class="chip">Avanzado</span>
+                <span class="chip">Glaciar</span>
+              </div>
+              <img src="assets/calendario/orizaba-card.jpg" alt="Pico de Orizaba — Glaciar de Jamapa">
+            </div>
+            <div class="xp-body">
+              <h4 class="xp-title">Pico de Orizaba</h4>
+              <p class="xp-sub">Glaciar · Máxima altura de MX</p>
+              <div class="xp-meta">
+                <span>⛰ 5,636 msnm</span>
+                <span>⏱ 16 h</span>
+                <span>🧊 Equipo técnico</span>
+              </div>
+              <div class="xp-cupos">
+                <div class="bar"></div>
+                <div class="label"></div>
+              </div>
+              <div class="xp-actions">
+                <a class="btn" href="pico-de-orizaba.html">Ver detalle</a>
+                <a class="btn btn-outline" target="_blank" href="https://wa.me/523343682659?text=Hola%20Alpath%C2%AE%2C%20quiero%20informaci%C3%B3n%20del%20Pico%20de%20Orizaba">Reservar</a>
+              </div>
+            </div>
+          </article>
 
+          <!-- Alpes Suizos -->
+          <article class="xp-card" style="--d:340ms" data-cupos="3" data-max="6">
+            <div class="xp-media">
+              <div class="chips">
+                <span class="chip">Internacional</span>
+                <span class="chip">8 días</span>
+              </div>
+              <img src="assets/calendario/alpes-card.jpg" alt="Alpes Suizos — Lagos y glaciares">
+            </div>
+            <div class="xp-body">
+              <h4 class="xp-title">Alpes Suizos — Lagos y Glaciares</h4>
+              <p class="xp-sub">Itinerario curado · Guía profesional</p>
+              <div class="xp-meta">
+                <span>🛫 ZRH</span>
+                <span>⛺ Trek multi-día</span>
+                <span>❄️ Glaciares</span>
+              </div>
+              <div class="xp-cupos">
+                <div class="bar"></div>
+                <div class="label"></div>
+              </div>
+              <div class="xp-actions">
+                <a class="btn btn-outline" target="_blank" href="https://wa.me/523343682659?text=Hola%20Alpath%C2%AE%2C%20quiero%20informaci%C3%B3n%20de%20Alpes%20Suizos">Reservar</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Roatán -->
+          <article class="xp-card" style="--d:400ms" data-cupos="6" data-max="10">
+            <div class="xp-media">
+              <div class="chips">
+                <span class="chip">Internacional</span>
+                <span class="chip">Mar</span>
+              </div>
+              <img src="assets/calendario/roatan-card.jpg" alt="Roatán — Caribe y arrecifes">
+            </div>
+            <div class="xp-body">
+              <h4 class="xp-title">Roatán</h4>
+              <p class="xp-sub">Arrecifes · Snorkel y relax</p>
+              <div class="xp-meta">
+                <span>🏝 Caribe</span>
+                <span>⏱ 5 días</span>
+                <span>🐠 Snorkel</span>
+              </div>
+              <div class="xp-cupos">
+                <div class="bar"></div>
+                <div class="label"></div>
+              </div>
+              <div class="xp-actions">
+                <a class="btn btn-outline" target="_blank" href="https://wa.me/523343682659?text=Hola%20Alpath%C2%AE%2C%20quiero%20informaci%C3%B3n%20de%20Roat%C3%A1n">Reservar</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Acatenango -->
+          <article class="xp-card" style="--d:460ms" data-cupos="5" data-max="10">
+            <div class="xp-media">
+              <div class="chips">
+                <span class="chip">Intermedio</span>
+                <span class="chip">Volcán activo</span>
+              </div>
+              <img src="assets/calendario/acatenango-card.jpg" alt="Acatenango — Noche de fumarolas">
+            </div>
+            <div class="xp-body">
+              <h4 class="xp-title">Acatenango</h4>
+              <p class="xp-sub">Campamento con vistas al Fuego</p>
+              <div class="xp-meta">
+                <span>⛰ 3,976 msnm</span>
+                <span>⏱ 2 días</span>
+                <span>🔥 Volcán activo cercano</span>
+              </div>
+              <div class="xp-cupos">
+                <div class="bar"></div>
+                <div class="label"></div>
+              </div>
+              <div class="xp-actions">
+                <a class="btn" href="acatenango.html">Ver detalle</a>
+                <a class="btn btn-outline" target="_blank" href="https://wa.me/523343682659?text=Hola%20Alpath%C2%AE%2C%20quiero%20informaci%C3%B3n%20de%20Acatenango">Reservar</a>
+              </div>
+            </div>
+          </article>
+
+        </div>
       </div>
     </div>
   </section>
+
 
   <!-- Nosotros -->
   <section id="nosotros" class="section">
@@ -714,6 +907,35 @@
   }
 })();
 </script>
+
+<script>
+// === Cupos + Stagger reveal ===
+(function(){
+  const cards = document.querySelectorAll('.xp-card');
+  // Cupos
+  cards.forEach(card=>{
+    const cur = parseInt(card.dataset.cupos||'0',10);
+    const max = parseInt(card.dataset.max||'0',10) || 1;
+    const pct = Math.max(0, Math.min(100, Math.round((cur/max)*100)));
+    const bar = card.querySelector('.xp-cupos .bar');
+    const label = card.querySelector('.xp-cupos .label');
+    if(bar){ bar.style.setProperty('--p', pct+'%'); }
+    if(label){ label.textContent = `${cur}/${max}`; }
+  });
+
+  // Stagger reveal al entrar al viewport
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add('reveal');
+        io.unobserve(e.target);
+      }
+    });
+  }, {threshold:.15});
+  cards.forEach(c=>io.observe(c));
+})();
+</script>
+
 
 
 
