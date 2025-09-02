@@ -63,18 +63,18 @@ textarea{min-height:220px;resize:vertical;line-height:1.5}
 .lightbox.open{display:flex}.lightbox img{max-width:96vw;max-height:90vh;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.5);touch-action:pinch-zoom}
 .lightbox .close{position:absolute;top:14px;right:14px;background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.35);border-radius:10px;padding:.5rem .7rem}
 
-/* ===== CAROUSEL / SLIDER ===== */
+/* ===== CAROUSEL / SLIDER (multi-per-view) ===== */
 .carousel{position:relative;width:100%;overflow:hidden;background:#000}
 .carousel-frame{width:100%;height:clamp(280px,62vh,760px)}
 .carousel-track{display:flex;height:100%;transition:transform .6s ease;will-change:transform}
 .carousel-slide{min-width:100%;height:100%;position:relative}
+@media (min-width:1024px){
+  .carousel-slide{min-width:33.3333%} /* 3 por vista en desktop */
+}
 .carousel-slide img{width:100%;height:100%;object-fit:cover;display:block}
 
-/* Caption opcional */
-.carousel-caption{
-  position:absolute;left:0;right:0;bottom:0;padding:14px 16px;color:#fff;
-  background:linear-gradient(to top,rgba(0,0,0,.45),rgba(0,0,0,0));font-weight:600
-}
+/* Ocultar caption (punto 3) */
+.carousel-caption{display:none}
 
 /* Controles */
 .c-btn{position:absolute;top:50%;transform:translateY(-50%);z-index:5;
@@ -88,6 +88,7 @@ textarea{min-height:220px;resize:vertical;line-height:1.5}
 .c-dots{position:absolute;left:0;right:0;bottom:10px;display:flex;gap:8px;justify-content:center;z-index:5}
 .c-dot{width:9px;height:9px;border-radius:999px;border:1px solid rgba(255,255,255,.8);background:transparent}
 .c-dot.is-active{background:#fff}
+
 
 
 </style>
@@ -120,22 +121,38 @@ textarea{min-height:220px;resize:vertical;line-height:1.5}
   </div>
 </section>
 
-<section id="galeria" class="section" style="background:var(--card)">
+<section class="section" style="padding:28px 0 8px;background:var(--card)">
   <div class="container">
-    <h2 style="margin:0 0 8px;font-size:2rem;color:var(--brand);text-align:center">Galería — Roatán</h2>
-    <div class="gallery-masonry">
-      <a class="gitem" href="assets/galeria/roatan-01.jpg" data-caption="Roatán — Arrecife">
-        <img loading="lazy" decoding="async" src="assets/galeria/roatan-01.jpg" alt="Roatán — Arrecife">
-      </a>
-      <a class="gitem" href="assets/galeria/roatan-02.jpg" data-caption="Roatán — Snorkel">
-        <img loading="lazy" decoding="async" src="assets/galeria/roatan-02.jpg" alt="Roatán — Snorkel">
-      </a>
-      <a class="gitem" href="assets/galeria/roatan-03.jpg" data-caption="Roatán — Playa tropical">
-        <img loading="lazy" decoding="async" src="assets/galeria/roatan-03.jpg" alt="Roatán — Playa tropical">
-      </a>
-    </div>
+    <h2 style="margin:0;font-size:2rem;color:var(--brand);text-align:center">Momentos Alpath®</h2>
   </div>
 </section>
+
+
+<!-- Galería — Roatán -->
+<section id="galeria" class="section" style="padding:0">
+  <div class="carousel" data-autoplay="true" data-interval="4800">
+    <div class="carousel-frame">
+      <div class="carousel-track">
+        <div class="carousel-slide">
+          <img src="assets/galeria/roatan-01.jpg" alt="Roatán — Arrecife">
+          <div class="carousel-caption">Roatán — Arrecife</div>
+        </div>
+        <div class="carousel-slide">
+          <img src="assets/galeria/roatan-02.jpg" alt="Roatán — Snorkel">
+          <div class="carousel-caption">Roatán — Snorkel</div>
+        </div>
+        <div class="carousel-slide">
+          <img src="assets/galeria/roatan-03.jpg" alt="Roatán — Playa tropical">
+          <div class="carousel-caption">Roatán — Playa tropical</div>
+        </div>
+      </div>
+    </div>
+    <button class="c-btn c-prev" type="button" aria-label="Anterior">‹</button>
+    <button class="c-btn c-next" type="button" aria-label="Siguiente">›</button>
+    <div class="c-dots" aria-label="Paginación"></div>
+  </div>
+</section>
+
 
 
 <section class="section">
@@ -210,73 +227,111 @@ const toggle=document.getElementById('menuToggle');const links=document.getEleme
 </script>
 
 <script>
-/* ===== Slider genérico (autoplay, flechas, dots, swipe, pausa al hover) ===== */
+/* ===== Slider multi-per-view (autoplay, flechas, dots por grupo, swipe) ===== */
 (function(){
-  const carousels = document.querySelectorAll('.carousel');
-  carousels.forEach(initCarousel);
+  const mqDesktop = window.matchMedia('(min-width:1024px)');
+  const debounce = (fn,ms=150)=>{let t;return (...a)=>{clearTimeout(t);t=setTimeout(()=>fn(...a),ms);}};
+
+  document.querySelectorAll('.carousel').forEach(initCarousel);
 
   function initCarousel(root){
-    const frame = root.querySelector('.carousel-frame');
-    const track = root.querySelector('.carousel-track');
-    const slides = Array.from(root.querySelectorAll('.carousel-slide'));
+    const frame   = root.querySelector('.carousel-frame');
+    const track   = root.querySelector('.carousel-track');
+    const slides  = Array.from(root.querySelectorAll('.carousel-slide'));
     const btnPrev = root.querySelector('.c-prev');
     const btnNext = root.querySelector('.c-next');
-    const dotsWrap = root.querySelector('.c-dots');
+    const dotsWrap= root.querySelector('.c-dots');
+
     const interval = parseInt(root.dataset.interval || '5000', 10);
     const autoplay = root.dataset.autoplay !== 'false';
 
-    let i = 0, timer = null, hovering = false, touching = false;
-    // Dots
-    const dots = slides.map((_,idx)=>{
-      const b = document.createElement('button');
-      b.className = 'c-dot' + (idx===0 ? ' is-active' : '');
-      b.type = 'button';
-      b.setAttribute('aria-label', `Ir al slide ${idx+1}`);
-      b.addEventListener('click', ()=>go(idx,true));
-      dotsWrap.appendChild(b);
-      return b;
-    });
+    let i = 0;                 // índice del primer slide visible
+    let spv = getSPV();        // slides por vista (1 móvil, 3 desktop)
+    let timer = null, hovering = false, touching = false;
+    let dots = [];
+
+    function getSPV(){ return mqDesktop.matches ? 3 : 1; }
+    function groupsCount(){ return Math.ceil(slides.length / spv); }
+    function groupIndex(){ return Math.floor(i / spv); }
+
+    function buildDots(){
+      dotsWrap.innerHTML = '';
+      dots = Array.from({length: groupsCount()}, (_,g)=>{
+        const b = document.createElement('button');
+        b.className = 'c-dot' + (g===groupIndex() ? ' is-active' : '');
+        b.type = 'button';
+        b.setAttribute('aria-label', `Ir al grupo ${g+1}`);
+        b.addEventListener('click', ()=> go(g*spv, true));
+        dotsWrap.appendChild(b);
+        return b;
+      });
+    }
 
     function setTransform(){
-      track.style.transform = `translateX(${-i*100}%)`;
-      dots.forEach((d,idx)=>d.classList.toggle('is-active', idx===i));
+      const offset = (100 / spv) * i;        // % a desplazar según spv
+      track.style.transform = `translateX(-${offset}%)`;
+      const g = groupIndex();
+      dots.forEach((d,idx)=> d.classList.toggle('is-active', idx===g));
     }
-    function prev(manual=false){ i=(i-1+slides.length)%slides.length; setTransform(); restart(manual); }
-    function next(manual=false){ i=(i+1)%slides.length; setTransform(); restart(manual); }
-    function go(idx,manual=false){ i=idx%slides.length; setTransform(); restart(manual); }
+
+    function clampIndex(idx){
+      if (idx < 0) return slides.length - 1;
+      if (idx > slides.length - 1) return 0;
+      return idx;
+    }
+
+    function prev(manual=false){ i = clampIndex(i - 1); setTransform(); restart(manual); }
+    function next(manual=false){ i = clampIndex(i + 1); setTransform(); restart(manual); }
+    function go(idx,manual=false){ i = clampIndex(idx); setTransform(); restart(manual); }
 
     function start(){
       if(!autoplay) return;
       stop();
-      timer = setInterval(()=>{ if(!hovering && !touching && document.visibilityState==='visible'){ next(); } }, interval);
+      timer = setInterval(()=> {
+        if(!hovering && !touching && document.visibilityState==='visible'){ next(); }
+      }, interval);
     }
     function stop(){ if(timer){ clearInterval(timer); timer=null; } }
-    function restart(manual){ if(manual) { stop(); start(); } }
+    function restart(manual){ if(manual){ stop(); start(); } }
 
-    // Eventos
-    btnPrev.addEventListener('click', ()=>prev(true));
-    btnNext.addEventListener('click', ()=>next(true));
+    // Eventos UI
+    if(btnPrev) btnPrev.addEventListener('click', ()=> prev(true));
+    if(btnNext) btnNext.addEventListener('click', ()=> next(true));
 
-    root.addEventListener('mouseenter', ()=>{ hovering=true; });
-    root.addEventListener('mouseleave', ()=>{ hovering=false; });
-    document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState!=='visible') stop(); else start(); });
+    root.addEventListener('mouseenter', ()=> hovering=true);
+    root.addEventListener('mouseleave', ()=> hovering=false);
+    document.addEventListener('visibilitychange', ()=> { if(document.visibilityState!=='visible') stop(); else start(); });
 
     // Swipe
     let sx=0, sy=0;
     frame.addEventListener('touchstart', (e)=>{ touching=true; const t=e.changedTouches[0]; sx=t.clientX; sy=t.clientY; }, {passive:true});
     frame.addEventListener('touchend', (e)=>{
-      const t=e.changedTouches[0]; const dx=t.clientX-sx, dy=t.clientY-sy;
+      const t=e.changedTouches[0], dx=t.clientX-sx, dy=t.clientY-sy;
       touching=false;
       if(Math.abs(dx)>40 && Math.abs(dx)>Math.abs(dy)){ dx<0 ? next(true) : prev(true); }
     }, {passive:true});
 
-    // Inicial
-    setTransform(); start();
-    // Resize: asegura altura
-    addEventListener('resize', ()=>setTransform());
+    // Responsive: si cambia spv, rearmar dots y reajustar transform
+    const onResize = debounce(()=>{
+      const s = getSPV();
+      if (s !== spv){
+        spv = s;
+        // re-alinear i al inicio del grupo equivalente
+        i = Math.max(0, Math.min(i, slides.length-1));
+        buildDots();
+        setTransform();
+      }
+    }, 150);
+    mqDesktop.addEventListener ? mqDesktop.addEventListener('change', onResize) : window.addEventListener('resize', onResize);
+
+    // Init
+    buildDots();
+    setTransform();
+    start();
   }
 })();
 </script>
+
 
 
 </body>
