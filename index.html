@@ -26,6 +26,8 @@
       --bg:#f4a71d;--card:#fdf5e6;--muted:#5c4520;--text:#1f1a09;--brand:#3a492d;--accent:#a65a2c;--ring:0 0 0 3px rgba(58,73,45,.35);
       --hero:url('assets/landing-hero.jpg');
       --hero-mobile:url('assets/landing-hero-mobile.jpg');
+      --about-bg: url('assets/nosotros-bg.jpg');              /* cambia el archivo */
+      --about-mark: url('assets/brand/isotipo-greengray-512.png'); /* isotipo PNG */
     }
     *{box-sizing:border-box}
     html,body{margin:0;height:100%}
@@ -265,6 +267,28 @@
       .about-list li{margin:.25rem 0}
       @media (max-width:900px){ .about-grid{grid-template-columns:1fr 1fr} }
       @media (max-width:640px){ .about-grid{grid-template-columns:1fr} }
+
+            /* --- NOSOTROS mejorado --- */
+      .section.about{position:relative;color:#fff;padding:84px 0}
+      .section.about .bg{position:absolute;inset:0;background:var(--about-bg) center/cover no-repeat;z-index:-2}
+      .section.about::after{content:"";position:absolute;inset:0;
+        background:linear-gradient(180deg,rgba(0,0,0,.50),rgba(0,0,0,.55));z-index:-1}
+
+      .about-head{display:flex;align-items:flex-end;gap:14px;margin-bottom:22px}
+      .about-head h2{margin:0;font-size:clamp(1.8rem,3.5vw,2.4rem);font-family:'Fraunces',serif}
+      .about-head p{margin:0;color:#e9e9e9}
+      .about-mark{width:56px;height:56px;flex:none;opacity:.9;filter:drop-shadow(0 2px 8px rgba(0,0,0,.45))}
+
+      .about-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+      .about-card{position:relative;background:rgba(253,245,230,.92);color:var(--text);
+        border:1px solid rgba(0,0,0,.08);border-radius:18px;padding:18px;overflow:hidden}
+      .about-card h3{margin:0 0 8px;color:var(--brand)}
+      .about-card p{margin:0;color:var(--muted)}
+      .about-card ul{margin:0;padding-left:18px;color:var(--muted)}
+      .about-card .watermark{position:absolute;right:-10px;bottom:-10px;width:120px;height:120px;
+        background:var(--about-mark) center/contain no-repeat;opacity:.08;pointer-events:none}
+
+      @media (max-width:900px){.about-grid{grid-template-columns:1fr}}
 
   </style>
 </head>
@@ -660,38 +684,45 @@
 
 
   <!-- Nosotros -->
-  <section id="nosotros" class="section">
+  <section id="nosotros" class="section about">
+    <div class="bg" aria-hidden="true"></div>
     <div class="container">
-      <h2 style="margin:0 0 14px;font-size:2rem;color:var(--brand)">Nosotros</h2>
+      <header class="about-head">
+        <img class="about-mark" src="assets/brand/isotipo-greengray-512.png" alt="Isotipo Alpath®">
+        <div>
+          <h2>Nosotros</h2>
+          <p>Your Own Summit — experiencias de montaña seguras, cercanas y transformativas.</p>
+        </div>
+      </header>
+
       <div class="about-grid">
-
-        <!-- Your own summit -->
-        <article class="about-card about-quote">
-          <span class="about-badge">Your own summit</span>
-          <p>Buscamos inspirar y facilitar el acceso a experiencias de ecoturismo de manera segura y exclusiva. Nos esforzamos por eliminar las limitaciones y brindar a todas las personas, sin importar su nivel de experiencia, la oportunidad de conectarse con la belleza de la naturaleza y vivir momentos inolvidables y transformadores, tanto a nivel físico como emocional y mental.</p>
+        <article class="about-card">
+          <h3>Misión</h3>
+          <p>Nuestra misión es ayudar a las personas a alcanzar su propia cumbre. Buscamos ser el guía que los acompañe en su transformación personal, donde se encuentren a sí mismos, crezcan y se conecten con su entorno. Nuestro objetivo es brindar una aventura alpina con impacto positivo en sus vidas y en el medio ambiente.</p>
+          <span class="watermark" aria-hidden="true"></span>
         </article>
 
-        <!-- Misión -->
-        <article class="about-card about-quote">
-          <span class="about-badge">Misión</span>
-          <p>Nuestra misión es ayudar a las personas a alcanzar su propia cumbre. Buscamos ser el guía que los acompañe en su transformación personal, donde se encuentren a sí mismos, crezcan y se conecten con su entorno. Nuestro objetivo es brindarles una aventura alpina con un impacto positivo tanto en sus vidas como en el medio ambiente.</p>
+        <article class="about-card">
+          <h3>Your Own Summit</h3>
+          <p>Inspiramos y facilitamos el acceso a experiencias de ecoturismo de manera segura y exclusiva. Eliminamos limitaciones y brindamos a todas las personas, sin importar su nivel, la oportunidad de conectar con la naturaleza y vivir momentos inolvidables y transformadores — físicos, emocionales y mentales.</p>
+          <span class="watermark" aria-hidden="true"></span>
         </article>
 
-        <!-- Valores -->
-        <article class="about-card about-quote">
-          <span class="about-badge">Valores</span>
-          <ul class="about-list">
+        <article class="about-card">
+          <h3>Valores</h3>
+          <ul>
             <li>Honestidad</li>
             <li>Comunidad</li>
             <li>Conciencia Social</li>
             <li>Confianza</li>
             <li>Gratitud</li>
           </ul>
+          <span class="watermark" aria-hidden="true"></span>
         </article>
-
       </div>
     </div>
   </section>
+
 
 
   <!-- Contacto / Reserva tu lugar -->
