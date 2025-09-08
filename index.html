@@ -315,8 +315,152 @@
 
       @media (max-width:900px){.about-grid{grid-template-columns:1fr}}
 
+      /* === Framer-like UI pack === */
+      :root{
+        --brand-grad: linear-gradient(135deg,#3a492d 0%, #88a06c 100%);
+        --ig-grad: linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5);
+        --glass-bg: rgba(32, 40, 28, .48);
+        --glass-bd: rgba(255,255,255,.18);
+        --lift: translateY(-6px);
+      }
+
+      /* Glass/blur header */
+      header.glass {
+        background: transparent;
+        border-bottom: 1px solid transparent;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        transition: background .35s, border .35s, backdrop-filter .35s;
+      }
+      header.glass.scrolled{
+        background: var(--glass-bg);
+        border-bottom: 1px solid var(--glass-bd);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+      }
+
+      /* Botones con gradiente estilo Framer */
+      .btn-gradient{
+        background: var(--brand-grad);
+        border: none;
+        color:#fff;
+        box-shadow: 0 10px 30px rgba(58,73,45,.35);
+      }
+      .btn-instagram{
+        background: var(--ig-grad);
+        border: none;
+        color:#fff;
+        box-shadow: 0 10px 30px rgba(0,0,0,.25);
+      }
+      .btn-sm{ padding:.65rem .8rem; border-radius:12px; font-size:.95rem }
+
+      /* Micro-interacciones */
+      .btn { transition: transform .18s ease, box-shadow .18s ease }
+      .btn:hover{ transform: translateY(-2px) }
+      .btn:active{ transform: translateY(0) scale(.98) }
+
+      /* Reveal al hacer scroll (IntersectionObserver) */
+      .reveal{ opacity:0; transform: translateY(18px) scale(.98) ; filter: blur(2px);}
+      .reveal.in{ opacity:1; transform: none; filter: none; transition: opacity .55s ease, transform .55s ease, filter .55s ease }
+      .reveal-stagger > *{ opacity:0; transform: translateY(14px); }
+      .reveal-stagger.in > *{ opacity:1; transform:none; }
+      .reveal-stagger.in > *{ transition: transform .5s ease, opacity .5s ease; }
+      .reveal-stagger.in > *:nth-child(1){ transition-delay:.06s}
+      .reveal-stagger.in > *:nth-child(2){ transition-delay:.12s}
+      .reveal-stagger.in > *:nth-child(3){ transition-delay:.18s}
+      .reveal-stagger.in > *:nth-child(4){ transition-delay:.24s}
+      .reveal-stagger.in > *:nth-child(5){ transition-delay:.30s}
+
+      /* Tilt 3D en tarjetas */
+      .fx-tilt{
+        will-change: transform;
+        transform-style: preserve-3d;
+        transition: transform .2s ease, box-shadow .2s ease;
+      }
+      .fx-tilt:hover{
+        box-shadow: 0 14px 36px rgba(0,0,0,.22);
+      }
+      .fx-tilt .xp-media img{ transform: translateZ(0); transition: transform .35s ease; }
+      .fx-tilt:hover .xp-media img{ transform: scale(1.03); }
+
+      /* Parallax suave del hero */
+      .parallax-hero::before{ will-change: transform; }
+      .parallax-hero .container{ will-change: transform; }
+
+      /* Marquee opcional para slogans (por si lo usas) */
+      .marquee{ overflow: hidden; mask: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent) }
+      .marquee .track{ display:flex; gap:2rem; white-space:nowrap; animation: slide 28s linear infinite }
+      @keyframes slide { from{ transform:translateX(0)} to{ transform:translateX(-50%)} }
+
+      /* Accesibilidad: reduce motion */
+      @media (prefers-reduced-motion: reduce){
+        .reveal, .reveal-stagger > *, .fx-tilt, .btn, .marquee .track{ transition: none !important; animation: none !important }
+      }
   </style>
 </head>
+<script>
+(() => {
+  // 1) Header glass al hacer scroll
+  const header = document.getElementById('siteHeader');
+  header?.classList.add('glass');
+  const onScroll = () => {
+    if (window.scrollY > 60) header.classList.add('scrolled');
+    else header.classList.remove('scrolled');
+  };
+  onScroll();
+  window.addEventListener('scroll', onScroll, {passive:true});
+
+  // 2) Reveal al entrar en viewport
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    })
+  }, {threshold:.12});
+  document.querySelectorAll('.reveal, .reveal-stagger').forEach(el=>io.observe(el));
+
+  // 3) Tilt 3D en tarjetas (ligero, sin lib)
+  const maxTilt = 8; // grados
+  const cards = document.querySelectorAll('.fx-tilt');
+  cards.forEach(card=>{
+    let rAF;
+    const handle = (e)=>{
+      const rect = card.getBoundingClientRect();
+      const px = (e.clientX - rect.left) / rect.width;
+      const py = (e.clientY - rect.top) / rect.height;
+      const rotY = (px - .5) * (maxTilt*2);
+      const rotX = (py - .5) * -(maxTilt*2);
+      cancelAnimationFrame(rAF);
+      rAF = requestAnimationFrame(()=>{
+        card.style.transform = `perspective(900px) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg) translateY(-2px)`;
+      });
+    };
+    const reset = ()=>{ card.style.transform=''; };
+    card.addEventListener('mousemove', handle);
+    card.addEventListener('mouseleave', reset);
+    card.addEventListener('touchend', reset, {passive:true});
+  });
+
+  // 4) Parallax del hero (muy sutil)
+  const hero = document.querySelector('.parallax-hero');
+  if (hero){
+    const content = hero.querySelector('.container');
+    const parallax = () => {
+      const y = window.scrollY * 0.15;
+      hero.style.setProperty('--pY', `${y}px`);
+      if(content) content.style.transform = `translateY(${y*0.25}px)`;
+    };
+    const apply = ()=>{
+      hero.style.setProperty('--pY', '0px');
+      window.addEventListener('scroll', parallax, {passive:true});
+      parallax();
+    };
+    apply();
+  }
+})();
+</script>
 <body>
   <header id="siteHeader">
     <div class="container">
@@ -345,8 +489,8 @@
   </header>
 
   <!-- Hero -->
-  <section class="hero">
-    <div class="container">
+  <section class="hero parallax-hero">
+    <div class="container reveal-stagger">
       <img class="hero-logo" src="assets/brand/hero-logo-greengray-960.png" alt="Alpath®">
       <p>El viaje a tu mejor versión.</p>
       <div class="cta-row">
@@ -366,7 +510,7 @@
 
 <!-- Galería (slider grande) -->
   <section id="galeria" class="section" style="padding:0">
-    <div class="carousel" data-autoplay="true" data-interval="4800">
+    <div class="carousel reveal" data-autoplay="true" data-interval="4800">
       <div class="carousel-frame">
         <div class="carousel-track" id="track-index">
           <!-- Nevado -->
@@ -520,7 +664,7 @@
         <div class="xp-track" id="xpTrack">
 
           <!-- Alpes Suizos -->
-          <article class="xp-card" style="--d:340ms">
+          <article class="xp-card fx-tilt reveal" style="--d:340ms">
             <div class="xp-media">
               <div class="chips"><span class="chip">Internacional</span><span class="chip">8 días</span></div>
               <img src="assets/calendario/alpes-card.jpg" alt="Alpes Suizos — Lagos y glaciares">
@@ -541,7 +685,7 @@
           </article>
 
           <!-- Roatán -->
-          <article class="xp-card" style="--d:400ms">
+          <article class="xp-card fx-tilt reveal" style="--d:400ms">
             <div class="xp-media">
               <div class="chips"><span class="chip">Internacional</span><span class="chip">Buceo</span></div>
               <img src="assets/calendario/roatan-card.jpg" alt="Roatán — Caribe y arrecifes">
@@ -562,7 +706,7 @@
           </article>
 
           <!-- Acatenango -->
-          <article class="xp-card" style="--d:460ms">
+          <article class="xp-card fx-tilt reveal" style="--d:460ms">
             <div class="xp-media">
               <div class="chips"><span class="chip">Internacional</span><span class="chip">Volcán activo</span></div>
               <img src="assets/calendario/acatenango-card.jpg" alt="Acatenango — Noche de fumarolas">
@@ -582,7 +726,7 @@
           </article>
 
           <!-- Patagonia -->
-          <article class="xp-card" style="--d:360ms">
+          <article class="xp-card fx-tilt reveal" style="--d:360ms">
             <div class="xp-media">
               <div class="chips"><span class="chip">Internacional</span><span class="chip">Trekking</span></div>
               <img src="assets/calendario/patagonia-card.jpg" alt="Patagonia — Torres y glaciares">
@@ -602,7 +746,7 @@
           </article>
 
           <!-- Nevado de Toluca -->
-          <article class="xp-card" style="--d:40ms">
+          <article class="xp-card fx-tilt reveal" style="--d:40ms">
             <div class="xp-media">
               <div class="chips"><span class="chip">Fácil</span><span class="chip">Alta montaña</span></div>
               <img src="assets/calendario/nevado-card.jpg" alt="Nevado de Toluca — Amanecer">
@@ -622,7 +766,7 @@
           </article>
 
           <!-- Iztaccíhuatl -->
-          <article class="xp-card" style="--d:100ms">
+          <article class="xp-card fx-tilt reveal" style="--d:100ms">
             <div class="xp-media">
               <div class="chips"><span class="chip">Avanzado</span><span class="chip">Alta montaña</span></div>
               <img src="assets/calendario/izta-card.jpg" alt="Iztaccíhuatl — Aclimatación & Cumbre">
@@ -643,7 +787,7 @@
           </article>
 
           <!-- Nevado de Colima -->
-          <article class="xp-card" style="--d:160ms">
+          <article class="xp-card fx-tilt reveal" style="--d:160ms">
             <div class="xp-media">
               <div class="chips"><span class="chip">Fácil</span><span class="chip">Alta Montaña</span></div>
               <img src="assets/calendario/colima-card.jpg" alt="Nevado de Colima — Senderos de pino">
@@ -663,7 +807,7 @@
           </article>
 
           <!-- La Malinche -->
-          <article class="xp-card" style="--d:220ms">
+          <article class="xp-card fx-tilt reveal" style="--d:220ms">
             <div class="xp-media">
               <div class="chips"><span class="chip">Intermedio</span><span class="chip">Alta Montaña</span></div>
               <img src="assets/calendario/malinche-card.jpg" alt="La Malinche — Cresta y pinos">
@@ -683,7 +827,7 @@
           </article>
 
           <!-- Pico de Orizaba -->
-          <article class="xp-card" style="--d:280ms">
+          <article class="xp-card fx-tilt reveal" style="--d:280ms">
             <div class="xp-media">
               <div class="chips"><span class="chip">Avanzado</span><span class="chip">Alta montaña</span></div>
               <img src="assets/calendario/orizaba-card.jpg" alt="Pico de Orizaba — Glaciar de Jamapa">
@@ -711,7 +855,7 @@
   <!-- Nosotros -->
   <section id="nosotros" class="section about">
     <div class="bg" aria-hidden="true"></div>
-    <div class="container">
+    <div class="container reveal">
       <header class="about-head">
         <img class="about-mark" src="assets/brand/isotipo-greengray-512.png" alt="Isotipo Alpath®">
         <div>
@@ -786,7 +930,7 @@
   </section>
 
   <footer>
-    <div class="container" style="display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap">
+    <div class="container reveal" style="display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap">
       <small>© <span id="year"></span> Alpath®.</small>
       <small><a href="#">Aviso de privacidad</a> · <a href="#">Términos</a></small>
     </div>
