@@ -462,6 +462,11 @@
         box-shadow: 0 8px 20px rgba(0,0,0,.15);
       }
 
+      /* Asegurar bordes redondeados visibles en el mosaico */
+      .gm-big, .gm-small { margin:0; border-radius:18px; overflow:hidden; }
+      .gm-big img, .gm-small img { width:100%; height:100%; object-fit:cover; display:block; }
+
+
       /* Controles */
       .gm-btn{
         position:absolute; top:50%; transform:translateY(-50%);
@@ -593,7 +598,7 @@
 
 <!-- Galería (slider grande) -->
 <section id="galeria" class="section" style="padding:0 0 24px">
-  <div class="gm" data-interval="4200">
+  <div class="gm" data-speed-fast="2600" data-speed-slow="6000">
     <button class="gm-btn gm-prev" aria-label="Anterior">‹</button>
     <div class="gm-viewport">
       <div class="gm-track">
@@ -601,24 +606,24 @@
         <div class="gm-slide">
           <figure class="gm-big"><img src="assets/galeria/alpes-01.jpg" alt="Alpes — Lago alpino"></figure>
           <div class="gm-col">
-            <figure class="gm-small"><img src="assets/galeria/nevado-02.jpg" alt="Nevado — Aristas"></figure>
-            <figure class="gm-small"><img src="assets/galeria/malinche-03.jpg" alt="Malinche — Cima"></figure>
+            <figure class="gm-small"><img src="assets/galeria/izta-01.jpg" alt="Iztaccíhuatl — Cresta"></figure>
+            <figure class="gm-small"><img src="assets/galeria/acatenango-01.jpg" alt="Acatenango — Fuego nocturno"></figure>
           </div>
         </div>
         <!-- Slide 2 -->
         <div class="gm-slide">
-          <figure class="gm-big"><img src="assets/galeria/orizaba-02.jpg" alt="Orizaba — Glaciar"></figure>
+          <figure class="gm-big"><img src="assets/galeria/izta-01.jpg" alt="Iztaccíhuatl — Cresta"></figure>
           <div class="gm-col">
-            <figure class="gm-small"><img src="assets/galeria/roatan-03.jpg" alt="Roatán — Playa"></figure>
-            <figure class="gm-small"><img src="assets/galeria/patagonia-01.jpg" alt="Patagonia — Laguna"></figure>
+            <figure class="gm-small"><img src="assets/galeria/acatenango-01.jpg" alt="Acatenango — Fuego nocturno"></figure>
+            <figure class="gm-small"><img src="assets/galeria/alpes-01.jpg" alt="Alpes — Lago alpino"></figure>
           </div>
         </div>
         <!-- Slide 3 -->
         <div class="gm-slide">
-          <figure class="gm-big"><img src="assets/galeria/acatenango-02.jpg" alt="Acatenango — Fuego nocturno"></figure>
+          <figure class="gm-big"><img src="assets/galeria/acatenango-01.jpg" alt="Acatenango — Fuego nocturno"></figure>
           <div class="gm-col">
-            <figure class="gm-small"><img src="assets/galeria/colima-02.jpg" alt="Colima — Bosque alto"></figure>
-            <figure class="gm-small"><img src="assets/galeria/alpes-03.jpg" alt="Alpes — Glaciar"></figure>
+            <figure class="gm-small"><img src="assets/galeria/alpes-01.jpg" alt="Alpes — Lago alpino"></figure>
+            <figure class="gm-small"><img src="assets/galeria/izta-01.jpg" alt="Iztaccíhuatl — Cresta"></figure>
           </div>
         </div>
       </div>
@@ -627,6 +632,8 @@
     <div class="gm-dots" aria-label="Paginación"></div>
   </div>
 </section>
+
+
 
 
 
@@ -1193,12 +1200,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const root = document.querySelector('.gm');
   if(!root) return;
 
-  const track = root.querySelector('.gm-track');
+  const track    = root.querySelector('.gm-track');
   const viewport = root.querySelector('.gm-viewport');
-  const prevBtn = root.querySelector('.gm-prev');
-  const nextBtn = root.querySelector('.gm-next');
+  const prevBtn  = root.querySelector('.gm-prev');
+  const nextBtn  = root.querySelector('.gm-next');
   const dotsWrap = root.querySelector('.gm-dots');
-  const interval = parseInt(root.dataset.interval || '4500', 10);
+
+  // Velocidades
+  const SPEED_FAST = parseInt(root.dataset.speedFast || '2600', 10);
+  const SPEED_SLOW = parseInt(root.dataset.speedSlow || '6000', 10);
+  let curInterval  = SPEED_FAST;
 
   const slides = Array.from(root.querySelectorAll('.gm-slide'));
   const n = slides.length;
@@ -1209,13 +1220,14 @@ document.addEventListener('DOMContentLoaded', () => {
   track.appendChild(firstClone);
   track.insertBefore(lastClone, slides[0]);
 
-  let index = 1; // empezamos en el primer real
-  let timer = null, hovering = false, touching = false;
+  let index = 1; // primer slide real
+  let timer = null, touching = false;
 
   function setX(animated = true){
-    track.style.transition = animated ? 'transform .6s ease' : 'none';
+    const dur = (curInterval === SPEED_SLOW) ? '.9s' : '.6s';
+    track.style.transition = animated ? `transform ${dur} ease` : 'none';
     track.style.transform  = `translateX(-${index * 100}%)`;
-    // activar dot
+
     const real = ((index - 1) % n + n) % n;
     dotsWrap.querySelectorAll('.gm-dot').forEach((d,i)=> d.classList.toggle('is-active', i === real));
   }
@@ -1237,27 +1249,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Snap al cruzar clones
   track.addEventListener('transitionend', ()=>{
-    if (index === 0){ index = n;   setX(false); }
-    if (index === n+1){ index = 1; setX(false); }
+    if (index === 0){   index = n;   setX(false); }
+    if (index === n+1){ index = 1;   setX(false); }
   });
 
+  // Autoplay con velocidad variable
   function start(){
     stop();
-    timer = setInterval(()=>{ 
-      if(!hovering && !touching && document.visibilityState === 'visible'){ next(); }
-    }, interval);
+    timer = setInterval(()=>{
+      if(!touching && document.visibilityState==='visible'){ next(); }
+    }, curInterval);
   }
   function stop(){ if(timer){ clearInterval(timer); timer=null; } }
   function restart(manual){ if(manual){ stop(); start(); } }
 
+  // Hover: bajar velocidad (solo desktop/puntero fino)
+  const canHover = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+  if (canHover){
+    root.addEventListener('mouseenter', ()=>{ curInterval = SPEED_SLOW; restart(true); });
+    root.addEventListener('mouseleave', ()=>{ curInterval = SPEED_FAST; restart(true); });
+  }
+
   // Controles
   prevBtn.addEventListener('click', ()=> prev(true));
   nextBtn.addEventListener('click', ()=> next(true));
-  root.addEventListener('mouseenter', ()=> hovering=true);
-  root.addEventListener('mouseleave', ()=> hovering=false);
+
+  // Pause si cambias de pestaña
   document.addEventListener('visibilitychange', ()=> document.visibilityState!=='visible' ? stop() : start());
 
-  // Swipe
+  // Swipe básico
   let sx=0, sy=0;
   viewport.addEventListener('touchstart', (e)=>{ touching=true; const t=e.changedTouches[0]; sx=t.clientX; sy=t.clientY; }, {passive:true});
   viewport.addEventListener('touchend', (e)=>{ 
@@ -1271,5 +1291,6 @@ document.addEventListener('DOMContentLoaded', () => {
   start();
 });
 </script>
+
 
 </html>
