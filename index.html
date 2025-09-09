@@ -462,6 +462,13 @@
         box-shadow: 0 8px 20px rgba(0,0,0,.15);
       }
 
+      /* ---- Galería: proporción de columnas 60% / 40% ---- */
+      .gm-slide{ grid-template-columns: 3fr 2fr; }
+
+      /* (opcional) altura un pelín más compacta */
+      .gm{ --gm-h: clamp(280px, 52vh, 500px); }
+
+
       /* Asegurar bordes redondeados visibles en el mosaico */
       .gm-big, .gm-small { margin:0; border-radius:18px; overflow:hidden; }
       .gm-big img, .gm-small img { width:100%; height:100%; object-fit:cover; display:block; }
@@ -1186,119 +1193,150 @@
 })();
 </script>
 <script>
-/* Galería Mosaic: autoplay fluido infinito + hover-slow */
-(function(){
+/* Galería Mosaic v2: scroll continuo suave + hover slow + flechas y dots */
+document.addEventListener('DOMContentLoaded', () => {
   const root = document.querySelector('.gm');
-  if(!root) return;
+  if (!root) return;
 
-  const track = root.querySelector('.gm-track');
   const viewport = root.querySelector('.gm-viewport');
-  const prevBtn = root.querySelector('.gm-prev');
-  const nextBtn = root.querySelector('.gm-next');
+  const track    = root.querySelector('.gm-track');
+  const prevBtn  = root.querySelector('.gm-prev');
+  const nextBtn  = root.querySelector('.gm-next');
   const dotsWrap = root.querySelector('.gm-dots');
 
-  const SPEED_FAST = parseFloat(root.dataset.fast || "0.28"); // px/ms
-  const SPEED_SLOW = parseFloat(root.dataset.slow || "0.10"); // px/ms
+  // Velocidades (px por ms). Puedes ajustar vía data-fast / data-slow.
+  const V_FAST = parseFloat(root.dataset.fast || '0.28'); // ~16-18px/s a 60fps
+  const V_SLOW = parseFloat(root.dataset.slow || '0.10');
 
-  // Duplicamos el set de slides para poder ciclar sin saltos
-  const originals = Array.from(track.children);
-  const n = originals.length;
-  originals.forEach(s => track.appendChild(s.cloneNode(true)));
-
-  // Dots
-  dotsWrap.innerHTML = Array.from({length:n}, (_,i)=>(
-    `<button class="gm-dot${i===0?' is-active':''}" type="button" aria-label="Ir al slide ${i+1}"></button>`
-  )).join('');
-  const dots = [...dotsWrap.children];
-  const setActive = (idx)=> dots.forEach((d,i)=> d.classList.toggle('is-active', i===idx));
-
-  // Medidas
-  let slideW = viewport.clientWidth;
-  new ResizeObserver(()=>{ slideW = viewport.clientWidth; }).observe(viewport);
+  // --- Duplicamos el set de slides para loop perfecto ---
+  const slides = Array.from(track.querySelectorAll('.gm-slide'));
+  const n = slides.length;
+  slides.forEach(s => track.appendChild(s.cloneNode(true))); // [original] + [clonados]
 
   // Estado
-  let idx = 0;            // índice "real" (0..n-1)
-  let offset = 0;         // px (negativos hacia la izquierda)
-  let speed = SPEED_FAST; // px/ms
-  let raf, last;
+  let slideW = viewport.clientWidth;      // ancho de cada slide (100% viewport)
+  let total  = slideW * n;                // ancho del set original (sin clones)
+  let x = 0;                              // desplazamiento en px
+  let v = V_FAST;                         // velocidad actual (px/ms)
+  let last = performance.now();
+  let playing = true;
+  let tween = null;                       // si hay animación de flechas
+  let dots = [];
 
+  // --- helpers ---
+  const easeCubic = t => (t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t+2,3)/2);
+
+  function layout(){
+    slideW = viewport.clientWidth;
+    total  = slideW * n;
+  }
+  window.addEventListener('resize', () => { layout(); });
+
+  // Dots por slide "real"
+  function buildDots(){
+    dotsWrap.innerHTML = '';
+    dots = Array.from({length:n}, (_,i)=>{
+      const b = document.createElement('button');
+      b.className = 'gm-dot' + (i===0 ? ' is-active':'');
+      b.type = 'button';
+      b.addEventListener('click', ()=> snapTo(i));
+      dotsWrap.appendChild(b);
+      return b;
+    });
+  }
+  function updateDots(){
+    const idx = Math.floor(((x % total) + total) % total / slideW);
+    dots.forEach((d,i)=> d.classList.toggle('is-active', i===idx));
+  }
+
+  // Render del track (usamos el “módulo” para que el salto sea imperceptible)
+  function render(){
+    const mod = ((x % total) + total) % total;
+    track.style.transform = `translate3d(${-mod}px,0,0)`;
+    updateDots();
+  }
+
+  // Bucle continuo sin rebotes
   function loop(now){
-    if(last==null) last = now;
-    const dt = now - last; last = now;
+    const dt = now - last;
+    last = now;
 
-    // Avanza en forma continua
-    offset -= dt * speed;
-
-    // Cada que pasamos un slide completo, movemos el primero al final y reajustamos offset
-    while(-offset >= slideW){
-      offset += slideW;
-      track.appendChild(track.firstElementChild); // rueda
-      idx = (idx + 1) % n;
-      setActive(idx);
+    if (playing && !tween) {
+      x += v * dt;
+      // cuando acumulamos más que "total", restamos para evitar floats grandes
+      if (x > 1e7) x = x % total;
+      render();
     }
-
-    track.style.transform = `translateX(${offset}px)`;
-    raf = requestAnimationFrame(loop);
-  }
-  function start(){ cancelAnimationFrame(raf); last = undefined; raf = requestAnimationFrame(loop); }
-  function stop(){ cancelAnimationFrame(raf); }
-
-  // Tween para botones (salta un slide en la dirección dada)
-  function tween(direction){ // 1=next, -1=prev
-    stop();
-    const startOff = offset;
-    const targetOff = startOff + direction*slideW;
-    const t0 = performance.now(), dur = 420;
-    const ease = t => t<.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2,3)/2;
-
-    (function step(t){
-      const p = Math.min(1, (t - t0)/dur);
-      offset = startOff + (targetOff - startOff)*ease(p);
-      track.style.transform = `translateX(${offset}px)`;
-      if(p < 1){ requestAnimationFrame(step); }
-      else {
-        // Normalizamos y reordenamos un slide
-        if(direction === 1){
-          track.appendChild(track.firstElementChild);
-          offset += slideW;
-          idx = (idx + 1) % n;
-        } else {
-          track.insertBefore(track.lastElementChild, track.firstElementChild);
-          offset -= slideW;
-          idx = (idx - 1 + n) % n;
-        }
-        setActive(idx);
-        start();
-      }
-    })(t0);
+    if (tween) {
+      // tween es una función (now)=>done
+      if (tween(now)) tween = null;
+    }
+    requestAnimationFrame(loop);
   }
 
-  // Controles
-  prevBtn.addEventListener('click', ()=> tween(-1));
-  nextBtn.addEventListener('click', ()=> tween(1));
-
-  // Hover: bajar velocidad (solo desktop con mouse)
+  // Hover → más lento (solo desktop con hover)
   const canHover = matchMedia('(hover:hover) and (pointer:fine)').matches;
   if (canHover){
-    root.addEventListener('mouseenter', ()=> speed = SPEED_SLOW);
-    root.addEventListener('mouseleave', ()=> speed = SPEED_FAST);
+    root.addEventListener('mouseenter', ()=> v = V_SLOW);
+    root.addEventListener('mouseleave', ()=> v = V_FAST);
   }
 
-  // Swipe (móvil)
+  // Flechas: animamos hasta el siguiente/previo snap sin “rebote”
+  function tweenTo(targetMod){
+    // targetMod: destino en [0,total)
+    const startX = x;
+    const curMod = ((x % total) + total) % total;
+
+    // Elegimos el camino más corto respetando dirección (podemos ir ±)
+    let diff = targetMod - curMod;
+    if (diff >  total/2) diff -= total;
+    if (diff < -total/2) diff += total;
+
+    const DUR = 550; const t0 = performance.now();
+    playing = false;
+    tween = (now) => {
+      const p = Math.min(1, (now - t0)/DUR);
+      const e = easeCubic(p);
+      x = startX + diff * e;
+      render();
+      if (p >= 1) { playing = true; return true; }
+      return false;
+    };
+  }
+
+  function snapTo(idx){ // idx 0..n-1
+    const target = Math.min(total - 1, idx * slideW); // evita clavar exactamente en total
+    tweenTo(target);
+  }
+  function next(){ // al slide real siguiente
+    const cur = Math.floor(((x % total)+total)%total / slideW);
+    const target = ((cur + 1) % n) * slideW;
+    tweenTo(target);
+  }
+  function prev(){
+    const cur = Math.floor(((x % total)+total)%total / slideW);
+    const target = ((cur - 1 + n) % n) * slideW;
+    tweenTo(target);
+  }
+
+  // Swipe básico
   let sx=0, sy=0;
-  viewport.addEventListener('touchstart', e=>{ const t=e.changedTouches[0]; sx=t.clientX; sy=t.clientY; stop(); }, {passive:true});
-  viewport.addEventListener('touchend',   e=>{
+  viewport.addEventListener('touchstart',(e)=>{ const t=e.changedTouches[0]; sx=t.clientX; sy=t.clientY; }, {passive:true});
+  viewport.addEventListener('touchend',(e)=>{
     const t=e.changedTouches[0], dx=t.clientX-sx, dy=t.clientY-sy;
-    if(Math.abs(dx)>40 && Math.abs(dx)>Math.abs(dy)){ tween(dx<0?1:-1); } else { start(); }
+    if (Math.abs(dx)>40 && Math.abs(dx)>Math.abs(dy)) (dx<0 ? next() : prev());
   }, {passive:true});
 
-  // Pestaña oculta
-  document.addEventListener('visibilitychange', ()=> document.visibilityState!=='visible' ? stop() : start());
+  // Controles
+  prevBtn?.addEventListener('click', prev);
+  nextBtn?.addEventListener('click', next);
 
   // Init
-  setActive(0);
-  start();
-})();
+  layout();
+  buildDots();
+  render();
+  requestAnimationFrame(loop);
+});
 </script>
 </body>
 <script>
