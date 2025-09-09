@@ -1286,8 +1286,15 @@ document.addEventListener('DOMContentLoaded', () => {
   slides.forEach(s => track.appendChild(s.cloneNode(true))); // [original] + [clonados]
 
   // Estado
-  let slideW = viewport.clientWidth;      // ancho de cada slide (100% viewport)
-  let total  = slideW * n;                // ancho del set original (sin clones)
+  let slideW, total, SEP = 0;
+
+  function layout(){
+    const cs = getComputedStyle(root);
+    SEP = parseFloat(cs.getPropertyValue('--gm-gap')) || 0;
+
+    slideW = viewport.clientWidth + SEP;  // ancho del slide + separación
+    total  = slideW * n;                  // longitud del set original
+  }
   let x = 0;                              // desplazamiento en px
   let v = V_FAST;                         // velocidad actual (px/ms)
   let last = performance.now();
@@ -1298,10 +1305,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- helpers ---
   const easeCubic = t => (t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t+2,3)/2);
 
-  function layout(){
-    slideW = viewport.clientWidth;
-    total  = slideW * n;
-  }
+  function layout(){ const cs = getComputedStyle(root); SEP = parseFloat(cs.getPropertyValue('--gm-gap')) || 0; slideW = viewport.clientWidth + SEP; total = slideW * n; }
   window.addEventListener('resize', () => { layout(); });
 
   // Dots por slide "real"
@@ -1468,6 +1472,7 @@ if (hero){
 })();
 </script>
 </html>
+
 
 
 
