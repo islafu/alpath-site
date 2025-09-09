@@ -1,8 +1,23 @@
-﻿/* Fixes r�pidos */
-.hero{ min-height:58vh; }
-.gm{ --gm-h: clamp(240px,42vh,480px); }
-.gm-big,.gm-col{ height: var(--gm-h); }
-.gm-small{ height: calc((var(--gm-h) - 14px)/2); }
-.gm-big,.gm-small{ border-radius:18px; overflow:hidden; }
-.gm-big img,.gm-small img{ width:100%; height:100%; object-fit:cover; border-radius:18px; }
+﻿/* Ajustes Galería Mosaic (v2) */
+#galeria .gm{
+  /* alto del mosaico */
+  --gm-h: clamp(320px, 54vh, 560px);
 
+  /* ⬅️ ancho total del carrusel */
+  width: calc(100vw - 32px);      /* cambia este valor para hacerlo más angosto/ancho */
+  margin-left: 50%;
+  transform: translateX(-50%);
+  padding: 0;
+}
+
+#galeria .gm-viewport{ overflow: hidden; }
+
+/* ⬅️ proporción de columnas: grande | columna de 2 chicas */
+#galeria .gm-slide{
+  grid-template-columns: 64% 36%; /* sube el 36% a 38–40% si quieres las chicas más anchas */
+}
+
+/* evita micro-línea entre las dos chicas */
+#galeria .gm-small{
+  height: calc((var(--gm-h) - var(--gm-gap))/2 - 1px);
+}
