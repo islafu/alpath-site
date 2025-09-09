@@ -103,14 +103,37 @@
     }
 
     /* Hero */
-    .hero{padding:72px 0 48px;position:relative;min-height:70vh;display:flex;align-items:center;justify-content:center;text-align:center}
-    .hero::before{content:'';position:absolute;inset:0;background:var(--hero) center/cover no-repeat}
-    .hero::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom, rgba(0,0,0,.38), rgba(0,0,0,.70))}
-    .hero .container{position:relative;z-index:1}
-    .hero h1{font-size:clamp(2.2rem,6vw,3.5rem);color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.6)}
-    .hero p{font-family:'Fraunces',serif;font-size:1.6rem;color:#fff;margin:0 auto 24px;text-shadow:0 2px 8px rgba(0,0,0,.6)}
-    .hero-logo{width:min(60vw,520px);height:auto;filter:drop-shadow(0 6px 18px rgba(0,0,0,.35));margin:0 auto 8px;display:block}
-    .cta-row{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap;justify-content:center}
+    .hero{
+      padding:72px 0 48px;
+      position:relative;
+      min-height:70vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+
+      /* 🔧 arreglos */
+      overflow:hidden;          /* recorta bg al alto del hero */
+      isolation:isolate;        /* crea un stacking context */
+      z-index:0;
+    }
+    .hero::before{
+      content:'';
+      position:absolute; inset:0;
+      background:var(--hero) center/cover no-repeat;
+
+      /* 🔧 que quede detrás del contenido */
+      z-index:-1;
+    }
+    .hero::after{
+      content:'';
+      position:absolute; inset:0;
+      background:linear-gradient(to bottom, rgba(0,0,0,.38), rgba(0,0,0,.70));
+
+      /* 🔧 también al fondo */
+      z-index:-1;
+    }
+    .hero .container{ position:relative; z-index:1 }
 
     /* Sections */
     .section{padding:64px 0}
@@ -1141,22 +1164,15 @@
     card.addEventListener('touchend', reset, {passive:true});
   });
 
-  // 4) Parallax del hero (muy sutil)
-  const hero = document.querySelector('.parallax-hero');
-  if (hero){
-    const content = hero.querySelector('.container');
-    const parallax = () => {
-      const y = window.scrollY * 0.15;
-      hero.style.setProperty('--pY', `${y}px`);
-      if(content) content.style.transform = `translateY(${y*0.25}px)`;
-    };
-    const apply = ()=>{
-      hero.style.setProperty('--pY', '0px');
-      window.addEventListener('scroll', parallax, {passive:true});
-      parallax();
-    };
-    apply();
-  }
+// 4) Parallax del hero (desactivado para evitar bleed)
+const hero = document.querySelector('.parallax-hero');
+if (hero){
+  const content = hero.querySelector('.container');
+  hero.style.setProperty('--pY', '0px');
+  if(content) content.style.transform = 'none';
+  // No agregamos listeners de scroll
+}
+
 })();
 </script>
 </html>
