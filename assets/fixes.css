@@ -35,3 +35,6 @@
   .gm-slide{ grid-template-columns:1fr; grid-auto-rows:auto; }
   .gm-col{ grid-template-columns:1fr 1fr; grid-template-rows:none; height:calc(var(--gm-h) - 0px); }
 }
+/* --- Overrides duros para la galería --- */
+.gm-small, .gm-big { aspect-ratio: auto !important; } /* elimina el cuadrado heredado */
+.gm-track { transition: none !important; }             /* evita rebote entre slides */
