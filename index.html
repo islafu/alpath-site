@@ -509,24 +509,39 @@
   .gm-col{ grid-template-columns:1fr 1fr; grid-template-rows:none; height:calc(var(--gm-h) - 0px); }
 }
 </style>
-<style id="gm-fixes">
-/* Galer�a Mosaic: 1 grande + 2 peque�as, tama�o controlado */
-.gm{ --gm-gap:14px; --gm-radius:18px; --gm-h:clamp(280px,52vh,520px); max-width:1120px; margin:0 auto; padding:0 20px; }
-.gm-viewport{ overflow:hidden; width:100%; }
-.gm-track{ display:flex; will-change:transform; transition:transform .6s ease; }
-.gm-slide{ min-width:100%; display:grid; gap:var(--gm-gap); grid-template-columns:2fr 1fr; align-items:stretch; }
-.gm-col{ display:grid; gap:var(--gm-gap); grid-template-rows:1fr 1fr; }
-.gm-big,.gm-small{ margin:0; border-radius:var(--gm-radius); overflow:hidden; }
-.gm-big,.gm-col{ height:var(--gm-h); }
-.gm-small{ height:calc((var(--gm-h) - var(--gm-gap))/2); }
-.gm-big img,.gm-small img{ width:100%; height:100%; object-fit:cover; display:block; border-radius:var(--gm-radius); box-shadow:0 8px 20px rgba(0,0,0,.15); }
-@media (max-width:820px){
-  .gm-slide{ grid-template-columns:1fr; grid-auto-rows:auto; }
-  .gm-col{ grid-template-columns:1fr 1fr; grid-template-rows:none; height:calc(var(--gm-h) - 0px); }
+<style id="gm-gallery">
+/* Galería Mosaic — 1 grande + 2 pequeñas (tamaño controlado) */
+.gm{
+  --gap:14px; --r:18px; --h:clamp(280px,52vh,520px);
+  max-width:1120px; margin:0 auto; padding:0 20px; position:relative;
 }
-/* Hero m�s compacto */
-.hero{ min-height:clamp(360px,60vh,680px); }
+.gm-viewport{ overflow:hidden; width:100% }
+.gm-track{ display:flex; will-change:transform }
+.gm-slide{ min-width:100%; display:grid; gap:var(--gap); grid-template-columns:2fr 1fr; align-items:stretch }
+.gm-col{ display:grid; gap:var(--gap); grid-template-rows:1fr 1fr }
+.gm-big,.gm-small{ border-radius:var(--r); overflow:hidden }
+.gm-big,.gm-col{ height:var(--h) }
+.gm-small{ height:calc((var(--h) - var(--gap))/2) }
+.gm-big img,.gm-small img{ width:100%; height:100%; object-fit:cover; display:block }
+
+/* Controles + dots */
+.gm-btn{
+  position:absolute; top:50%; transform:translateY(-50%);
+  background:rgba(0,0,0,.22); color:#fff; border:1px solid rgba(255,255,255,.45);
+  padding:.55rem .75rem; border-radius:12px; z-index:5
+}
+.gm-prev{ left:10px } .gm-next{ right:10px }
+.gm-dots{ display:flex; gap:8px; justify-content:center; margin:10px 0 0 }
+.gm-dot{ width:9px; height:9px; border-radius:999px; border:1px solid rgba(0,0,0,.45); background:transparent }
+.gm-dot.is-active{ background:#000 }
+
+/* Responsive */
+@media (max-width:820px){
+  .gm-slide{ grid-template-columns:1fr; grid-auto-rows:auto }
+  .gm-col{ grid-template-columns:1fr 1fr; grid-template-rows:none; height:calc(var(--h) - 0px) }
+}
 </style>
+
   <link rel="stylesheet" href="assets/fixes.css" />
 </head>
 <script>
@@ -637,7 +652,7 @@
 
 <!-- Galería (slider grande) -->
 <section id="galeria" class="section" style="padding:0 0 24px">
-  <div class="gm" data-speed-fast="2600" data-speed-slow="6000">
+  <div class="gm" data-fast="0.28" data-slow="0.10">
     <button class="gm-btn gm-prev" aria-label="Anterior">‹</button>
     <div class="gm-viewport">
       <div class="gm-track">
@@ -671,8 +686,6 @@
     <div class="gm-dots" aria-label="Paginación"></div>
   </div>
 </section>
-
-
 
 
 
@@ -1038,7 +1051,6 @@
       document.addEventListener('keydown',(e)=>{ if(e.key==='Escape') closeLb(); });
     })();
   </script>
-
 <script>
 /* ===== Slider multi-per-view (autoplay, flechas, dots por grupo, swipe) ===== */
 (function(){
@@ -1173,100 +1185,120 @@
   cards.forEach(c => ioCards.observe(c));
 })();
 </script>
-
-
-
-
 <script>
-document.addEventListener('DOMContentLoaded', function(){
-  var root = document.querySelector('.gm');
+/* Galería Mosaic: autoplay fluido infinito + hover-slow */
+(function(){
+  const root = document.querySelector('.gm');
   if(!root) return;
 
-  var track    = root.querySelector('.gm-track');
-  var viewport = root.querySelector('.gm-viewport');
-  var prevBtn  = root.querySelector('.gm-prev');
-  var nextBtn  = root.querySelector('.gm-next');
-  var dotsWrap = root.querySelector('.gm-dots');
+  const track = root.querySelector('.gm-track');
+  const viewport = root.querySelector('.gm-viewport');
+  const prevBtn = root.querySelector('.gm-prev');
+  const nextBtn = root.querySelector('.gm-next');
+  const dotsWrap = root.querySelector('.gm-dots');
 
-  var SPEED_FAST = parseInt(root.getAttribute('data-speed-fast') || '2600', 10);
-  var SPEED_SLOW = parseInt(root.getAttribute('data-speed-slow') || '6000', 10);
-  var curInterval = SPEED_FAST;
+  const SPEED_FAST = parseFloat(root.dataset.fast || "0.28"); // px/ms
+  const SPEED_SLOW = parseFloat(root.dataset.slow || "0.10"); // px/ms
 
-  var slides = Array.prototype.slice.call(track.querySelectorAll('.gm-slide'));
-  var n = slides.length;
-  if(n === 0) return;
+  // Duplicamos el set de slides para poder ciclar sin saltos
+  const originals = Array.from(track.children);
+  const n = originals.length;
+  originals.forEach(s => track.appendChild(s.cloneNode(true)));
 
-  // clones para loop infinito [-1] [0..n-1] [+1]
-  var firstClone = slides[0].cloneNode(true);
-  var lastClone  = slides[n-1].cloneNode(true);
-  track.insertBefore(lastClone, slides[0]);
-  track.appendChild(firstClone);
+  // Dots
+  dotsWrap.innerHTML = Array.from({length:n}, (_,i)=>(
+    `<button class="gm-dot${i===0?' is-active':''}" type="button" aria-label="Ir al slide ${i+1}"></button>`
+  )).join('');
+  const dots = [...dotsWrap.children];
+  const setActive = (idx)=> dots.forEach((d,i)=> d.classList.toggle('is-active', i===idx));
 
-  var index = 1;
-  var timer = null, touching=false, isAnimating=false;
+  // Medidas
+  let slideW = viewport.clientWidth;
+  new ResizeObserver(()=>{ slideW = viewport.clientWidth; }).observe(viewport);
 
-  function updateDots(){
-    var real = ((index-1)%n + n) % n;
-    var dots = dotsWrap.querySelectorAll('.gm-dot');
-    for(var i=0;i<dots.length;i++){ dots[i].classList.toggle('is-active', i===real); }
-  }
-  function setX(animated){
-    if(animated===void 0) animated=true;
-    track.style.transition = animated ? 'transform .6s ease' : 'none';
-    track.style.transform  = 'translateX(-'+(index*100)+'%)';
-  }
-  function buildDots(){
-    dotsWrap.innerHTML = '';
-    for (var i=0;i<n;i++){
-      var b = document.createElement('button');
-      b.className = 'gm-dot' + (i===0 ? ' is-active' : '');
-      b.type='button';
-      (function(g){ b.addEventListener('click', function(){ go(g+1, true); }); })(i);
-      dotsWrap.appendChild(b);
+  // Estado
+  let idx = 0;            // índice "real" (0..n-1)
+  let offset = 0;         // px (negativos hacia la izquierda)
+  let speed = SPEED_FAST; // px/ms
+  let raf, last;
+
+  function loop(now){
+    if(last==null) last = now;
+    const dt = now - last; last = now;
+
+    // Avanza en forma continua
+    offset -= dt * speed;
+
+    // Cada que pasamos un slide completo, movemos el primero al final y reajustamos offset
+    while(-offset >= slideW){
+      offset += slideW;
+      track.appendChild(track.firstElementChild); // rueda
+      idx = (idx + 1) % n;
+      setActive(idx);
     }
-  }
-  function go(i, manual){
-    if(isAnimating) return;
-    index = i; isAnimating = true;
-    setX(true); if(manual) restart();
-  }
-  function next(manual){ go(index+1, manual); }
-  function prev(manual){ go(index-1, manual); }
 
-  track.addEventListener('transitionend', function(){
-    if(index === 0){ index = n; setX(false); }
-    else if(index === n+1){ index = 1; setX(false); }
-    isAnimating = false; updateDots();
-  });
+    track.style.transform = `translateX(${offset}px)`;
+    raf = requestAnimationFrame(loop);
+  }
+  function start(){ cancelAnimationFrame(raf); last = undefined; raf = requestAnimationFrame(loop); }
+  function stop(){ cancelAnimationFrame(raf); }
 
-  function start(){
+  // Tween para botones (salta un slide en la dirección dada)
+  function tween(direction){ // 1=next, -1=prev
     stop();
-    timer = setInterval(function(){
-      if(!touching && document.visibilityState==='visible' && !isAnimating){ next(false); }
-    }, curInterval);
-  }
-  function stop(){ if(timer){ clearInterval(timer); timer=null; } }
-  function restart(){ stop(); start(); }
+    const startOff = offset;
+    const targetOff = startOff + direction*slideW;
+    const t0 = performance.now(), dur = 420;
+    const ease = t => t<.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2,3)/2;
 
-  var canHover = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+    (function step(t){
+      const p = Math.min(1, (t - t0)/dur);
+      offset = startOff + (targetOff - startOff)*ease(p);
+      track.style.transform = `translateX(${offset}px)`;
+      if(p < 1){ requestAnimationFrame(step); }
+      else {
+        // Normalizamos y reordenamos un slide
+        if(direction === 1){
+          track.appendChild(track.firstElementChild);
+          offset += slideW;
+          idx = (idx + 1) % n;
+        } else {
+          track.insertBefore(track.lastElementChild, track.firstElementChild);
+          offset -= slideW;
+          idx = (idx - 1 + n) % n;
+        }
+        setActive(idx);
+        start();
+      }
+    })(t0);
+  }
+
+  // Controles
+  prevBtn.addEventListener('click', ()=> tween(-1));
+  nextBtn.addEventListener('click', ()=> tween(1));
+
+  // Hover: bajar velocidad (solo desktop con mouse)
+  const canHover = matchMedia('(hover:hover) and (pointer:fine)').matches;
   if (canHover){
-    root.addEventListener('mouseenter', function(){ curInterval = SPEED_SLOW; restart(); });
-    root.addEventListener('mouseleave', function(){ curInterval = SPEED_FAST; restart(); });
+    root.addEventListener('mouseenter', ()=> speed = SPEED_SLOW);
+    root.addEventListener('mouseleave', ()=> speed = SPEED_FAST);
   }
 
-  prevBtn.addEventListener('click', function(){ prev(true); });
-  nextBtn.addEventListener('click', function(){ next(true); });
-  document.addEventListener('visibilitychange', function(){ document.visibilityState!=='visible' ? stop() : start(); });
-
-  var sx=0, sy=0;
-  viewport.addEventListener('touchstart', function(e){ touching=true; var t=e.changedTouches[0]; sx=t.clientX; sy=t.clientY; }, {passive:true});
-  viewport.addEventListener('touchend', function(e){
-    var t=e.changedTouches[0], dx=t.clientX-sx, dy=t.clientY-sy; touching=false;
-    if(Math.abs(dx)>40 && Math.abs(dx)>Math.abs(dy)){ dx<0 ? next(true) : prev(true); }
+  // Swipe (móvil)
+  let sx=0, sy=0;
+  viewport.addEventListener('touchstart', e=>{ const t=e.changedTouches[0]; sx=t.clientX; sy=t.clientY; stop(); }, {passive:true});
+  viewport.addEventListener('touchend',   e=>{
+    const t=e.changedTouches[0], dx=t.clientX-sx, dy=t.clientY-sy;
+    if(Math.abs(dx)>40 && Math.abs(dx)>Math.abs(dy)){ tween(dx<0?1:-1); } else { start(); }
   }, {passive:true});
 
-  buildDots(); setX(false); updateDots(); start();
-});
+  // Pestaña oculta
+  document.addEventListener('visibilitychange', ()=> document.visibilityState!=='visible' ? stop() : start());
+
+  // Init
+  setActive(0);
+  start();
+})();
 </script>
 </body>
 <script>
@@ -1325,9 +1357,6 @@ if (hero){
 
 })();
 </script>
-
-
-
 </html>
 
 
