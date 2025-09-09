@@ -14,7 +14,7 @@
 
 /* ⬅️ proporción de columnas: grande | columna de 2 chicas */
 #galeria .gm-slide{
-  grid-template-columns: 60% 30%; /* sube el 36% a 38–40% si quieres las chicas más anchas */
+  grid-template-columns: 40% 20%; /* sube el 36% a 38–40% si quieres las chicas más anchas */
 }
 
 /* evita micro-línea entre las dos chicas */
