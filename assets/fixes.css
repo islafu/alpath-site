@@ -1,7 +1,8 @@
-﻿/* Fixes rápidos */
+﻿/* Fixes r�pidos */
 .hero{ min-height:58vh; }
 .gm{ --gm-h: clamp(240px,42vh,480px); }
 .gm-big,.gm-col{ height: var(--gm-h); }
 .gm-small{ height: calc((var(--gm-h) - 14px)/2); }
 .gm-big,.gm-small{ border-radius:18px; overflow:hidden; }
 .gm-big img,.gm-small img{ width:100%; height:100%; object-fit:cover; border-radius:18px; }
+

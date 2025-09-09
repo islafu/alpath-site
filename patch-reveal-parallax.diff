@@ -1,0 +1,58 @@
+﻿*** Begin Patch
+*** Update File: index.html
+@@
+-<script>
+-(() => {
++<script>
++document.addEventListener('DOMContentLoaded', function(){
+   // 1) Header glass al hacer scroll
+   const header = document.getElementById('siteHeader');
+-  header?.classList.add('glass');
+-  const onScroll = () => {
+-    if (window.scrollY > 60) header.classList.add('scrolled');
+-    else header.classList.remove('scrolled');
+-  };
+-  onScroll();
+-  window.addEventListener('scroll', onScroll, {passive:true});
++  if (header){
++    header.classList.add('glass');
++    const onScroll = () => {
++      if (window.scrollY > 60) header.classList.add('scrolled');
++      else header.classList.remove('scrolled');
++    };
++    onScroll();
++    window.addEventListener('scroll', onScroll, {passive:true});
++  }
+@@
+-  // 2) Reveal al entrar en viewport
++  // 2) Reveal al entrar en viewport
+   const io = new IntersectionObserver((entries)=>{
+     entries.forEach(e=>{
+       if(e.isIntersecting){
+         e.target.classList.add('in');
+         io.unobserve(e.target);
+       }
+     })
+   }, {threshold:.12});
+   document.querySelectorAll('.reveal, .reveal-stagger').forEach(el=>io.observe(el));
+@@
+-  const hero = document.querySelector('.parallax-hero');
++  const hero = document.querySelector('.parallax-hero');
+   if (hero){
+     const content = hero.querySelector('.container');
+     const parallax = () => {
+       const y = window.scrollY * 0.15;
+       hero.style.setProperty('--pY', ${y}px);
+       if(content) content.style.transform = 	ranslateY(px);
+     };
+     const apply = ()=>{
+       hero.style.setProperty('--pY', '0px');
+       window.addEventListener('scroll', parallax, {passive:true});
+       parallax();
+     };
+     apply();
+   }
+-})();
++});
+ </script>
+*** End Patch
