@@ -66,3 +66,6 @@
   #galeria .gm-col{ grid-template-columns:1fr 1fr; grid-template-rows:none; height:calc(var(--gm-h) - 0px); }
 }
 
+/* separación real entre slides en el track */
+#galeria .gm-track { display:flex; gap:18px; }
+#galeria .gm-slide { margin-right:0; } /* anulamos si antes lo tenías */
