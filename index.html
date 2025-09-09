@@ -516,88 +516,11 @@
   .gm-col{ grid-template-columns:1fr 1fr; grid-template-rows:none; height:calc(var(--gm-h) - 0px); }
 }
 </style>
-<style id="gm-gallery">
-/* Galería Mosaic — 1 grande + 2 pequeñas (tamaño controlado) */
-.gm{
-  --gap:14px; --r:18px; --h:clamp(280px,52vh,520px);
-  max-width:1120px; margin:0 auto; padding:0 20px; position:relative;
-}
-.gm-viewport{ overflow:hidden; width:100% }
-.gm-track{ display:flex; will-change:transform }
-.gm-slide{ min-width:100%; display:grid; gap:var(--gap); grid-template-columns:2fr 1fr; align-items:stretch }
-.gm-col{ display:grid; gap:var(--gap); grid-template-rows:1fr 1fr }
-.gm-big,.gm-small{ border-radius:var(--r); overflow:hidden }
-.gm-big,.gm-col{ height:var(--h) }
-.gm-small{ height:calc((var(--h) - var(--gap))/2) }
-.gm-big img,.gm-small img{ width:100%; height:100%; object-fit:cover; display:block }
 
-/* Controles + dots */
-.gm-btn{
-  position:absolute; top:50%; transform:translateY(-50%);
-  background:rgba(0,0,0,.22); color:#fff; border:1px solid rgba(255,255,255,.45);
-  padding:.55rem .75rem; border-radius:12px; z-index:5
-}
-.gm-prev{ left:10px } .gm-next{ right:10px }
-.gm-dots{ display:flex; gap:8px; justify-content:center; margin:10px 0 0 }
-.gm-dot{ width:9px; height:9px; border-radius:999px; border:1px solid rgba(0,0,0,.45); background:transparent }
-.gm-dot.is-active{ background:#000 }
 
-/* Responsive */
-@media (max-width:820px){
-  .gm-slide{ grid-template-columns:1fr; grid-auto-rows:auto }
-  .gm-col{ grid-template-columns:1fr 1fr; grid-template-rows:none; height:calc(var(--h) - 0px) }
-}
-</style>
-
-  <link rel="stylesheet" href="assets/fixes.css" />
+  
 </head>
-<style id="gm-overrides">
-/* ---- Galería Mosaic: full-bleed, minis más anchas y sin “cuadrado forzado” ---- */
-#galeria{ padding:0; }
-#galeria .gm{
-  --gm-gap:14px;
-  --gm-radius:18px;
-  --gm-h: clamp(280px, 58vh, 600px);
 
-  /* full-bleed */
-  width:95vw;
-  max-width:95vw;
-  margin:0;
-  padding:0;
-}
-
-#galeria .gm-viewport{ overflow:hidden; width:100%; }
-#galeria .gm-track{ display:flex; will-change:transform; transition:transform .6s ease; }
-
-/* minis más anchas → 55/45 */
-#galeria .gm-slide{ min-width:100%; display:grid; gap:var(--gm-gap); grid-template-columns:6fr 4fr; align-items:stretch; }
-#galeria .gm-col{ display:grid; gap:var(--gm-gap); grid-template-rows:1fr 1fr; }
-
-/* anula el aspect-ratio heredado que las hacía cuadradas */
-#galeria .gm-big, #galeria .gm-small{ aspect-ratio:auto; margin:0; border-radius:var(--gm-radius); overflow:hidden; }
-#galeria .gm-big, #galeria .gm-col{ height:var(--gm-h); }
-#galeria .gm-small{ height:calc((var(--gm-h) - var(--gm-gap))/2); }
-#galeria .gm-big img, #galeria .gm-small img{ width:100%; height:100%; object-fit:cover; display:block; border-radius:var(--gm-radius); box-shadow:0 8px 20px rgba(0,0,0,.15); }
-
-/* controles y dots (por si los necesitas aquí) */
-#galeria .gm-btn{
-  position:absolute; top:50%; transform:translateY(-50%);
-  background:rgba(0,0,0,.22); color:#fff; border:1px solid rgba(255,255,255,.45);
-  padding:.55rem .75rem; border-radius:12px; cursor:pointer; z-index:2;
-}
-#galeria .gm-btn:hover{ background:rgba(0,0,0,.32); }
-#galeria .gm-prev{ left:10px } 
-#galeria .gm-next{ right:10px }
-#galeria .gm-dots{ display:flex; gap:8px; justify-content:center; margin:12px 0 0 }
-#galeria .gm-dot{ width:9px; height:9px; border-radius:999px; border:1px solid rgba(0,0,0,.45); background:transparent }
-#galeria .gm-dot.is-active{ background:#000 }
-
-/* móvil */
-@media (max-width:820px){
-  #galeria .gm-slide{ grid-template-columns:1fr; grid-auto-rows:auto; }
-  #galeria .gm-col{ grid-template-columns:1fr 1fr; grid-template-rows:none; height:calc(var(--gm-h) - 0px); }
-}
-</style>
 <script>
 (() => {
   // Scroll con easing + offset por header + highlight del H2 destino
@@ -1472,6 +1395,7 @@ if (hero){
 })();
 </script>
 </html>
+
 
 
 
